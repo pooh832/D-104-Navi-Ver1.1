@@ -335,14 +335,37 @@ body::after{
   overflow:hidden;
 }
 
+/* === Button shine (hover不要で自動) === */
+.btnPrimary{
+  position: relative;
+  overflow: hidden;
+}
+
 .btnPrimary::after{
   content:"";
   position:absolute;
-  inset:-60% -20%;
-  background:radial-gradient(220px 120px at 50% 50%, rgba(255,255,255,.35), transparent 60%);
-  opacity:.55;
-  transform:translateY(8px);
+  inset:-40% -80%;
+  background: linear-gradient(
+    120deg,
+    transparent 35%,
+    rgba(255,255,255,.28) 50%,
+    transparent 65%
+  );
+  transform: translateX(-30%);
+  animation: btnShine 3.6s ease-in-out infinite;
   pointer-events:none;
+  opacity: .85;
+}
+
+@keyframes btnShine{
+  0%   { transform: translateX(-55%); }
+  55%  { transform: translateX(55%); }
+  100% { transform: translateX(55%); }
+}
+
+/* 動きが苦手な人向け */
+@media (prefers-reduced-motion: reduce){
+  .btnPrimary::after{ animation: none; opacity: .45; }
 }
 
 .btnPrimary:active{ transform:scale(.99); }
