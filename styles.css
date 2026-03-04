@@ -700,3 +700,6 @@ body::after{
 @media (prefers-reduced-motion: reduce){
   .btnPrimary::after{ animation:none; opacity:.45; }
 }
+
+/* CHECK-REFLECT */
+body{ outline: 8px solid hotpink !important; }
