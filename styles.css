@@ -569,3 +569,134 @@ body::after{
   .grid{ grid-template-columns:1fr 1fr; }
   .heroTitle{ font-size:34px; }
 }
+
+/* =========================
+   Watercolor + Sparkle boost
+   (add at the END of styles.css)
+========================= */
+
+/* 背景を水彩っぽく：柔らかい霧 + うねり */
+body{
+  background:
+    radial-gradient(1200px 700px at 50% -12%, rgba(255,255,255,.92), transparent 58%),
+    radial-gradient(900px 520px at 20% 20%, rgba(255,255,255,.55), transparent 62%),
+    radial-gradient(900px 520px at 80% 30%, rgba(255,255,255,.38), transparent 66%),
+    radial-gradient(1200px 900px at 50% 100%, rgba(110,190,210,.30), transparent 60%),
+    linear-gradient(180deg, #eafaff 0%, #cfeff7 55%, #a7dae6 100%);
+}
+
+/* 紙/水彩の“ざらっ”を疑似的に（超うっすら） */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background:
+    radial-gradient(1px 1px at 10% 20%, rgba(0,0,0,.05), transparent 60%),
+    radial-gradient(1px 1px at 40% 60%, rgba(0,0,0,.04), transparent 60%),
+    radial-gradient(1px 1px at 70% 30%, rgba(0,0,0,.035), transparent 60%),
+    radial-gradient(1px 1px at 90% 80%, rgba(0,0,0,.03), transparent 60%);
+  opacity:.18;
+  filter: blur(.2px);
+}
+
+/* キラ粒を“多め＆大小混在”に：iPadでも見えるよう少し強め */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background:
+    radial-gradient(1.6px 1.6px at 12% 18%, rgba(255,255,255,.90), transparent 60%),
+    radial-gradient(1.2px 1.2px at 18% 62%, rgba(255,255,255,.60), transparent 60%),
+    radial-gradient(1.4px 1.4px at 26% 36%, rgba(255,255,255,.70), transparent 60%),
+    radial-gradient(1.8px 1.8px at 34% 78%, rgba(255,255,255,.55), transparent 60%),
+    radial-gradient(1.2px 1.2px at 44% 22%, rgba(255,255,255,.55), transparent 60%),
+    radial-gradient(1.6px 1.6px at 58% 48%, rgba(255,255,255,.50), transparent 60%),
+    radial-gradient(1.2px 1.2px at 66% 14%, rgba(255,255,255,.60), transparent 60%),
+    radial-gradient(1.8px 1.8px at 74% 64%, rgba(255,255,255,.50), transparent 60%),
+    radial-gradient(1.4px 1.4px at 82% 26%, rgba(255,255,255,.65), transparent 60%),
+    radial-gradient(1.2px 1.2px at 90% 74%, rgba(255,255,255,.55), transparent 60%);
+  opacity:.42;
+  filter: blur(.15px);
+}
+
+/* コンテンツを前面に */
+.topbar, .hero, .container, .footer{
+  position:relative;
+  z-index:1;
+}
+
+/* カードを“白い縁取り＋内側の光”で絵の雰囲気に寄せる */
+.card, .tile, .newsItem, .chip{
+  border: 1.5px solid rgba(255,255,255,.78);
+  box-shadow:
+    0 18px 36px rgba(6,38,46,.12),
+    0 0 0 1px rgba(255,255,255,.55) inset,
+    0 10px 20px rgba(255,255,255,.35) inset;
+}
+
+/* 角の“きらん”感（上品） */
+.card::before, .tile::before{
+  opacity:.55;
+}
+
+/* 見出しを柔らかく：軽い光彩 */
+.heroTitle{
+  text-shadow: 0 10px 30px rgba(0,0,0,.10);
+}
+.heroEyebrow{
+  letter-spacing:.20em;
+  text-shadow: 0 6px 20px rgba(255,255,255,.55);
+}
+
+/* MENUの装飾を画像っぽく（曲線/きら） */
+.sectionTitle{
+  gap:12px;
+}
+.sectionTitle::before,
+.sectionTitle::after{
+  content:"✧";
+  font-size:16px;
+  color:rgba(255,255,255,.90);
+  text-shadow: 0 6px 22px rgba(44,147,178,.28);
+}
+
+/* タイルに“押し出し”感（ふわっと） */
+.tile{
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.tile:active{
+  transform: scale(.99);
+}
+
+/* ボタンの光沢：hover不要で自動（iPadでも見える） */
+.btnPrimary{
+  overflow:hidden;
+  position:relative;
+}
+.btnPrimary::after{
+  content:"";
+  position:absolute;
+  inset:-40% -80%;
+  background: linear-gradient(
+    120deg,
+    transparent 35%,
+    rgba(255,255,255,.26) 50%,
+    transparent 65%
+  );
+  transform: translateX(-55%);
+  animation: btnShine 3.6s ease-in-out infinite;
+  pointer-events:none;
+  opacity:.85;
+}
+@keyframes btnShine{
+  0%   { transform: translateX(-55%); }
+  55%  { transform: translateX(55%); }
+  100% { transform: translateX(55%); }
+}
+@media (prefers-reduced-motion: reduce){
+  .btnPrimary::after{ animation:none; opacity:.45; }
+}
