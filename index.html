@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>D'104 Navi</title>
+
+  <!-- ✅ キャッシュ対策：更新したら v=2, v=3... に変える -->
+  <link rel="stylesheet" href="styles.css?v=1" />
+</head>
+<body>
+
+  <!-- Top / Global Nav -->
+  <header class="topbar" id="top">
+    <div class="brand">
+      <div class="brandIcon" aria-hidden="true">📘</div>
+      <div class="brandText">
+        <div class="brandTitle">D'104 Navi</div>
+        <div class="brandSub">サークルメンバーお助けツール</div>
+      </div>
+    </div>
+
+    <nav class="topNav" aria-label="ページ内ナビゲーション">
+      <a href="#next" class="navLink">Next</a>
+      <a href="#menu" class="navLink">Menu</a>
+      <a href="#news" class="navLink">News</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" aria-label="ヒーローセクション">
+    <div class="heroInner">
+      <p class="heroEyebrow">Sparkling Community</p>
+      <h1 class="heroTitle">Welcome to D'104</h1>
+      <p class="heroLead">予定・詳細・部室案内・質問を、迷わずひとまとめ。</p>
+
+      <div class="heroChips" aria-label="クイック情報">
+        <div class="chip">
+          <span class="chipKey">Today</span>
+          <span class="chipVal" id="today">--/--</span>
+        </div>
+        <div class="chip">
+          <span class="chipKey">Next</span>
+          <span class="chipVal" id="countdown">未設定</span>
+        </div>
+        <div class="chip">
+          <span class="chipKey">Status</span>
+          <span class="chipVal">Beta</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+
+    <!-- Next Event -->
+    <section class="card" id="next" aria-labelledby="nextTitle">
+      <div class="cardHead">
+        <h2 class="cardTitle" id="nextTitle">
+          <span class="badge" aria-hidden="true">📅</span>
+          next event
+        </h2>
+        <span class="pill">重要</span>
+      </div>
+
+      <div class="nextBox" role="group" aria-label="次回の活動">
+        <div class="kv">
+          <div class="k">日時</div>
+          <div class="v" id="nextDate">未設定</div>
+        </div>
+        <div class="kv">
+          <div class="k">内容</div>
+          <div class="v" id="nextWhat">未設定</div>
+        </div>
+        <div class="kv">
+          <div class="k">集合</div>
+          <div class="v" id="nextWhere">未設定</div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btnPrimary" id="setNextBtn" type="button">
+          次回予定を仮登録
+        </button>
+        <button class="btnGhost" id="clearBtn" type="button">
+          リセット
+        </button>
+      </div>
+
+      <p class="hint">※のちほどカレンダー連携に置き換えます（いまは仮の表示です）</p>
+    </section>
+
+    <!-- Divider -->
+    <div class="sectionTitle" id="menu">MENU</div>
+
+    <!-- Menu tiles -->
+    <section class="grid" aria-label="メニュー">
+      <a class="tile" href="room.html">
+        <span class="emoji" aria-hidden="true">🎥</span>
+        <div class="tileText">
+          <h3>部室への行き方</h3>
+          <p>動画でチェック</p>
+        </div>
+        <span class="arrow" aria-hidden="true">›</span>
+      </a>
+
+      <a class="tile isDisabled" href="#" aria-disabled="true">
+        <span class="emoji" aria-hidden="true">🗓️</span>
+        <div class="tileText">
+          <h3>カレンダー</h3>
+          <p>（今後実装）</p>
+        </div>
+        <span class="arrow" aria-hidden="true">›</span>
+      </a>
+
+      <a class="tile isDisabled" href="#" aria-disabled="true">
+        <span class="emoji" aria-hidden="true">📌</span>
+        <div class="tileText">
+          <h3>活動詳細</h3>
+          <p>（今後実装）</p>
+        </div>
+        <span class="arrow" aria-hidden="true">›</span>
+      </a>
+
+      <a class="tile isDisabled" href="#" aria-disabled="true">
+        <span class="emoji" aria-hidden="true">❓</span>
+        <div class="tileText">
+          <h3>質問する</h3>
+          <p>（今後実装）</p>
+        </div>
+        <span class="arrow" aria-hidden="true">›</span>
+      </a>
+    </section>
+
+    <!-- News -->
+    <div class="sectionTitle" id="news">NEWS</div>
+
+    <section class="card" aria-label="お知らせ">
+      <ul class="newsList">
+        <li class="newsItem">
+          <span class="date">2026/03/04</span>
+          <span class="dot" aria-hidden="true"></span>
+          <span class="text">トップページUIをジュビリーブルー基調に更新</span>
+        </li>
+        <li class="newsItem">
+          <span class="date">2026/03/04</span>
+          <span class="dot" aria-hidden="true"></span>
+          <span class="text">次回予定カードを追加（仮登録ボタン）</span>
+        </li>
+        <li class="newsItem">
+          <span class="date">Coming</span>
+          <span class="dot" aria-hidden="true"></span>
+          <span class="text">カレンダー・質問フォーム・PWA化を実装予定</span>
+        </li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <a class="toTop" href="#top">↑ TOPへ</a>
+    <small>© Circle Hub</small>
+  </footer>
+
+  <!-- ✅ JSは任意：ボタン動作と日付表示だけ（使わなくても表示は崩れません） -->
+  <script>
+    // Today
+    (function(){
+      const d = new Date();
+      const mm = String(d.getMonth()+1).padStart(2,'0');
+      const dd = String(d.getDate()).padStart(2,'0');
+      const el = document.getElementById('today');
+      if(el) el.textContent = `${mm}/${dd}`;
+    })();
+
+    // Next event (temporary demo)
+    const setBtn = document.getElementById('setNextBtn');
+    const clearBtn = document.getElementById('clearBtn');
+
+    function setNextDemo(){
+      document.getElementById('nextDate').textContent = '3/10 (火) 18:30';
+      document.getElementById('nextWhat').textContent = '新歓ミーティング（役割確認）';
+      document.getElementById('nextWhere').textContent = '学生会館ロビー集合';
+      document.getElementById('countdown').textContent = 'あと6日';
+    }
+
+    function clearNext(){
+      document.getElementById('nextDate').textContent = '未設定';
+      document.getElementById('nextWhat').textContent = '未設定';
+      document.getElementById('nextWhere').textContent = '未設定';
+      document.getElementById('countdown').textContent = '未設定';
+    }
+
+    if(setBtn) setBtn.addEventListener('click', setNextDemo);
+    if(clearBtn) clearBtn.addEventListener('click', clearNext);
+  </script>
+</body>
+</html>
