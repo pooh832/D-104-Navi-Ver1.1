@@ -169,36 +169,59 @@
 
   <!-- ✅ JSは任意：ボタン動作と日付表示だけ（使わなくても表示は崩れません） -->
   <script>
-    // Today
-    (function(){
-      const d = new Date();
-      const mm = String(d.getMonth()+1).padStart(2,'0');
-      const dd = String(d.getDate()).padStart(2,'0');
-      const el = document.getElementById('today');
-      if(el) el.textContent = `${mm}/${dd}`;
-    })();
+  // Today
+  (function(){
+    const d = new Date();
+    const mm = String(d.getMonth()+1).padStart(2,'0');
+    const dd = String(d.getDate()).padStart(2,'0');
+    const el = document.getElementById('today');
+    if(el) el.textContent = `${mm}/${dd}`;
+  })();
 
-    // Next event (temporary demo)
-    const setBtn = document.getElementById('setNextBtn');
-    const clearBtn = document.getElementById('clearBtn');
+  const setBtn = document.getElementById('setNextBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const addCalendarBtn = document.getElementById('addCalendarBtn');
 
-    function setNextDemo(){
-      document.getElementById('nextDate').textContent = '3/12 (木) 18:30';
-      document.getElementById('nextWhat').textContent = '新歓ミーティング（役割確認）';
-      document.getElementById('nextWhere').textContent = 'BOX集合or Zoom';
-      document.getElementById('countdown').textContent = 'あと8日';
+  function setNextDemo(){
+    document.getElementById('nextDate').textContent = '3/12 (木) 18:30';
+    document.getElementById('nextWhat').textContent = '新歓ミーティング（役割確認）';
+    document.getElementById('nextWhere').textContent = 'BOX集合or Zoom';
+    document.getElementById('countdown').textContent = 'あと8日';
+  }
+
+  function clearNext(){
+    document.getElementById('nextDate').textContent = '未設定';
+    document.getElementById('nextWhat').textContent = '未設定';
+    document.getElementById('nextWhere').textContent = '未設定';
+    document.getElementById('countdown').textContent = '未設定';
+  }
+
+  function addToCalendar() {
+
+    const title = document.getElementById('nextWhat').textContent;
+    const location = document.getElementById('nextWhere').textContent;
+
+    if(title === '未設定'){
+      alert('先に次回予定を設定してください');
+      return;
     }
 
-    function clearNext(){
-      document.getElementById('nextDate').textContent = '未設定';
-      document.getElementById('nextWhat').textContent = '未設定';
-      document.getElementById('nextWhere').textContent = '未設定';
-      document.getElementById('countdown').textContent = '未設定';
-    }
+    const start = '20260312T183000';
+    const end = '20260312T200000';
 
-    if(setBtn) setBtn.addEventListener('click', setNextDemo);
-    if(clearBtn) clearBtn.addEventListener('click', clearNext);
-  </script>
+    const url =
+      "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+      "&text=" + encodeURIComponent(title) +
+      "&dates=" + start + "/" + end +
+      "&location=" + encodeURIComponent(location);
+
+    window.open(url, "_blank");
+  }
+
+  if(setBtn) setBtn.addEventListener('click', setNextDemo);
+  if(clearBtn) clearBtn.addEventListener('click', clearNext);
+  if(addCalendarBtn) addCalendarBtn.addEventListener('click', addToCalendar);
+</script>
   <footer>
 
 <script src="app.js"></script>
