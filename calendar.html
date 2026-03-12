@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>カレンダー | D'104 Navi</title>
+  <link rel="stylesheet" href="styles.css?v=30" />
+</head>
+<body>
+  <header class="topbar" id="top">
+    <div class="brand">
+      <div class="brandIcon" aria-hidden="true">📘</div>
+      <div class="brandText">
+        <div class="brandTitle">Club D'104</div>
+        <div class="brandSub">予定一覧</div>
+      </div>
+    </div>
+
+    <nav class="topNav" aria-label="ページ内ナビゲーション">
+      <a href="index.html" class="navLink">Home</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="heroInner">
+      <p class="heroEyebrow">Schedule</p>
+      <h1 class="heroTitle">カレンダー</h1>
+      <p class="heroLead">今後の活動予定を一覧で確認できます。</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <section class="card">
+      <div class="cardHead">
+        <h2 class="cardTitle">
+          <span class="badge" aria-hidden="true">🗓️</span>
+          upcoming events
+        </h2>
+      </div>
+
+      <div id="calendarEventList">
+        <p class="hint">予定を読み込み中...</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <a class="toTop" href="index.html">← TOPへ戻る</a>
+    <small>© Circle Hub</small>
+  </footer>
+
+  <script type="module">
+    import { listenEvents } from "./events-db.js";
+
+    const eventList = document.getElementById("calendarEventList");
+
+    function formatDateJP(dateString) {
+      const date = new Date(dateString);
+      const week = ["日", "月", "火", "水", "木", "金", "土"];
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const weekday = week[date.getDay()];
+      const hour = String(date.getHours()).padStart(2, "0");
+      const minute = String(date.getMinutes()).padStart(2, "0");
+      return `${month}/${day} (${weekday}) ${hour}:${minute}`;
+    }
+
+    function formatGoogleCalendarDate(dateString) {
+      const date = new Date(dateString);
+      const yyyy = date.getFullYear();
+      const mm = String(date.getMonth() + 1).padStart(2, "0");
+      const dd = String(date.getDate()).padStart(2, "0");
+      const hh = String(date.getHours()).padStart(2, "0");
+      const min = String(date.getMinutes()).padStart(2, "0");
+      return `${yyyy}${mm}${dd}T${hh}${min}00`;
+    }
+
+    function openGoogleCalendar(event) {
+      const start = formatGoogleCalendarDate(event.start);
+      const end = formatGoogleCalendarDate(event.end);
+
+      const url =
+        "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+        "&text=" + encodeURIComponent(event.title) +
+        "&dates=" + encodeURIComponent(`${start}/${end}`) +
+        "&location=" + encodeURIComponent(event.location) +
+        "&details=" + encodeURIComponent("D'104 Naviから追加した活動予定です。");
+
+      window.open(url, "_blank");
+    }
+
+    function formatICSDate(dateString) {
+      const date = new Date(dateString);
+      const yyyy = date.getFullYear();
+      const mm = String(date.getMonth() + 1).padStart(2, "0");
+      const dd = String(date.getDate()).padStart(2, "0");
+      const hh = String(date.getHours()).padStart(2, "0");
+      const min = String(date.getMinutes()).padStart(2, "0");
+      const ss = "00";
+      return `${yyyy}${mm}${dd}T${hh}${min}${ss}`;
+    }
+
+    function downloadICS(event) {
+      const uid = `d104-${Date.now()}@d104navi`;
+      const dtStamp = formatICSDate(new Date().toISOString());
+      const dtStart = formatICSDate(event.start);
+      const dtEnd = formatICSDate(event.end);
+
+      const icsContent =
+`BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//D104 Navi//JP
+BEGIN:VEVENT
+UID:${uid}
+DTSTAMP:${dtStamp}
+DTSTART:${dtStart}
+DTEND:${dtEnd}
+SUMMARY:${event.title}
+LOCATION:${event.location}
+DESCRIPTION:D'104 Naviから追加した活動予定です。
+END:VEVENT
+END:VCALENDAR`;
+
+      const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${event.title}.ics`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function renderEvents(events) {
+      const now = new Date();
+
+      const upcoming = events
+        .filter(event => new Date(event.end) >= now)
+        .sort((a, b) => new Date(a.start) - new Date(b.start));
+
+      if (!upcoming.length) {
+        eventList.innerHTML = `<p class="hint">今後の予定はまだありません。</p>`;
+        return;
+      }
+
+      eventList.innerHTML = upcoming.map((event, index) => `
+        <div class="card calendarItemCard">
+          <div class="cardHead">
+            <h3 class="cardTitle">
+              <span class="badge">${index + 1}</span>
+              ${event.title}
+            </h3>
+          </div>
+
+          <div class="nextBox">
+            <div class="kv">
+              <div class="k">日時</div>
+              <div class="v">${formatDateJP(event.start)} 〜 ${formatDateJP(event.end)}</div>
+            </div>
+            <div class="kv">
+              <div class="k">場所</div>
+              <div class="v">${event.location}</div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btnGhost google-btn" data-index="${index}">Googleカレンダー</button>
+            <button class="btnGhost ics-btn" data-index="${index}">iPhoneカレンダー</button>
+          </div>
+        </div>
+      `).join("");
+
+      document.querySelectorAll(".google-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          openGoogleCalendar(upcoming[btn.dataset.index]);
+        });
+      });
+
+      document.querySelectorAll(".ics-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          downloadICS(upcoming[btn.dataset.index]);
+        });
+      });
+    }
+
+    listenEvents((events) => {
+      renderEvents(events || []);
+    });
+  </script>
+</body>
+</html>
