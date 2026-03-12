@@ -1,4 +1,5 @@
-const ADMIN_EMAIL = "exsample@toyo.jp";
+const ADMIN_EMAIL = "s11502401307@toyo.jp";
+
 import { auth } from "./firebase-config.js";
 import {
   createUserWithEmailAndPassword,
@@ -14,8 +15,7 @@ window.registerUser = async function () {
 
   try {
     await createUserWithEmailAndPassword(auth, email, password);
-    message.textContent = "登録しました。管理ページへ移動します。";
-    location.href = "admin.html";
+    message.textContent = "登録しました。ログインしてください。";
   } catch (error) {
     message.textContent = "登録に失敗しました: " + error.message;
   }
@@ -27,7 +27,14 @@ window.loginUser = async function () {
   const message = document.getElementById("message");
 
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+    if (userCredential.user.email !== ADMIN_EMAIL) {
+      message.textContent = "このアカウントは管理者ではありません";
+      await signOut(auth);
+      return;
+    }
+
     message.textContent = "ログイン成功";
     window.location.href = "admin.html";
   } catch (error) {
@@ -42,11 +49,18 @@ window.logoutUser = async function () {
 };
 
 window.protectAdminPage = function () {
-  onAuthStateChanged(auth, (user) => {
+  onAuthStateChanged(auth, async (user) => {
     if (!user) {
       location.href = "login.html";
       return;
     }
+
+    if (user.email !== ADMIN_EMAIL) {
+      await signOut(auth);
+      location.href = "login.html";
+      return;
+    }
+
     const userEmail = document.getElementById("userEmail");
     if (userEmail) userEmail.textContent = user.email;
   });
