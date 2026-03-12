@@ -361,7 +361,30 @@ END:VCALENDAR`;
   // 初期表示
   renderNextEvent();
 </script>
-  <footer>
+
+  </script>
+
+<!-- 🔥 ここに追加 -->
+<script type="module">
+
+import { listenEvents } from "./events-db.js";
+
+listenEvents((events)=>{
+
+  if(!events || !events.length) return;
+
+  events.sort((a,b)=> new Date(a.start) - new Date(b.start));
+
+  const next = events[0];
+
+  document.getElementById("nextDate").textContent = next.start;
+  document.getElementById("nextWhat").textContent = next.title;
+  document.getElementById("nextWhere").textContent = next.location;
+
+});
+
+</script>
+<footer>
 
 <script src="app.js"></script>
 
