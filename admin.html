@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>幹部ページ | D'104 Navi</title>
+  <link rel="stylesheet" href="styles.css?v=20" />
+</head>
+<body>
+  <header class="topbar" id="top">
+    <div class="brand">
+      <div class="brandIcon">📘</div>
+      <div class="brandText">
+        <div class="brandTitle">Club D'104</div>
+        <div class="brandSub">管理ページ</div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="heroInner">
+      <p class="heroEyebrow">Admin Page</p>
+      <h1 class="heroTitle">幹部ページ</h1>
+      <p class="heroLead">ログイン済みの幹部のみ表示されます。</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <section class="card">
+      <div class="cardHead">
+        <h2 class="cardTitle"><span class="badge">👤</span> user</h2>
+      </div>
+      <p>ログイン中: <strong id="userEmail">確認中...</strong></p>
+
+      <div class="actions">
+        <button class="btnGhost" onclick="logoutUser()">ログアウト</button>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import "./auth.js";
+    window.protectAdminPage();
+  </script>
+</body>
+</html>
