@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>幹部ページ | D'104 Navi</title>
-  <link rel="stylesheet" href="styles.css?v=20" />
+  <link rel="stylesheet" href="styles.css?v=21" />
 </head>
 <body>
   <header class="topbar" id="top">
@@ -26,84 +26,140 @@
   </section>
 
   <main class="container">
+
     <section class="card">
-  <div class="cardHead">
-    <h2 class="cardTitle"><span class="badge">📝</span> event editor</h2>
-  </div>
+      <div class="cardHead">
+        <h2 class="cardTitle"><span class="badge">👤</span> admin user</h2>
+      </div>
+      <p>ログイン中: <strong id="userEmail">確認中...</strong></p>
 
-  <div class="nextBox" style="gap:14px;">
-    <div>
-      <label class="k" for="eventTitle">予定タイトル</label>
-      <input id="eventTitle" type="text" placeholder="例：新歓ミーティング"
-        style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.12);font-size:14px;">
-    </div>
+      <div class="actions">
+        <button class="btnGhost" onclick="logoutUser()">ログアウト</button>
+      </div>
+    </section>
 
-    <div>
-      <label class="k" for="eventLocation">場所</label>
-      <input id="eventLocation" type="text" placeholder="例：BOX集合 or Zoom"
-        style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.12);font-size:14px;">
-    </div>
+    <section class="card">
+      <div class="cardHead">
+        <h2 class="cardTitle"><span class="badge">📝</span> event editor</h2>
+      </div>
 
-    <div>
-      <label class="k" for="eventStart">開始日時</label>
-      <input id="eventStart" type="datetime-local"
-        style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.12);font-size:14px;">
-    </div>
+      <div class="nextBox" style="gap:14px;">
+        <div>
+          <label class="k" for="eventTitle">予定タイトル</label>
+          <input id="eventTitle" type="text" placeholder="例：新歓ミーティング"
+            style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.12);font-size:14px;">
+        </div>
 
-    <div>
-      <label class="k" for="eventEnd">終了日時</label>
-      <input id="eventEnd" type="datetime-local"
-        style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.12);font-size:14px;">
-    </div>
-  </div>
+        <div>
+          <label class="k" for="eventLocation">場所</label>
+          <input id="eventLocation" type="text" placeholder="例：BOX集合 or Zoom"
+            style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.12);font-size:14px;">
+        </div>
 
-  <div class="actions">
-    <button class="btnPrimary" id="saveEventBtn" type="button">予定を追加</button>
-  </div>
+        <div>
+          <label class="k" for="eventStart">開始日時</label>
+          <input id="eventStart" type="datetime-local"
+            style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.12);font-size:14px;">
+        </div>
 
-  <p id="adminMessage" class="hint"></p>
-</section>
+        <div>
+          <label class="k" for="eventEnd">終了日時</label>
+          <input id="eventEnd" type="datetime-local"
+            style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.12);font-size:14px;">
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btnPrimary" id="saveEventBtn" type="button">予定を追加</button>
+      </div>
+
+      <p id="adminMessage" class="hint"></p>
+    </section>
+
+    <section class="card">
+      <div class="cardHead">
+        <h2 class="cardTitle"><span class="badge">📚</span> saved events</h2>
+      </div>
+
+      <div id="adminEventList">
+        <p class="hint">読み込み中...</p>
+      </div>
+    </section>
+
   </main>
 
- <script type="module">
-  import "./auth.js";
-  import { addEvent } from "./events-db.js";
+  <script type="module">
+    import "./auth.js";
+    import { addEvent, listenEvents } from "./events-db.js";
 
-  window.protectAdminPage();
+    window.protectAdminPage();
 
-  const saveEventBtn = document.getElementById("saveEventBtn");
-  const adminMessage = document.getElementById("adminMessage");
+    const saveEventBtn = document.getElementById("saveEventBtn");
+    const adminMessage = document.getElementById("adminMessage");
+    const adminEventList = document.getElementById("adminEventList");
 
-  saveEventBtn.addEventListener("click", () => {
-    const title = document.getElementById("eventTitle").value.trim();
-    const location = document.getElementById("eventLocation").value.trim();
-    const start = document.getElementById("eventStart").value;
-    const end = document.getElementById("eventEnd").value;
-
-    if (!title || !location || !start || !end) {
-      adminMessage.textContent = "すべて入力してください。";
-      return;
+    function formatDateJP(dateString) {
+      const date = new Date(dateString);
+      const week = ["日", "月", "火", "水", "木", "金", "土"];
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const weekday = week[date.getDay()];
+      const hour = String(date.getHours()).padStart(2, "0");
+      const minute = String(date.getMinutes()).padStart(2, "0");
+      return `${month}/${day} (${weekday}) ${hour}:${minute}`;
     }
 
-    if (new Date(end) <= new Date(start)) {
-      adminMessage.textContent = "終了日時は開始日時より後にしてください。";
-      return;
+    function renderAdminEvents(events) {
+      if (!events || !events.length) {
+        adminEventList.innerHTML = `<p class="hint">まだ予定はありません。</p>`;
+        return;
+      }
+
+      events.sort((a, b) => new Date(a.start) - new Date(b.start));
+
+      adminEventList.innerHTML = events.map(event => `
+        <div class="newsItem">
+          <span class="date">${formatDateJP(event.start)}</span>
+          <span class="dot" aria-hidden="true"></span>
+          <span class="text">${event.title} / ${event.location}</span>
+        </div>
+      `).join("");
     }
 
-    addEvent({
-      title,
-      location,
-      start,
-      end
+    saveEventBtn.addEventListener("click", () => {
+      const title = document.getElementById("eventTitle").value.trim();
+      const location = document.getElementById("eventLocation").value.trim();
+      const start = document.getElementById("eventStart").value;
+      const end = document.getElementById("eventEnd").value;
+
+      if (!title || !location || !start || !end) {
+        adminMessage.textContent = "すべて入力してください。";
+        return;
+      }
+
+      if (new Date(end) <= new Date(start)) {
+        adminMessage.textContent = "終了日時は開始日時より後にしてください。";
+        return;
+      }
+
+      addEvent({
+        title,
+        location,
+        start,
+        end
+      });
+
+      adminMessage.textContent = "予定を保存しました。";
+
+      document.getElementById("eventTitle").value = "";
+      document.getElementById("eventLocation").value = "";
+      document.getElementById("eventStart").value = "";
+      document.getElementById("eventEnd").value = "";
     });
 
-    adminMessage.textContent = "予定を保存しました。";
-
-    document.getElementById("eventTitle").value = "";
-    document.getElementById("eventLocation").value = "";
-    document.getElementById("eventStart").value = "";
-    document.getElementById("eventEnd").value = "";
-  });
-</script>
+    listenEvents((events) => {
+      renderAdminEvents(events);
+    });
+  </script>
 </body>
 </html>
