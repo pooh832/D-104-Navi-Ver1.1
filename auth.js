@@ -27,11 +27,18 @@ window.loginUser = async function () {
   const message = document.getElementById("message");
 
   try {
-    await signInWithEmailAndPassword(auth, email, password);
-    message.textContent = "ログイン成功";
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+    if (userCredential.user.email !== ADMIN_EMAIL) {
+      message.textContent = "このアカウントは管理者ではありません";
+      await signOut(auth);
+      return;
+    }
+
     location.href = "admin.html";
+
   } catch (error) {
-    message.textContent = "ログインに失敗しました: " + error.message;
+    message.textContent = "ログイン失敗: " + error.message;
   }
 };
 
