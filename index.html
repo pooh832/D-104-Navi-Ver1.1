@@ -82,7 +82,7 @@
 
      <div class="actions">
   <button class="btnPrimary" id="setNextBtn" type="button">
-    次回予定を仮登録
+    最新予定を表示
   </button>
   <button class="btnGhost" id="clearBtn" type="button">
     リセット
@@ -181,29 +181,22 @@
     if (el) el.textContent = `${mm}/${dd}`;
   })();
 
-  const setBtn = document.getElementById('setNextBtn');
   const clearBtn = document.getElementById('clearBtn');
   const addGoogleCalendarBtn = document.getElementById('addGoogleCalendarBtn');
   const downloadIcsBtn = document.getElementById('downloadIcsBtn');
 
-  // ===== 予定データ（今後はここを変えるだけでも運用可）=====
+  // DBから入る予定をここで保持
   let nextEvent = null;
 
-  // 例: 2026/3/12 18:30 - 20:00
-  function setNextDemo() {
-    nextEvent = {
-      title: '新歓ミーティング（役割確認）',
-      location: 'BOX集合 or Zoom',
-      start: new Date(2026, 2, 12, 18, 30), // 月は0始まり: 2 = 3月
-      end: new Date(2026, 2, 12, 20, 0)
-    };
+  function formatDateJP(date) {
+    const week = ['日', '月', '火', '水', '木', '金', '土'];
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const weekday = week[date.getDay()];
+    const hour = String(date.getHours()).padStart(2, '0');
+    const min = String(date.getMinutes()).padStart(2, '0');
 
-    renderNextEvent();
-  }
-
-  function clearNext() {
-    nextEvent = null;
-    renderNextEvent();
+    return `${month}/${day} (${weekday}) ${hour}:${min}`;
   }
 
   function renderNextEvent() {
@@ -226,18 +219,11 @@
     updateCountdown();
   }
 
-  function formatDateJP(date) {
-    const week = ['日', '月', '火', '水', '木', '金', '土'];
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const weekday = week[date.getDay()];
-    const hour = String(date.getHours()).padStart(2, '0');
-    const min = String(date.getMinutes()).padStart(2, '0');
-
-    return `${month}/${day} (${weekday}) ${hour}:${min}`;
+  function clearNext() {
+    nextEvent = null;
+    renderNextEvent();
   }
 
-  // ===== カウントダウン =====
   function updateCountdown() {
     const countdownEl = document.getElementById('countdown');
 
@@ -268,10 +254,8 @@
     }
   }
 
-  // 1分ごとに自動更新
   setInterval(updateCountdown, 60000);
 
-  // ===== Googleカレンダー追加 =====
   function formatGoogleCalendarDate(date) {
     const yyyy = date.getFullYear();
     const mm = String(date.getMonth() + 1).padStart(2, '0');
@@ -284,7 +268,7 @@
 
   function openGoogleCalendar() {
     if (!nextEvent) {
-      alert('先に次回予定を設定してください。');
+      alert('予定がありません。');
       return;
     }
 
@@ -303,7 +287,6 @@
     window.open(url, '_blank');
   }
 
-  // ===== iPhone / Appleカレンダー向け .ics ダウンロード =====
   function formatICSDate(date) {
     const yyyy = date.getFullYear();
     const mm = String(date.getMonth() + 1).padStart(2, '0');
@@ -316,7 +299,7 @@
 
   function downloadICS() {
     if (!nextEvent) {
-      alert('先に次回予定を設定してください。');
+      alert('予定がありません。');
       return;
     }
 
@@ -352,18 +335,18 @@ END:VCALENDAR`;
     URL.revokeObjectURL(url);
   }
 
-  // ===== イベント登録 =====
-  if (setBtn) setBtn.addEventListener('click', setNextDemo);
   if (clearBtn) clearBtn.addEventListener('click', clearNext);
   if (addGoogleCalendarBtn) addGoogleCalendarBtn.addEventListener('click', openGoogleCalendar);
   if (downloadIcsBtn) downloadIcsBtn.addEventListener('click', downloadICS);
 
-  // 初期表示
   renderNextEvent();
+
+  // module側から触れるようにする
+  window.setRealtimeNextEvent = function(event) {
+    nextEvent = event;
+    renderNextEvent();
+  };
 </script>
-
-  </script>
-
 <!-- 🔥 ここに追加 -->
 <script type="module">
 
@@ -386,21 +369,26 @@ listenEvents((events)=>{
 </script>
 <footer>
 
-<script src="app.js"></script>
-
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+  import { listenEvents } from "./events-db.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyAU_CjOafyVtoJK9t29b-reMlFuCvoB0nk",
-    authDomain: "d104-navi.firebaseapp.com",
-    projectId: "d104-navi",
-    storageBucket: "d104-navi.firebasestorage.app",
-    messagingSenderId: "967406609529",
-    appId: "1:967406609529:web:a6e7b06550f6071a33e0a8"
-  };
+  listenEvents((events) => {
+    if (!events || !events.length) {
+      window.setRealtimeNextEvent(null);
+      return;
+    }
 
-  const app = initializeApp(firebaseConfig);
+    events.sort((a, b) => new Date(a.start) - new Date(b.start));
+
+    const next = events[0];
+
+    window.setRealtimeNextEvent({
+      title: next.title,
+      location: next.location,
+      start: new Date(next.start),
+      end: new Date(next.end)
+    });
+  });
 </script>
 </body>
 </html>
