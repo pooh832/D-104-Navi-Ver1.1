@@ -27,39 +27,83 @@
 
   <main class="container">
     <section class="card">
-      <div class="cardHead">
-        <h2 class="cardTitle"><span class="badge">👤</span> user</h2>
-      </div>
-      <p>ログイン中: <strong id="userEmail">確認中...</strong></p>
+  <div class="cardHead">
+    <h2 class="cardTitle"><span class="badge">📝</span> event editor</h2>
+  </div>
 
-      <div class="actions">
-        <button class="btnGhost" onclick="logoutUser()">ログアウト</button>
-      </div>
-    </section>
+  <div class="nextBox" style="gap:14px;">
+    <div>
+      <label class="k" for="eventTitle">予定タイトル</label>
+      <input id="eventTitle" type="text" placeholder="例：新歓ミーティング"
+        style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.12);font-size:14px;">
+    </div>
+
+    <div>
+      <label class="k" for="eventLocation">場所</label>
+      <input id="eventLocation" type="text" placeholder="例：BOX集合 or Zoom"
+        style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.12);font-size:14px;">
+    </div>
+
+    <div>
+      <label class="k" for="eventStart">開始日時</label>
+      <input id="eventStart" type="datetime-local"
+        style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.12);font-size:14px;">
+    </div>
+
+    <div>
+      <label class="k" for="eventEnd">終了日時</label>
+      <input id="eventEnd" type="datetime-local"
+        style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.12);font-size:14px;">
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btnPrimary" id="saveEventBtn" type="button">予定を追加</button>
+  </div>
+
+  <p id="adminMessage" class="hint"></p>
+</section>
   </main>
 
  <script type="module">
+  import "./auth.js";
+  import { addEvent } from "./events-db.js";
 
-import "./auth.js";
-import { addEvent } from "./events-db.js";
+  window.protectAdminPage();
 
-window.protectAdminPage();
+  const saveEventBtn = document.getElementById("saveEventBtn");
+  const adminMessage = document.getElementById("adminMessage");
 
-const saveEventBtn = document.getElementById("saveEventBtn");
+  saveEventBtn.addEventListener("click", () => {
+    const title = document.getElementById("eventTitle").value.trim();
+    const location = document.getElementById("eventLocation").value.trim();
+    const start = document.getElementById("eventStart").value;
+    const end = document.getElementById("eventEnd").value;
 
-saveEventBtn.addEventListener("click", () => {
+    if (!title || !location || !start || !end) {
+      adminMessage.textContent = "すべて入力してください。";
+      return;
+    }
 
-  const event = {
-    title: document.getElementById("eventTitle").value,
-    location: document.getElementById("eventLocation").value,
-    start: document.getElementById("eventStart").value,
-    end: document.getElementById("eventEnd").value
-  };
+    if (new Date(end) <= new Date(start)) {
+      adminMessage.textContent = "終了日時は開始日時より後にしてください。";
+      return;
+    }
 
-  addEvent(event);
+    addEvent({
+      title,
+      location,
+      start,
+      end
+    });
 
-});
+    adminMessage.textContent = "予定を保存しました。";
 
+    document.getElementById("eventTitle").value = "";
+    document.getElementById("eventLocation").value = "";
+    document.getElementById("eventStart").value = "";
+    document.getElementById("eventEnd").value = "";
+  });
 </script>
 </body>
 </html>
