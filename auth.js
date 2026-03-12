@@ -1,4 +1,4 @@
-const ADMIN_EMAIL = "example@toyo.jp";
+const ADMIN_EMAIL = "s11502401307@toyo.jp";
 import { auth } from "./firebase-config.js";
 import {
   createUserWithEmailAndPassword,
