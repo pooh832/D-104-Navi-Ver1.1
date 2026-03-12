@@ -38,9 +38,28 @@
     </section>
   </main>
 
-  <script type="module">
-    import "./auth.js";
-    window.protectAdminPage();
-  </script>
+ <script type="module">
+
+import "./auth.js";
+import { addEvent } from "./events-db.js";
+
+window.protectAdminPage();
+
+const saveEventBtn = document.getElementById("saveEventBtn");
+
+saveEventBtn.addEventListener("click", () => {
+
+  const event = {
+    title: document.getElementById("eventTitle").value,
+    location: document.getElementById("eventLocation").value,
+    start: document.getElementById("eventStart").value,
+    end: document.getElementById("eventEnd").value
+  };
+
+  addEvent(event);
+
+});
+
+</script>
 </body>
 </html>
