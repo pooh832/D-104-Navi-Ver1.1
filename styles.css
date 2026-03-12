@@ -730,3 +730,11 @@ color:white;
 border-radius:20px;
 text-decoration:none;
 }
+
+.calendarItemCard{
+  margin-bottom:16px;
+}
+
+.calendarItemCard:last-child{
+  margin-bottom:0;
+}
