@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ログイン | D'104 Navi</title>
+  <link rel="stylesheet" href="styles.css?v=20" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brandIcon">📘</div>
+      <div class="brandText">
+        <div class="brandTitle">Club D'104</div>
+        <div class="brandSub">幹部ログイン</div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="heroInner">
+      <p class="heroEyebrow">Member Portal</p>
+      <h1 class="heroTitle">幹部ログイン</h1>
+      <p class="heroLead">管理ページに入るにはログインしてください。</p>
+    </div>
+  </section>
+
+  <main class="container" style="max-width:680px;">
+    <section class="card">
+      <div class="cardHead">
+        <h2 class="cardTitle"><span class="badge">🔐</span> login</h2>
+      </div>
+
+      <div class="nextBox" style="gap:14px;">
+        <div>
+          <label class="k" for="email">メールアドレス</label>
+          <input id="email" type="email" placeholder="example@gmail.com"
+            style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.12);font-size:14px;">
+        </div>
+
+        <div>
+          <label class="k" for="password">パスワード</label>
+          <input id="password" type="password" placeholder="••••••••"
+            style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.12);font-size:14px;">
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btnPrimary" onclick="loginUser()">ログイン</button>
+        <button class="btnGhost" onclick="registerUser()">新規登録</button>
+      </div>
+
+      <p id="message" class="hint"></p>
+    </section>
+  </main>
+
+  <script type="module" src="auth.js"></script>
+</body>
+</html>
