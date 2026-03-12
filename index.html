@@ -80,17 +80,20 @@
         </div>
       </div>
 
-      <div class="actions">
-       <button class="btnPrimary" id="setNextBtn" type="button">
-        次回予定を仮登録
-　　    </button>
-       <button class="btnGhost" id="clearBtn" type="button">
-       リセット
-       </button>
-       <button class="btnGhost" id="addCalendarBtn" type="button">
-         カレンダーに追加
-       </button>
-      </div>
+     <div class="actions">
+  <button class="btnPrimary" id="setNextBtn" type="button">
+    次回予定を仮登録
+  </button>
+  <button class="btnGhost" id="clearBtn" type="button">
+    リセット
+  </button>
+  <button class="btnGhost" id="addGoogleCalendarBtn" type="button">
+    Googleカレンダー
+  </button>
+  <button class="btnGhost" id="downloadIcsBtn" type="button">
+    iPhoneカレンダー
+  </button>
+</div>
 
       <p class="hint">※のちほどカレンダー連携に置き換えます（いまは仮の表示です）</p>
     </section>
@@ -169,58 +172,194 @@
 
   <!-- ✅ JSは任意：ボタン動作と日付表示だけ（使わなくても表示は崩れません） -->
   <script>
-  // Today
+  // ===== 今日の日付表示 =====
   (function(){
     const d = new Date();
-    const mm = String(d.getMonth()+1).padStart(2,'0');
-    const dd = String(d.getDate()).padStart(2,'0');
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
     const el = document.getElementById('today');
-    if(el) el.textContent = `${mm}/${dd}`;
+    if (el) el.textContent = `${mm}/${dd}`;
   })();
 
   const setBtn = document.getElementById('setNextBtn');
   const clearBtn = document.getElementById('clearBtn');
-  const addCalendarBtn = document.getElementById('addCalendarBtn');
+  const addGoogleCalendarBtn = document.getElementById('addGoogleCalendarBtn');
+  const downloadIcsBtn = document.getElementById('downloadIcsBtn');
 
-  function setNextDemo(){
-    document.getElementById('nextDate').textContent = '3/12 (木) 18:30';
-    document.getElementById('nextWhat').textContent = '新歓ミーティング（役割確認）';
-    document.getElementById('nextWhere').textContent = 'BOX集合or Zoom';
-    document.getElementById('countdown').textContent = 'あと8日';
+  // ===== 予定データ（今後はここを変えるだけでも運用可）=====
+  let nextEvent = null;
+
+  // 例: 2026/3/12 18:30 - 20:00
+  function setNextDemo() {
+    nextEvent = {
+      title: '新歓ミーティング（役割確認）',
+      location: 'BOX集合 or Zoom',
+      start: new Date(2026, 2, 12, 18, 30), // 月は0始まり: 2 = 3月
+      end: new Date(2026, 2, 12, 20, 0)
+    };
+
+    renderNextEvent();
   }
 
-  function clearNext(){
-    document.getElementById('nextDate').textContent = '未設定';
-    document.getElementById('nextWhat').textContent = '未設定';
-    document.getElementById('nextWhere').textContent = '未設定';
-    document.getElementById('countdown').textContent = '未設定';
+  function clearNext() {
+    nextEvent = null;
+    renderNextEvent();
   }
 
-  function addToCalendar() {
+  function renderNextEvent() {
+    const nextDateEl = document.getElementById('nextDate');
+    const nextWhatEl = document.getElementById('nextWhat');
+    const nextWhereEl = document.getElementById('nextWhere');
+    const countdownEl = document.getElementById('countdown');
 
-    const title = document.getElementById('nextWhat').textContent;
-    const location = document.getElementById('nextWhere').textContent;
-
-    if(title === '未設定'){
-      alert('先に次回予定を設定してください');
+    if (!nextEvent) {
+      nextDateEl.textContent = '未設定';
+      nextWhatEl.textContent = '未設定';
+      nextWhereEl.textContent = '未設定';
+      countdownEl.textContent = '未設定';
       return;
     }
 
-    const start = '20260312T183000';
-    const end = '20260312T200000';
-
-    const url =
-      "https://calendar.google.com/calendar/render?action=TEMPLATE" +
-      "&text=" + encodeURIComponent(title) +
-      "&dates=" + start + "/" + end +
-      "&location=" + encodeURIComponent(location);
-
-    window.open(url, "_blank");
+    nextDateEl.textContent = formatDateJP(nextEvent.start);
+    nextWhatEl.textContent = nextEvent.title;
+    nextWhereEl.textContent = nextEvent.location;
+    updateCountdown();
   }
 
-  if(setBtn) setBtn.addEventListener('click', setNextDemo);
-  if(clearBtn) clearBtn.addEventListener('click', clearNext);
-  if(addCalendarBtn) addCalendarBtn.addEventListener('click', addToCalendar);
+  function formatDateJP(date) {
+    const week = ['日', '月', '火', '水', '木', '金', '土'];
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const weekday = week[date.getDay()];
+    const hour = String(date.getHours()).padStart(2, '0');
+    const min = String(date.getMinutes()).padStart(2, '0');
+
+    return `${month}/${day} (${weekday}) ${hour}:${min}`;
+  }
+
+  // ===== カウントダウン =====
+  function updateCountdown() {
+    const countdownEl = document.getElementById('countdown');
+
+    if (!nextEvent) {
+      countdownEl.textContent = '未設定';
+      return;
+    }
+
+    const now = new Date();
+    const diff = nextEvent.start - now;
+
+    if (diff <= 0) {
+      countdownEl.textContent = '開催中 / 開催済み';
+      return;
+    }
+
+    const totalMinutes = Math.floor(diff / (1000 * 60));
+    const days = Math.floor(totalMinutes / (60 * 24));
+    const hours = Math.floor((totalMinutes % (60 * 24)) / 60);
+    const minutes = totalMinutes % 60;
+
+    if (days > 0) {
+      countdownEl.textContent = `あと${days}日 ${hours}時間`;
+    } else if (hours > 0) {
+      countdownEl.textContent = `あと${hours}時間 ${minutes}分`;
+    } else {
+      countdownEl.textContent = `あと${minutes}分`;
+    }
+  }
+
+  // 1分ごとに自動更新
+  setInterval(updateCountdown, 60000);
+
+  // ===== Googleカレンダー追加 =====
+  function formatGoogleCalendarDate(date) {
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    const hh = String(date.getHours()).padStart(2, '0');
+    const min = String(date.getMinutes()).padStart(2, '0');
+    const ss = '00';
+    return `${yyyy}${mm}${dd}T${hh}${min}${ss}`;
+  }
+
+  function openGoogleCalendar() {
+    if (!nextEvent) {
+      alert('先に次回予定を設定してください。');
+      return;
+    }
+
+    const start = formatGoogleCalendarDate(nextEvent.start);
+    const end = formatGoogleCalendarDate(nextEvent.end);
+
+    const details = "D'104 Naviから追加した活動予定です。";
+
+    const url =
+      'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+      '&text=' + encodeURIComponent(nextEvent.title) +
+      '&dates=' + encodeURIComponent(`${start}/${end}`) +
+      '&location=' + encodeURIComponent(nextEvent.location) +
+      '&details=' + encodeURIComponent(details);
+
+    window.open(url, '_blank');
+  }
+
+  // ===== iPhone / Appleカレンダー向け .ics ダウンロード =====
+  function formatICSDate(date) {
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    const hh = String(date.getHours()).padStart(2, '0');
+    const min = String(date.getMinutes()).padStart(2, '0');
+    const ss = '00';
+    return `${yyyy}${mm}${dd}T${hh}${min}${ss}`;
+  }
+
+  function downloadICS() {
+    if (!nextEvent) {
+      alert('先に次回予定を設定してください。');
+      return;
+    }
+
+    const uid = `d104-${Date.now()}@d104navi`;
+    const dtStamp = formatICSDate(new Date());
+    const dtStart = formatICSDate(nextEvent.start);
+    const dtEnd = formatICSDate(nextEvent.end);
+
+    const icsContent =
+`BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//D104 Navi//JP
+BEGIN:VEVENT
+UID:${uid}
+DTSTAMP:${dtStamp}
+DTSTART:${dtStart}
+DTEND:${dtEnd}
+SUMMARY:${nextEvent.title}
+LOCATION:${nextEvent.location}
+DESCRIPTION:D'104 Naviから追加した活動予定です。
+END:VEVENT
+END:VCALENDAR`;
+
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'd104-event.ics';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  // ===== イベント登録 =====
+  if (setBtn) setBtn.addEventListener('click', setNextDemo);
+  if (clearBtn) clearBtn.addEventListener('click', clearNext);
+  if (addGoogleCalendarBtn) addGoogleCalendarBtn.addEventListener('click', openGoogleCalendar);
+  if (downloadIcsBtn) downloadIcsBtn.addEventListener('click', downloadICS);
+
+  // 初期表示
+  renderNextEvent();
 </script>
   <footer>
 
