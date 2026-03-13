@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FAQ | D'104 Navi</title>
+  <link rel="stylesheet" href="styles.css?v=50" />
+</head>
+<body>
+  <header class="topbar" id="top">
+    <div class="brand">
+      <div class="brandIcon" aria-hidden="true">📘</div>
+      <div class="brandText">
+        <div class="brandTitle">Club D'104</div>
+        <div class="brandSub">よくある質問</div>
+      </div>
+    </div>
+
+    <nav class="topNav" aria-label="ページ内ナビゲーション">
+      <a href="index.html" class="navLink">Home</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="heroInner">
+      <p class="heroEyebrow">FAQ</p>
+      <h1 class="heroTitle">よくある質問</h1>
+      <p class="heroLead">寄せられた質問と回答をまとめています。</p>
+    </div>
+  </section>
+
+  <main class="container" style="max-width: 900px;">
+    <section class="card">
+      <div class="cardHead">
+        <h2 class="cardTitle"><span class="badge">💬</span> questions & answers</h2>
+      </div>
+
+      <div id="faqList">
+        <p class="hint">FAQを読み込み中...</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <a class="toTop" href="index.html">← TOPへ戻る</a>
+    <small>© Circle Hub</small>
+  </footer>
+
+  <script type="module">
+    import { listenQuestions } from "./questions-db.js";
+
+    const faqList = document.getElementById("faqList");
+
+    function escapeHtml(str) {
+      return String(str ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function renderFaq(questions) {
+      const answered = (questions || [])
+        .filter(q => q.answer && q.answer.trim() !== "")
+        .sort((a, b) => new Date(b.answeredAt || b.createdAt) - new Date(a.answeredAt || a.createdAt));
+
+      if (!answered.length) {
+        faqList.innerHTML = `<p class="hint">公開されているFAQはまだありません。</p>`;
+        return;
+      }
+
+      faqList.innerHTML = answered.map(q => `
+        <div class="card" style="margin-bottom:16px;">
+          <div class="cardHead">
+            <h3 class="cardTitle">
+              <span class="badge">Q</span>
+              ${escapeHtml(q.category || "未分類")}
+            </h3>
+          </div>
+
+          <p style="font-weight:800; margin-bottom:12px;">${escapeHtml(q.text || "")}</p>
+
+          <div class="nextBox">
+            <div class="kv" style="grid-template-columns:40px 1fr;">
+              <div class="k" style="font-size:16px;">A</div>
+              <div class="v">${escapeHtml(q.answer || "")}</div>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    listenQuestions((questions) => {
+      renderFaq(questions);
+    });
+  </script>
+</body>
+</html>
