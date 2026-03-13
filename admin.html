@@ -99,8 +99,11 @@
   </main>
 
   <script type="module">
-    import "./auth.js";
-    import { addEvent, listenEvents } from "./events-db.js";
+  import "./auth.js";
+  import { addEvent, listenEvents } from "./events-db.js";
+  import { listenQuestions, answerQuestion } from "./questions-db.js";
+
+
 
     window.protectAdminPage();
 
@@ -124,6 +127,86 @@
         adminEventList.innerHTML = `<p class="hint">まだ予定はありません。</p>`;
         return;
       }
+
+          function escapeHtml(str) {
+      return String(str ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function formatQuestionDate(dateString) {
+      const date = new Date(dateString);
+      const yyyy = date.getFullYear();
+      const mm = String(date.getMonth() + 1).padStart(2, "0");
+      const dd = String(date.getDate()).padStart(2, "0");
+      const hh = String(date.getHours()).padStart(2, "0");
+      const min = String(date.getMinutes()).padStart(2, "0");
+      return `${yyyy}/${mm}/${dd} ${hh}:${min}`;
+    }
+
+    function renderQuestions(questions) {
+      const adminQuestionList = document.getElementById("adminQuestionList");
+
+      if (!questions || !questions.length) {
+        adminQuestionList.innerHTML = `<p class="hint">まだ質問はありません。</p>`;
+        return;
+      }
+
+      questions.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+      adminQuestionList.innerHTML = questions.map(q => `
+        <div class="card" style="margin-bottom:16px;">
+          <div class="cardHead">
+            <h3 class="cardTitle">
+              <span class="badge">?</span>
+              ${escapeHtml(q.category || "未分類")}
+            </h3>
+          </div>
+
+          <p class="hint">送信者：${escapeHtml(q.name || "匿名")} / ${formatQuestionDate(q.createdAt)}</p>
+          <p style="margin-top:10px; font-weight:700;">${escapeHtml(q.text || "")}</p>
+
+          <div style="margin-top:14px;">
+            <label class="k" for="answer-${q.id}">回答</label>
+            <textarea
+              id="answer-${q.id}"
+              rows="4"
+              style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.12);font-size:14px;resize:vertical;"
+              placeholder="回答を入力してください"
+            >${escapeHtml(q.answer || "")}</textarea>
+          </div>
+
+          <div class="actions" style="margin-top:12px;">
+            <button class="btnPrimary answer-btn" data-id="${q.id}" type="button">回答を保存</button>
+          </div>
+
+          ${
+            q.answer
+              ? `<p class="hint">公開中の回答あり</p>`
+              : `<p class="hint">未回答</p>`
+          }
+        </div>
+      `).join("");
+
+      document.querySelectorAll(".answer-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.dataset.id;
+          const textarea = document.getElementById(`answer-${id}`);
+          const answer = textarea.value.trim();
+
+          if (!answer) {
+            alert("回答を入力してください。");
+            return;
+          }
+
+          answerQuestion(id, answer);
+          alert("回答を保存しました。");
+        });
+      });
+    }
 
       events.sort((a, b) => new Date(a.start) - new Date(b.start));
 
@@ -169,6 +252,10 @@
 
     listenEvents((events) => {
       renderAdminEvents(events);
+    });
+
+    listenQuestions((questions) => {
+      renderQuestions(questions);
     });
   </script>
 </body>
