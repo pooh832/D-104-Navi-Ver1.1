@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>質問する | D'104 Navi</title>
+  <link rel="stylesheet" href="styles.css?v=40" />
+</head>
+<body>
+  <header class="topbar" id="top">
+    <div class="brand">
+      <div class="brandIcon" aria-hidden="true">📘</div>
+      <div class="brandText">
+        <div class="brandTitle">Club D'104</div>
+        <div class="brandSub">質問フォーム</div>
+      </div>
+    </div>
+
+    <nav class="topNav" aria-label="ページ内ナビゲーション">
+      <a href="index.html" class="navLink">Home</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="heroInner">
+      <p class="heroEyebrow">Question Form</p>
+      <h1 class="heroTitle">質問する</h1>
+      <p class="heroLead">気になることがあれば、ここから送信してください。</p>
+    </div>
+  </section>
+
+  <main class="container" style="max-width: 760px;">
+    <section class="card">
+      <div class="cardHead">
+        <h2 class="cardTitle"><span class="badge">❓</span> question</h2>
+      </div>
+
+      <div class="nextBox" style="gap:14px;">
+        <div>
+          <label class="k" for="questionName">名前（任意）</label>
+          <input id="questionName" type="text" placeholder="例：山田"
+            style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.12);font-size:14px;">
+        </div>
+
+        <div>
+          <label class="k" for="questionCategory">カテゴリ</label>
+          <select id="questionCategory"
+            style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.12);font-size:14px;">
+            <option value="">選択してください</option>
+            <option value="活動">活動について</option>
+            <option value="入会">入会について</option>
+            <option value="部室">部室について</option>
+            <option value="その他">その他</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="k" for="questionText">質問内容</label>
+          <textarea id="questionText" rows="6" placeholder="質問を入力してください"
+            style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.12);font-size:14px;resize:vertical;"></textarea>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btnPrimary" id="sendQuestionBtn" type="button">送信する</button>
+      </div>
+
+      <p id="questionMessage" class="hint"></p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <a class="toTop" href="index.html">← TOPへ戻る</a>
+    <small>© Circle Hub</small>
+  </footer>
+
+  <script type="module">
+    import { addQuestion } from "./questions-db.js";
+
+    const sendQuestionBtn = document.getElementById("sendQuestionBtn");
+    const message = document.getElementById("questionMessage");
+
+    sendQuestionBtn.addEventListener("click", () => {
+      const name = document.getElementById("questionName").value.trim();
+      const category = document.getElementById("questionCategory").value;
+      const text = document.getElementById("questionText").value.trim();
+
+      if (!category || !text) {
+        message.textContent = "カテゴリと質問内容を入力してください。";
+        return;
+      }
+
+      addQuestion({
+        name: name || "匿名",
+        category,
+        text,
+        createdAt: new Date().toISOString()
+      });
+
+      message.textContent = "質問を送信しました。";
+
+      document.getElementById("questionName").value = "";
+      document.getElementById("questionCategory").value = "";
+      document.getElementById("questionText").value = "";
+    });
+  </script>
+</body>
+</html>
