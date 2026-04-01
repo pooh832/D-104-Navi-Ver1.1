@@ -539,7 +539,11 @@ END:VCALENDAR`;
 
   const values = {};
   parts.forEach(part => {
-    if (part.type === "hour" || part.type === "minute" || part.type === "second") {
+    if (
+      part.type === "hour" ||
+      part.type === "minute" ||
+      part.type === "second"
+    ) {
       values[part.type] = part.value;
     }
   });
@@ -555,9 +559,13 @@ END:VCALENDAR`;
 }
 
 function setFlipCardValue(card, value, animate = false) {
+  if (!card) return;
+
   const top = card.querySelector(".flipTop");
   const bottom = card.querySelector(".flipBottom");
   const topNext = card.querySelector(".flipTopNext");
+
+  if (!top || !bottom || !topNext) return;
 
   const currentValue = top.dataset.value || "--";
   if (currentValue === value) return;
@@ -583,29 +591,31 @@ function setFlipCardValue(card, value, animate = false) {
 }
 
 function updateWorldDisneyTimes() {
-  const clocks = document.querySelectorAll(".flipClock");
+  const clocks = document.querySelectorAll(".compactFlipClock");
 
   clocks.forEach(clock => {
     const zone = clock.dataset.zone;
+    if (!zone) return;
+
     const parts = getTimeParts(zone);
 
     const hourCard = clock.querySelector('[data-unit="hour"]');
     const minuteCard = clock.querySelector('[data-unit="minute"]');
     const secondCard = clock.querySelector('[data-unit="second"]');
 
-    const currentHour = hourCard.querySelector(".flipTop")?.dataset.value;
-    const currentMinute = minuteCard.querySelector(".flipTop")?.dataset.value;
-    const currentSecond = secondCard.querySelector(".flipTop")?.dataset.value;
+    const currentHour = hourCard?.querySelector(".flipTop")?.dataset.value;
+    const currentMinute = minuteCard?.querySelector(".flipTop")?.dataset.value;
+    const currentSecond = secondCard?.querySelector(".flipTop")?.dataset.value;
 
     setFlipCardValue(hourCard, parts.hour, currentHour !== undefined);
     setFlipCardValue(minuteCard, parts.minute, currentMinute !== undefined);
     setFlipCardValue(secondCard, parts.second, currentSecond !== undefined);
 
     const row = clock.closest(".worldClockRow");
-if (row) {
-  const isNight = parts.hourNumber >= 18 || parts.hourNumber < 6;
-  row.classList.toggle("isNight", isNight);
-}
+    if (row) {
+      const isNight = parts.hourNumber >= 18 || parts.hourNumber < 6;
+      row.classList.toggle("isNight", isNight);
+    }
   });
 }
 
