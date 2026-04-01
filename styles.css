@@ -1068,3 +1068,39 @@ text-decoration:none;
     min-width:auto;
   }
 }
+/* ===== World clock one-line override ===== */
+
+.compactFlipCard,
+.compactSecondCard{
+  overflow: hidden;
+}
+
+.compactFlipCard .flipTop,
+.compactSecondCard .flipTop{
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 12px !important;
+}
+
+.compactFlipCard .flipBottom,
+.compactFlipCard .flipTopNext,
+.compactSecondCard .flipBottom,
+.compactSecondCard .flipTopNext{
+  display: none !important;
+}
+
+.compactFlipCard .flipTop span,
+.compactSecondCard .flipTop span{
+  transform: none !important;
+  font-size: 18px !important;
+  line-height: 1 !important;
+}
+
+.compactSecondCard .flipTop span{
+  font-size: 14px !important;
+}
