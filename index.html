@@ -564,6 +564,39 @@ END:VCALENDAR`;
       renderSelectedDay();
     });
   </script>
+
+  <script type="module">
+  import { db } from "./firebase-config.js";
+  import { ref, get, set } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-database.js";
+
+  const disneyRef = ref(db, "disneyEvents");
+
+  get(disneyRef).then((snapshot) => {
+    if (!snapshot.exists()) {
+      set(disneyRef, {
+        event1: {
+          title: "東京ディズニーシー 25周年開始",
+          date: "2026-04-08",
+          type: "resort",
+          link: "https://www.tokyodisneyresort.jp/",
+          note: "イベント開始日"
+        },
+        event2: {
+          title: "ミッキー スクリーンデビュー日",
+          date: "2026-11-18",
+          type: "character",
+          link: "https://www.disney.co.jp/",
+          note: "スクリーンデビュー記念日"
+        }
+      });
+      console.log("disneyEvents を作成しました");
+    } else {
+      console.log("disneyEvents はすでに存在します");
+    }
+  }).catch((error) => {
+    console.error("disneyEvents 作成エラー:", error);
+  });
+</script>
 </body>
 </html>
 
