@@ -806,15 +806,7 @@ setInterval(updateWorldDisneyTimes, 1000);
   });
 }
 
-      const next = upcoming[0];
-
-      window.setRealtimeNextEvent({
-        title: next.title,
-        location: next.location,
-        start: new Date(next.start),
-        end: new Date(next.end)
-      });
-    }
+      
 
     prevMonthBtn.addEventListener("click", () => {
       currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
