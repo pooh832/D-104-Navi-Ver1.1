@@ -526,48 +526,78 @@ END:VCALENDAR`;
       renderNextEvent();
     };
 
-    // ① 時刻フォーマット
-function formatWorldTime(timeZone) {
-  return new Intl.DateTimeFormat("ja-JP", {
+    function getTimeParts(timeZone) {
+  const parts = new Intl.DateTimeFormat("ja-JP", {
     timeZone,
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
     hour12: false
-  }).format(new Date());
+  }).formatToParts(new Date());
+
+  const values = {};
+  parts.forEach(part => {
+    if (part.type === "hour" || part.type === "minute" || part.type === "second") {
+      values[part.type] = part.value;
+    }
+  });
+
+  return values;
 }
 
-// ② 更新関数（←これをここに置く）
+function setFlipCardValue(card, value, animate = false) {
+  const top = card.querySelector(".flipTop");
+  const bottom = card.querySelector(".flipBottom");
+  const topNext = card.querySelector(".flipTopNext");
+
+  const currentValue = top.dataset.value || "--";
+
+  if (currentValue === value) return;
+
+  topNext.innerHTML = `<span>${value}</span>`;
+
+  if (animate) {
+    card.classList.remove("is-flipping");
+    void card.offsetWidth;
+    card.classList.add("is-flipping");
+
+    setTimeout(() => {
+      top.innerHTML = `<span>${value}</span>`;
+      bottom.innerHTML = `<span>${value}</span>`;
+      top.dataset.value = value;
+      card.classList.remove("is-flipping");
+    }, 480);
+  } else {
+    top.innerHTML = `<span>${value}</span>`;
+    bottom.innerHTML = `<span>${value}</span>`;
+    top.dataset.value = value;
+  }
+}
+
 function updateWorldDisneyTimes() {
-  const clocks = [
-    { id: "timeTokyo", zone: "Asia/Tokyo" },
-    { id: "timeAnaheim", zone: "America/Los_Angeles" },
-    { id: "timeOrlando", zone: "America/New_York" },
-    { id: "timeParis", zone: "Europe/Paris" },
-    { id: "timeHongKong", zone: "Asia/Hong_Kong" },
-    { id: "timeShanghai", zone: "Asia/Shanghai" }
-  ];
+  const clocks = document.querySelectorAll(".flipClock");
 
   clocks.forEach(clock => {
-    const el = document.getElementById(clock.id);
-    if (!el) return;
+    const zone = clock.dataset.zone;
+    const parts = getTimeParts(zone);
 
-    const newTime = formatWorldTime(clock.zone);
+    const hourCard = clock.querySelector('[data-unit="hour"]');
+    const minuteCard = clock.querySelector('[data-unit="minute"]');
+    const secondCard = clock.querySelector('[data-unit="second"]');
 
-    if (el.textContent !== newTime) {
-      el.classList.remove("timeFlip");
-      void el.offsetWidth;
-      el.textContent = newTime;
-      el.classList.add("timeFlip");
-    }
+    const currentHour = hourCard.querySelector(".flipTop")?.dataset.value;
+    const currentMinute = minuteCard.querySelector(".flipTop")?.dataset.value;
+    const currentSecond = secondCard.querySelector(".flipTop")?.dataset.value;
+
+    setFlipCardValue(hourCard, parts.hour, currentHour !== undefined);
+    setFlipCardValue(minuteCard, parts.minute, currentMinute !== undefined);
+    setFlipCardValue(secondCard, parts.second, currentSecond !== undefined);
   });
 }
 
-// ③ 初回実行
 updateWorldDisneyTimes();
-
-// ④ 1秒ごと更新
 setInterval(updateWorldDisneyTimes, 1000);
+  
   </script>
 
   <script type="module">
