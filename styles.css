@@ -874,4 +874,16 @@ text-decoration:none;
   .calendarDate{
     font-size:12px;
   }
+
+  /* Disneyイベントの日 */
+
+.calendarCell.disney {
+  border: 2px solid #ff6b81;
+}
+
+/* キャラ誕生日 */
+
+.calendarCell.character {
+  border: 2px solid #ffd93d;
+}
 }
