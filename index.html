@@ -625,223 +625,236 @@ setInterval(updateWorldDisneyTimes, 1000);
   </script>
 
   <script type="module">
-    import { listenEvents } from "./events-db.js";
-    import { listenDisneyEvents } from "./disney-events-db.js";
+  import { listenEvents } from "./events-db.js";
+  import { listenDisneyEvents } from "./disney-events-db.js";
 
-    let currentDate = new Date();
-    let selectedDateKey = null;
-    let allEvents = [];
-    let allDisneyEvents = [];
+  let currentDate = new Date();
+  let selectedDateKey = null;
+  let allEvents = [];
+  let allDisneyEvents = [];
 
-    const monthLabel = document.getElementById("calendarMonthLabel");
-    const grid = document.getElementById("miniCalendarGrid");
-    const selectedDateLabel = document.getElementById("selectedDateLabel");
-    const selectedDayEvents = document.getElementById("selectedDayEvents");
-    const prevMonthBtn = document.getElementById("prevMonthBtn");
-    const nextMonthBtn = document.getElementById("nextMonthBtn");
+  const monthLabel = document.getElementById("calendarMonthLabel");
+  const grid = document.getElementById("miniCalendarGrid");
+  const selectedDateLabel = document.getElementById("selectedDateLabel");
+  const selectedDayEvents = document.getElementById("selectedDayEvents");
+  const prevMonthBtn = document.getElementById("prevMonthBtn");
+  const nextMonthBtn = document.getElementById("nextMonthBtn");
 
-    function formatDateKey(date) {
-      const yyyy = date.getFullYear();
-      const mm = String(date.getMonth() + 1).padStart(2, "0");
-      const dd = String(date.getDate()).padStart(2, "0");
-      return `${yyyy}-${mm}-${dd}`;
-    }
-
-    function formatDateJP(date) {
-      const week = ["日", "月", "火", "水", "木", "金", "土"];
-      const month = date.getMonth() + 1;
-      const day = date.getDate();
-      const weekday = week[date.getDay()];
-      return `${month}/${day} (${weekday})`;
-    }
-
-    function formatTimeJP(dateString) {
-      const date = new Date(dateString);
-      const hh = String(date.getHours()).padStart(2, "0");
-      const mm = String(date.getMinutes()).padStart(2, "0");
-      return `${hh}:${mm}`;
-    }
-
-    function getEventsByDateKey(dateKey) {
-      return allEvents
-        .filter(event => {
-          const eventDate = new Date(event.start);
-          return formatDateKey(eventDate) === dateKey;
-        })
-        .sort((a, b) => new Date(a.start) - new Date(b.start));
-    }
-
-    function getDisneyEventsByDateKey(dateKey) {
-  return allDisneyEvents.filter(event => String(event.date || "").trim() === dateKey);
-}
-
-    function renderSelectedDay() {
-      if (!selectedDateKey) {
-        selectedDateLabel.textContent = "日付を選ぶと予定が表示されます。";
-        selectedDayEvents.innerHTML = `<p class="hint">この日の予定はありません。</p>`;
-        return;
-      }
-
-      const selectedDate = new Date(selectedDateKey);
-      selectedDateLabel.textContent = formatDateJP(selectedDate);
-
-      const dayEvents = getEventsByDateKey(selectedDateKey);
-      const disneyEvents = getDisneyEventsByDateKey(selectedDateKey);
-
-      if (!dayEvents.length && !disneyEvents.length) {
-        selectedDayEvents.innerHTML = `<p class="hint">この日の予定はありません。</p>`;
-        return;
-      }
-
-      const clubHtml = dayEvents.map(event => `
-        <div class="dayEventItem">
-          <div class="dayEventTitle">${event.title}</div>
-          <div class="dayEventMeta">
-            ${formatTimeJP(event.start)}〜${formatTimeJP(event.end)} / ${event.location}
-          </div>
-        </div>
-      `).join("");
-
-      const disneyHtml = disneyEvents.map(event => `
-        <div class="dayEventItem">
-          <div class="dayEventTitle">🏰🌏 ${event.title}</div>
-          <div class="dayEventMeta">
-            ${event.note || ""}
-            ${event.link ? ` / <a href="${event.link}" target="_blank" rel="noopener noreferrer">詳細</a>` : ""}
-          </div>
-        </div>
-      `).join("");
-
-      selectedDayEvents.innerHTML = clubHtml + disneyHtml;
-    }
-
-    function renderCalendar() {
-      const year = currentDate.getFullYear();
-      const month = currentDate.getMonth();
-
-      monthLabel.textContent = `${year}年${month + 1}月`;
-      grid.innerHTML = "";
-
-      const firstDay = new Date(year, month, 1);
-      const startWeekday = firstDay.getDay();
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-      const today = new Date();
-      const todayKey = formatDateKey(today);
-
-      for (let i = 0; i < startWeekday; i++) {
-        const emptyCell = document.createElement("div");
-        emptyCell.className = "calendarCell isMuted";
-        grid.appendChild(emptyCell);
-      }
-
-      for (let day = 1; day <= daysInMonth; day++) {
-        const cellDate = new Date(year, month, day);
-        const dateKey = formatDateKey(cellDate);
-
-        const dayEvents = getEventsByDateKey(dateKey);
-        const disneyEvents = getDisneyEventsByDateKey(dateKey);
-
-        const cell = document.createElement("button");
-        cell.type = "button";
-        cell.className = "calendarCell";
-
-        if (dateKey === todayKey) cell.classList.add("isToday");
-        if (selectedDateKey === dateKey) cell.classList.add("isSelected");
-        if (dayEvents.length || disneyEvents.length) cell.classList.add("hasEvent");
-
-        let dotsHtml = "";
-
-        if (dayEvents.length) {
-          dotsHtml += `<span class="calendarDot club"></span>`;
-        }
-
-        if (disneyEvents.some(event => event.type === "resort")) {
-          dotsHtml += `<span class="calendarDot disney"></span>`;
-        }
-
-        if (disneyEvents.some(event => event.type === "character")) {
-          dotsHtml += `<span class="calendarDot character"></span>`;
-        }
-
-        cell.innerHTML = `
-          <div class="calendarDate">${day}</div>
-          <div class="calendarDots">${dotsHtml}</div>
-        `;
-
-        cell.addEventListener("click", () => {
-          selectedDateKey = dateKey;
-          renderCalendar();
-          renderSelectedDay();
-        });
-
-        grid.appendChild(cell);
-      }
-    }
-
-    function updateNextEventFromDB(events) {
-  if (!events || !events.length) {
-    window.setRealtimeNextEvent(null);
-    return;
+  function formatDateKey(date) {
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, "0");
+    const dd = String(date.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
   }
 
-  const now = new Date();
-
-  const upcoming = events
-    .filter(event => event && event.start && event.end && new Date(event.end) >= now)
-    .sort((a, b) => new Date(a.start) - new Date(b.start));
-
-  if (!upcoming.length) {
-    window.setRealtimeNextEvent(null);
-    return;
+  function formatDateJP(date) {
+    const week = ["日", "月", "火", "水", "木", "金", "土"];
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const weekday = week[date.getDay()];
+    return `${month}/${day} (${weekday})`;
   }
 
-  const next = upcoming[0];
+  function formatTimeJP(dateString) {
+    const date = new Date(dateString);
+    const hh = String(date.getHours()).padStart(2, "0");
+    const mm = String(date.getMinutes()).padStart(2, "0");
+    return `${hh}:${mm}`;
+  }
 
-  window.setRealtimeNextEvent({
-    title: next.title,
-    location: next.location,
-    start: new Date(next.start),
-    end: new Date(next.end)
-  });
-}
+  function getEventsByDateKey(dateKey) {
+    return allEvents
+      .filter(event => event && event.start)
+      .filter(event => {
+        const eventDate = new Date(event.start);
+        return formatDateKey(eventDate) === dateKey;
+      })
+      .sort((a, b) => new Date(a.start) - new Date(b.start));
+  }
 
-      
+  function getDisneyEventsByDateKey(dateKey) {
+    return allDisneyEvents.filter(event => String(event.date || "").trim() === dateKey);
+  }
 
+  function renderSelectedDay() {
+    if (!selectedDateKey) {
+      selectedDateLabel.textContent = "日付を選ぶと予定が表示されます。";
+      selectedDayEvents.innerHTML = `<p class="hint">この日の予定はありません。</p>`;
+      return;
+    }
+
+    const selectedDate = new Date(selectedDateKey);
+    selectedDateLabel.textContent = formatDateJP(selectedDate);
+
+    const dayEvents = getEventsByDateKey(selectedDateKey);
+    const disneyEvents = getDisneyEventsByDateKey(selectedDateKey);
+
+    if (!dayEvents.length && !disneyEvents.length) {
+      selectedDayEvents.innerHTML = `<p class="hint">この日の予定はありません。</p>`;
+      return;
+    }
+
+    const clubHtml = dayEvents.map(event => `
+      <div class="dayEventItem">
+        <div class="dayEventTitle">${event.title}</div>
+        <div class="dayEventMeta">
+          ${formatTimeJP(event.start)}〜${formatTimeJP(event.end)} / ${event.location}
+        </div>
+      </div>
+    `).join("");
+
+    const disneyHtml = disneyEvents.map(event => `
+      <div class="dayEventItem">
+        <div class="dayEventTitle">🏰🌏 ${event.title}</div>
+        <div class="dayEventMeta">
+          ${event.note || ""}
+          ${event.link ? ` / <a href="${event.link}" target="_blank" rel="noopener noreferrer">詳細</a>` : ""}
+        </div>
+      </div>
+    `).join("");
+
+    selectedDayEvents.innerHTML = clubHtml + disneyHtml;
+  }
+
+  function renderCalendar() {
+    if (!monthLabel || !grid) return;
+
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+
+    monthLabel.textContent = `${year}年${month + 1}月`;
+    grid.innerHTML = "";
+
+    const firstDay = new Date(year, month, 1);
+    const startWeekday = firstDay.getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    const today = new Date();
+    const todayKey = formatDateKey(today);
+
+    for (let i = 0; i < startWeekday; i++) {
+      const emptyCell = document.createElement("div");
+      emptyCell.className = "calendarCell isMuted";
+      grid.appendChild(emptyCell);
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const cellDate = new Date(year, month, day);
+      const dateKey = formatDateKey(cellDate);
+
+      const dayEvents = getEventsByDateKey(dateKey);
+      const disneyEvents = getDisneyEventsByDateKey(dateKey);
+
+      const cell = document.createElement("button");
+      cell.type = "button";
+      cell.className = "calendarCell";
+
+      if (dateKey === todayKey) cell.classList.add("isToday");
+      if (selectedDateKey === dateKey) cell.classList.add("isSelected");
+      if (dayEvents.length || disneyEvents.length) cell.classList.add("hasEvent");
+
+      let dotsHtml = "";
+
+      if (dayEvents.length) {
+        dotsHtml += `<span class="calendarDot club"></span>`;
+      }
+
+      if (disneyEvents.some(event => event.type === "resort")) {
+        dotsHtml += `<span class="calendarDot disney"></span>`;
+      }
+
+      if (disneyEvents.some(event => event.type === "character")) {
+        dotsHtml += `<span class="calendarDot character"></span>`;
+      }
+
+      cell.innerHTML = `
+        <div class="calendarDate">${day}</div>
+        <div class="calendarDots">${dotsHtml}</div>
+      `;
+
+      cell.addEventListener("click", () => {
+        selectedDateKey = dateKey;
+        renderCalendar();
+        renderSelectedDay();
+      });
+
+      grid.appendChild(cell);
+    }
+  }
+
+  function updateNextEventFromDB(events) {
+    if (!events || !events.length) {
+      window.setRealtimeNextEvent(null);
+      return;
+    }
+
+    const now = new Date();
+
+    const upcoming = events
+      .filter(event => event && event.start && event.end && new Date(event.end) >= now)
+      .sort((a, b) => new Date(a.start) - new Date(b.start));
+
+    if (!upcoming.length) {
+      window.setRealtimeNextEvent(null);
+      return;
+    }
+
+    const next = upcoming[0];
+
+    window.setRealtimeNextEvent({
+      title: next.title,
+      location: next.location,
+      start: new Date(next.start),
+      end: new Date(next.end)
+    });
+  }
+
+  if (prevMonthBtn) {
     prevMonthBtn.addEventListener("click", () => {
       currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
       renderCalendar();
     });
+  }
 
+  if (nextMonthBtn) {
     nextMonthBtn.addEventListener("click", () => {
       currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
       renderCalendar();
     });
+  }
 
-    function rerenderAll() {
-      updateNextEventFromDB(allEvents);
+  function rerenderAll() {
+    updateNextEventFromDB(allEvents);
 
-      if (!selectedDateKey) {
-        const upcoming = allEvents
-          .filter(event => new Date(event.end) >= new Date())
-          .sort((a, b) => new Date(a.start) - new Date(b.start));
+    if (!selectedDateKey) {
+      const upcoming = allEvents
+        .filter(event => event && event.end && new Date(event.end) >= new Date())
+        .sort((a, b) => new Date(a.start) - new Date(b.start));
 
-        if (upcoming.length) {
-          selectedDateKey = formatDateKey(new Date(upcoming[0].start));
-        }
+      if (upcoming.length) {
+        selectedDateKey = formatDateKey(new Date(upcoming[0].start));
       }
+    }
 
-    listenEvents((events) => {
-      allEvents = (events || []).slice();
-      rerenderAll();
-    });
+    renderCalendar();
+    renderSelectedDay();
+  }
 
-    listenDisneyEvents((events) => {
-      allDisneyEvents = (events || []).slice();
-      rerenderAll();
-    });
-      renderCalendar();
-renderSelectedDay(); 
-  </script>
+  // 初期描画
+  renderCalendar();
+  renderSelectedDay();
+
+  listenEvents((events) => {
+    allEvents = (events || []).slice();
+    rerenderAll();
+  });
+
+  listenDisneyEvents((events) => {
+    allDisneyEvents = (events || []).slice();
+    rerenderAll();
+  });
+</script>
+
+  
 </body>
 </html>
