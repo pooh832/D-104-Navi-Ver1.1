@@ -621,8 +621,7 @@ function updateWorldDisneyTimes() {
 
 updateWorldDisneyTimes();
 setInterval(updateWorldDisneyTimes, 1000);
-renderCalendar();
-renderSelectedDay(); 
+
   </script>
 
   <script type="module">
@@ -832,10 +831,6 @@ renderSelectedDay();
         }
       }
 
-      renderCalendar();
-      renderSelectedDay();
-    }
-
     listenEvents((events) => {
       allEvents = (events || []).slice();
       rerenderAll();
@@ -845,6 +840,8 @@ renderSelectedDay();
       allDisneyEvents = (events || []).slice();
       rerenderAll();
     });
+      renderCalendar();
+renderSelectedDay(); 
   </script>
 </body>
 </html>
