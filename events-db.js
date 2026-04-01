@@ -14,6 +14,7 @@ export function addEvent(event) {
 
 }
 
+
 export function listenEvents(callback) {
 
   const eventsRef = ref(db, "events");
