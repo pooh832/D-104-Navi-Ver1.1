@@ -1,7 +1,10 @@
 import { db } from "./firebase-config.js";
 import {
   ref,
-  onValue
+  push,
+  onValue,
+  update,
+  remove
 } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-database.js";
 
 export function listenDisneyEvents(callback) {
@@ -22,4 +25,19 @@ export function listenDisneyEvents(callback) {
 
     callback(disneyEvents);
   });
+}
+
+export function addDisneyEvent(event) {
+  const disneyRef = ref(db, "disneyEvents");
+  return push(disneyRef, event);
+}
+
+export function updateDisneyEvent(id, event) {
+  const disneyEventRef = ref(db, `disneyEvents/${id}`);
+  return update(disneyEventRef, event);
+}
+
+export function deleteDisneyEvent(id) {
+  const disneyEventRef = ref(db, `disneyEvents/${id}`);
+  return remove(disneyEventRef);
 }
