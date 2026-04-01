@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>幹部ページ | D'104 Navi</title>
-  <link rel="stylesheet" href="styles.css?v=21" />
+  <link rel="stylesheet" href="styles.css?v=22" />
 </head>
 <body>
   <header class="topbar" id="top">
@@ -71,6 +71,7 @@
 
       <div class="actions">
         <button class="btnPrimary" id="saveEventBtn" type="button">予定を追加</button>
+        <button class="btnGhost" id="cancelEditBtn" type="button" style="display:none;">編集をキャンセル</button>
       </div>
 
       <p id="adminMessage" class="hint"></p>
@@ -87,29 +88,45 @@
     </section>
 
     <section class="card">
-  <div class="cardHead">
-    <h2 class="cardTitle"><span class="badge">❓</span> questions</h2>
-  </div>
+      <div class="cardHead">
+        <h2 class="cardTitle"><span class="badge">❓</span> questions</h2>
+      </div>
 
-  <div id="adminQuestionList">
-    <p class="hint">質問を読み込み中...</p>
-  </div>
-</section>
+      <div id="adminQuestionList">
+        <p class="hint">質問を読み込み中...</p>
+      </div>
+    </section>
 
   </main>
 
   <script type="module">
-  import "./auth.js";
-  import { addEvent, listenEvents } from "./events-db.js";
-  import { listenQuestions, answerQuestion } from "./questions-db.js";
-
-
+    import "./auth.js";
+    import { addEvent, listenEvents, updateEvent, deleteEvent } from "./events-db.js";
+    import { listenQuestions, answerQuestion } from "./questions-db.js";
 
     window.protectAdminPage();
 
     const saveEventBtn = document.getElementById("saveEventBtn");
+    const cancelEditBtn = document.getElementById("cancelEditBtn");
     const adminMessage = document.getElementById("adminMessage");
     const adminEventList = document.getElementById("adminEventList");
+    const adminQuestionList = document.getElementById("adminQuestionList");
+
+    const eventTitleInput = document.getElementById("eventTitle");
+    const eventLocationInput = document.getElementById("eventLocation");
+    const eventStartInput = document.getElementById("eventStart");
+    const eventEndInput = document.getElementById("eventEnd");
+
+    let editingEventId = null;
+
+    function escapeHtml(str) {
+      return String(str ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
 
     function formatDateJP(dateString) {
       const date = new Date(dateString);
@@ -122,21 +139,6 @@
       return `${month}/${day} (${weekday}) ${hour}:${minute}`;
     }
 
-    function renderAdminEvents(events) {
-      if (!events || !events.length) {
-        adminEventList.innerHTML = `<p class="hint">まだ予定はありません。</p>`;
-        return;
-      }
-
-          function escapeHtml(str) {
-      return String(str ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#39;");
-    }
-
     function formatQuestionDate(dateString) {
       const date = new Date(dateString);
       const yyyy = date.getFullYear();
@@ -147,17 +149,88 @@
       return `${yyyy}/${mm}/${dd} ${hh}:${min}`;
     }
 
-    function renderQuestions(questions) {
-      const adminQuestionList = document.getElementById("adminQuestionList");
+    function resetEventForm() {
+      editingEventId = null;
+      eventTitleInput.value = "";
+      eventLocationInput.value = "";
+      eventStartInput.value = "";
+      eventEndInput.value = "";
+      saveEventBtn.textContent = "予定を追加";
+      cancelEditBtn.style.display = "none";
+    }
 
+    function startEditingEvent(event) {
+      editingEventId = event.id;
+      eventTitleInput.value = event.title || "";
+      eventLocationInput.value = event.location || "";
+      eventStartInput.value = event.start || "";
+      eventEndInput.value = event.end || "";
+      saveEventBtn.textContent = "予定を更新";
+      cancelEditBtn.style.display = "inline-flex";
+      adminMessage.textContent = "編集中です。内容を修正して更新してください。";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderAdminEvents(events) {
+      if (!events || !events.length) {
+        adminEventList.innerHTML = `<p class="hint">まだ予定はありません。</p>`;
+        return;
+      }
+
+      const sorted = [...events].sort((a, b) => new Date(a.start) - new Date(b.start));
+
+      adminEventList.innerHTML = sorted.map(event => `
+        <div class="card" style="margin-bottom:14px;">
+          <div class="cardHead">
+            <h3 class="cardTitle"><span class="badge">📅</span> ${escapeHtml(event.title)}</h3>
+          </div>
+
+          <p class="hint">${formatDateJP(event.start)} 〜 ${formatDateJP(event.end)}</p>
+          <p style="margin:8px 0 0;">場所: ${escapeHtml(event.location)}</p>
+
+          <div class="actions" style="margin-top:12px;">
+            <button class="btnPrimary edit-event-btn" data-id="${event.id}" type="button">編集</button>
+            <button class="btnGhost delete-event-btn" data-id="${event.id}" type="button">削除</button>
+          </div>
+        </div>
+      `).join("");
+
+      document.querySelectorAll(".edit-event-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const target = sorted.find(event => event.id === btn.dataset.id);
+          if (target) startEditingEvent(target);
+        });
+      });
+
+      document.querySelectorAll(".delete-event-btn").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const ok = confirm("この予定を削除しますか？");
+          if (!ok) return;
+
+          try {
+            await deleteEvent(btn.dataset.id);
+            adminMessage.textContent = "予定を削除しました。";
+
+            if (editingEventId === btn.dataset.id) {
+              resetEventForm();
+            }
+          } catch (error) {
+            console.error(error);
+            adminMessage.textContent = "削除に失敗しました。";
+          }
+        });
+      });
+    }
+
+    function renderQuestions(questions) {
       if (!questions || !questions.length) {
         adminQuestionList.innerHTML = `<p class="hint">まだ質問はありません。</p>`;
         return;
       }
 
-      questions.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      const sorted = [...questions].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-      adminQuestionList.innerHTML = questions.map(q => `
+      adminQuestionList.innerHTML = sorted.map(q => `
         <div class="card" style="margin-bottom:16px;">
           <div class="cardHead">
             <h3 class="cardTitle">
@@ -183,16 +256,15 @@
             <button class="btnPrimary answer-btn" data-id="${q.id}" type="button">回答を保存</button>
           </div>
 
-          ${
-            q.answer
-              ? `<p class="hint">公開中の回答あり</p>`
-              : `<p class="hint">未回答</p>`
+          ${q.answer
+            ? `<p class="hint">公開中の回答あり</p>`
+            : `<p class="hint">未回答</p>`
           }
         </div>
       `).join("");
 
       document.querySelectorAll(".answer-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
+        btn.addEventListener("click", async () => {
           const id = btn.dataset.id;
           const textarea = document.getElementById(`answer-${id}`);
           const answer = textarea.value.trim();
@@ -202,28 +274,22 @@
             return;
           }
 
-          answerQuestion(id, answer);
-          alert("回答を保存しました。");
+          try {
+            await answerQuestion(id, answer);
+            alert("回答を保存しました。");
+          } catch (error) {
+            console.error(error);
+            alert("保存に失敗しました。");
+          }
         });
       });
     }
 
-      events.sort((a, b) => new Date(a.start) - new Date(b.start));
-
-      adminEventList.innerHTML = events.map(event => `
-        <div class="newsItem">
-          <span class="date">${formatDateJP(event.start)}</span>
-          <span class="dot" aria-hidden="true"></span>
-          <span class="text">${event.title} / ${event.location}</span>
-        </div>
-      `).join("");
-    }
-
-    saveEventBtn.addEventListener("click", () => {
-      const title = document.getElementById("eventTitle").value.trim();
-      const location = document.getElementById("eventLocation").value.trim();
-      const start = document.getElementById("eventStart").value;
-      const end = document.getElementById("eventEnd").value;
+    saveEventBtn.addEventListener("click", async () => {
+      const title = eventTitleInput.value.trim();
+      const location = eventLocationInput.value.trim();
+      const start = eventStartInput.value;
+      const end = eventEndInput.value;
 
       if (!title || !location || !start || !end) {
         adminMessage.textContent = "すべて入力してください。";
@@ -235,29 +301,27 @@
         return;
       }
 
-      addEvent({
-        title,
-        location,
-        start,
-        end
-      });
+      const eventData = { title, location, start, end };
 
-      adminMessage.textContent = "予定を保存しました。";
+      try {
+        if (editingEventId) {
+          await updateEvent(editingEventId, eventData);
+          adminMessage.textContent = "予定を更新しました。";
+        } else {
+          await addEvent(eventData);
+          adminMessage.textContent = "予定を保存しました。";
+        }
 
-      <section class="card" style="margin-top:20px;">
-  <div class="cardHead">
-    <h2 class="cardTitle"><span class="badge">📚</span> saved events</h2>
-  </div>
+        resetEventForm();
+      } catch (error) {
+        console.error(error);
+        adminMessage.textContent = "保存に失敗しました。";
+      }
+    });
 
-  <div id="savedEventsList">
-    <p class="hint">予定を読み込み中...</p>
-  </div>
-</section>
-
-      document.getElementById("eventTitle").value = "";
-      document.getElementById("eventLocation").value = "";
-      document.getElementById("eventStart").value = "";
-      document.getElementById("eventEnd").value = "";
+    cancelEditBtn.addEventListener("click", () => {
+      resetEventForm();
+      adminMessage.textContent = "編集をキャンセルしました。";
     });
 
     listenEvents((events) => {
@@ -270,35 +334,35 @@
   </script>
 
   <script type="module">
-  import { db } from "./firebase-config.js";
-  import { ref, get, set } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-database.js";
+    import { db } from "./firebase-config.js";
+    import { ref, get, set } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-database.js";
 
-  const disneyRef = ref(db, "disneyEvents");
+    const disneyRef = ref(db, "disneyEvents");
 
-  get(disneyRef).then((snapshot) => {
-    if (!snapshot.exists()) {
-      return set(disneyRef, {
-        event1: {
-          title: "東京ディズニーシー 25周年開始",
-          date: "2026-04-08",
-          type: "resort",
-          link: "https://www.tokyodisneyresort.jp/",
-          note: "イベント開始日"
-        },
-        event2: {
-          title: "ミッキー スクリーンデビュー日",
-          date: "2026-11-18",
-          type: "character",
-          link: "https://www.disney.co.jp/",
-          note: "スクリーンデビュー記念日"
-        }
-      });
-    }
-  }).then(() => {
-    console.log("disneyEvents ready");
-  }).catch((error) => {
-    console.error("disneyEvents error:", error);
-  });
-</script>
+    get(disneyRef).then((snapshot) => {
+      if (!snapshot.exists()) {
+        return set(disneyRef, {
+          event1: {
+            title: "東京ディズニーシー 25周年開始",
+            date: "2026-04-08",
+            type: "resort",
+            link: "https://www.tokyodisneyresort.jp/",
+            note: "イベント開始日"
+          },
+          event2: {
+            title: "ミッキー スクリーンデビュー日",
+            date: "2026-11-18",
+            type: "character",
+            link: "https://www.disney.co.jp/",
+            note: "スクリーンデビュー記念日"
+          }
+        });
+      }
+    }).then(() => {
+      console.log("disneyEvents ready");
+    }).catch((error) => {
+      console.error("disneyEvents error:", error);
+    });
+  </script>
 </body>
 </html>
