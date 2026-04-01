@@ -2,12 +2,14 @@ import { db } from "./firebase-config.js";
 import {
   ref,
   push,
-  onValue
+  onValue,
+  update,
+  remove
 } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-database.js";
 
 export function addEvent(event) {
   const eventsRef = ref(db, "events");
-  push(eventsRef, event);
+  return push(eventsRef, event);
 }
 
 export function listenEvents(callback) {
@@ -19,10 +21,23 @@ export function listenEvents(callback) {
 
     if (data) {
       for (const id in data) {
-        events.push(data[id]);
+        events.push({
+          id,
+          ...data[id]
+        });
       }
     }
 
     callback(events);
   });
+}
+
+export function updateEvent(id, event) {
+  const eventRef = ref(db, `events/${id}`);
+  return update(eventRef, event);
+}
+
+export function deleteEvent(id) {
+  const eventRef = ref(db, `events/${id}`);
+  return remove(eventRef);
 }
