@@ -258,5 +258,37 @@
       renderQuestions(questions);
     });
   </script>
+
+  <script type="module">
+  import { db } from "./firebase-config.js";
+  import { ref, get, set } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-database.js";
+
+  const disneyRef = ref(db, "disneyEvents");
+
+  get(disneyRef).then((snapshot) => {
+    if (!snapshot.exists()) {
+      return set(disneyRef, {
+        event1: {
+          title: "東京ディズニーリゾート 春イベント開始",
+          date: "2026-04-08",
+          type: "resort",
+          link: "https://www.tokyodisneyresort.jp/",
+          note: "イベント開始日"
+        },
+        event2: {
+          title: "ミッキー スクリーンデビュー日",
+          date: "2026-11-18",
+          type: "character",
+          link: "https://www.disney.co.jp/",
+          note: "スクリーンデビュー記念日"
+        }
+      });
+    }
+  }).then(() => {
+    console.log("disneyEvents ready");
+  }).catch((error) => {
+    console.error("disneyEvents error:", error);
+  });
+</script>
 </body>
 </html>
