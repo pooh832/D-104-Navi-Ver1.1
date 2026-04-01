@@ -512,17 +512,9 @@ listenEvents((events)=>{
       cell.type = "button";
       cell.className = "calendarCell";
 
-      if (dateKey === todayKey) {
-        cell.classList.add("isToday");
-      }
-
-      if (selectedDateKey === dateKey) {
-        cell.classList.add("isSelected");
-      }
-
-      if (dayEvents.length) {
-        cell.classList.add("hasEvent");
-      }
+      if (dateKey === todayKey) cell.classList.add("isToday");
+      if (selectedDateKey === dateKey) cell.classList.add("isSelected");
+      if (dayEvents.length) cell.classList.add("hasEvent");
 
       const dotsHtml = dayEvents.slice(0, 3).map(() => `<span class="calendarDot"></span>`).join("");
 
@@ -541,8 +533,59 @@ listenEvents((events)=>{
     }
   }
 
+  function updateNextEventFromDB(events) {
+    if (!events || !events.length) {
+      window.setRealtimeNextEvent(null);
+      return;
+    }
+
+    const now = new Date();
+
+    const upcoming = events
+      .filter(event => new Date(event.end) >= now)
+      .sort((a, b) => new Date(a.start) - new Date(b.start));
+
+    if (!upcoming.length) {
+      window.setRealtimeNextEvent(null);
+      return;
+    }
+
+    const next = upcoming[0];
+
+    window.setRealtimeNextEvent({
+      title: next.title,
+      location: next.location,
+      start: new Date(next.start),
+      end: new Date(next.end)
+    });
+  }
+
+  prevMonthBtn.addEventListener("click", () => {
+    currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
+    renderCalendar();
+  });
+
+  nextMonthBtn.addEventListener("click", () => {
+    currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
+    renderCalendar();
+  });
+
   listenEvents((events) => {
-    allEvents = events || [];
+    allEvents = (events || []).slice();
+
+    updateNextEventFromDB(allEvents);
+
+    if (!selectedDateKey && allEvents.length) {
+      const upcoming = allEvents
+        .filter(event => new Date(event.end) >= new Date())
+        .sort((a, b) => new Date(a.start) - new Date(b.start));
+
+      if (upcoming.length) {
+        const firstEventDate = new Date(upcoming[0].start);
+        selectedDateKey = formatDateKey(firstEventDate);
+      }
+    }
+
     renderCalendar();
     renderSelectedDay();
   });
