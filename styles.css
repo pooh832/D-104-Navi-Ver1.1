@@ -1117,3 +1117,15 @@ text-decoration:none;
 .compactSecondCard .flipTop span{
   font-size: 14px !important;
 }
+
+.calendarDot.club{
+  background:#5aa9c5 !important;
+}
+
+.calendarDot.disney{
+  background:#ff6b81 !important;
+}
+
+.calendarDot.character{
+  background:#ffd93d !important;
+}
