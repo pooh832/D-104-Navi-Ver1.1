@@ -410,15 +410,18 @@ END:VCALENDAR`;
       renderNextEvent();
     };
 
-    function formatWorldTime(timeZone) {
+    // ① 時刻フォーマット
+function formatWorldTime(timeZone) {
   return new Intl.DateTimeFormat("ja-JP", {
     timeZone,
     hour: "2-digit",
     minute: "2-digit",
+    second: "2-digit",
     hour12: false
   }).format(new Date());
 }
 
+// ② 更新関数（←これをここに置く）
 function updateWorldDisneyTimes() {
   const clocks = [
     { id: "timeTokyo", zone: "Asia/Tokyo" },
@@ -431,14 +434,24 @@ function updateWorldDisneyTimes() {
 
   clocks.forEach(clock => {
     const el = document.getElementById(clock.id);
-    if (el) {
-      el.textContent = formatWorldTime(clock.zone);
+    if (!el) return;
+
+    const newTime = formatWorldTime(clock.zone);
+
+    if (el.textContent !== newTime) {
+      el.classList.remove("timeFlip");
+      void el.offsetWidth;
+      el.textContent = newTime;
+      el.classList.add("timeFlip");
     }
   });
 }
 
+// ③ 初回実行
 updateWorldDisneyTimes();
-setInterval(updateWorldDisneyTimes, 60000);
+
+// ④ 1秒ごと更新
+setInterval(updateWorldDisneyTimes, 1000);
   </script>
 
   <script type="module">
