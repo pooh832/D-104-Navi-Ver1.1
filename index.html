@@ -601,11 +601,11 @@ function updateWorldDisneyTimes() {
     setFlipCardValue(minuteCard, parts.minute, currentMinute !== undefined);
     setFlipCardValue(secondCard, parts.second, currentSecond !== undefined);
 
-    const item = clock.closest(".worldClockItem");
-    if (item) {
-      const isNight = parts.hourNumber >= 18 || parts.hourNumber < 6;
-      item.classList.toggle("isNight", isNight);
-    }
+    const row = clock.closest(".worldClockRow");
+if (row) {
+  const isNight = parts.hourNumber >= 18 || parts.hourNumber < 6;
+  row.classList.toggle("isNight", isNight);
+}
   });
 }
 
