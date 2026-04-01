@@ -672,8 +672,8 @@ setInterval(updateWorldDisneyTimes, 1000);
     }
 
     function getDisneyEventsByDateKey(dateKey) {
-      return allDisneyEvents.filter(event => event.date === dateKey);
-    }
+  return allDisneyEvents.filter(event => String(event.date || "").trim() === dateKey);
+}
 
     function renderSelectedDay() {
       if (!selectedDateKey) {
@@ -780,21 +780,31 @@ setInterval(updateWorldDisneyTimes, 1000);
     }
 
     function updateNextEventFromDB(events) {
-      if (!events || !events.length) {
-        window.setRealtimeNextEvent(null);
-        return;
-      }
+  if (!events || !events.length) {
+    window.setRealtimeNextEvent(null);
+    return;
+  }
 
-      const now = new Date();
+  const now = new Date();
 
-      const upcoming = events
-        .filter(event => new Date(event.end) >= now)
-        .sort((a, b) => new Date(a.start) - new Date(b.start));
+  const upcoming = events
+    .filter(event => event && event.start && event.end && new Date(event.end) >= now)
+    .sort((a, b) => new Date(a.start) - new Date(b.start));
 
-      if (!upcoming.length) {
-        window.setRealtimeNextEvent(null);
-        return;
-      }
+  if (!upcoming.length) {
+    window.setRealtimeNextEvent(null);
+    return;
+  }
+
+  const next = upcoming[0];
+
+  window.setRealtimeNextEvent({
+    title: next.title,
+    location: next.location,
+    start: new Date(next.start),
+    end: new Date(next.end)
+  });
+}
 
       const next = upcoming[0];
 
