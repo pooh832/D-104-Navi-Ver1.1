@@ -888,122 +888,212 @@ text-decoration:none;
 }
 }
 
-/* ===== Flip World Clock ===== */
+
+/* ===== World Disney Time / refined ===== */
+
+.worldClockCard{
+  margin: 20px 0 28px;
+  padding: 20px;
+  border-radius: 28px;
+  background: rgba(255,255,255,.22);
+  border: 1px solid rgba(255,255,255,.55);
+  box-shadow: 0 12px 32px rgba(0,0,0,.08);
+  backdrop-filter: blur(10px);
+}
+
+.worldClockTitle{
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  color: #55727c;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+.worldClockGrid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.worldClockItem{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  border-radius: 22px;
+  background: rgba(255,255,255,.34);
+  border: 1px solid rgba(255,255,255,.52);
+  box-shadow: 0 8px 24px rgba(0,0,0,.05);
+  transition: background .3s ease, border-color .3s ease, transform .2s ease;
+}
+
+.worldClockItem.isNight{
+  background: rgba(41, 61, 76, 0.78);
+  border-color: rgba(255,255,255,.18);
+}
+
+.worldClockItem.isNight .parkName{
+  color: #d8e8ef;
+}
+
+.worldClockItem.isNight .flipSeparator{
+  color: #f2f7fa;
+}
+
+.parkName{
+  min-width: 140px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #4f6d77;
+  line-height: 1.4;
+}
 
 .flipClock{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  width:100%;
-  margin-top:10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .flipGroup{
-  display:flex;
-  align-items:center;
-  gap:6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .flipSeparator{
-  font-size:20px;
-  font-weight:900;
-  color:#21424d;
-  transform:translateY(-2px);
+  font-size: 22px;
+  font-weight: 900;
+  color: #2b4a55;
+  line-height: 1;
+  transform: translateY(-1px);
 }
 
 .flipCard,
 .flipSecondCard{
-  position:relative;
-  width:58px;
-  height:64px;
-  perspective:800px;
+  position: relative;
+  width: 54px;
+  height: 58px;
+  perspective: 900px;
 }
 
 .flipSecondCard{
-  width:52px;
+  width: 46px;
+  height: 52px;
 }
 
 .flipTop,
 .flipBottom,
 .flipTopNext{
-  position:absolute;
-  left:0;
-  width:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  font-weight:900;
-  color:#21424d;
-  background:rgba(255,255,255,.55);
-  border:1px solid rgba(255,255,255,.7);
-  box-shadow:0 8px 20px rgba(0,0,0,.08);
-  backface-visibility:hidden;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.74));
+  border: 1px solid rgba(255,255,255,.92);
+  box-shadow: 0 6px 18px rgba(0,0,0,.08);
+  backface-visibility: hidden;
+  color: #1f404b;
+  font-weight: 900;
+}
+
+.worldClockItem.isNight .flipTop,
+.worldClockItem.isNight .flipBottom,
+.worldClockItem.isNight .flipTopNext{
+  background: linear-gradient(180deg, rgba(73,97,114,.95), rgba(49,70,86,.95));
+  border-color: rgba(255,255,255,.08);
+  color: #f5fbff;
+  box-shadow: 0 6px 18px rgba(0,0,0,.18);
 }
 
 .flipTop,
 .flipTopNext{
-  top:0;
-  height:50%;
-  border-radius:14px 14px 8px 8px;
-  transform-origin:bottom;
+  top: 0;
+  height: 50%;
+  border-radius: 14px 14px 7px 7px;
+  transform-origin: bottom;
 }
 
 .flipBottom{
-  bottom:0;
-  height:50%;
-  border-radius:8px 8px 14px 14px;
-  transform-origin:top;
+  bottom: 0;
+  height: 50%;
+  border-radius: 7px 7px 14px 14px;
+  transform-origin: top;
 }
 
 .flipTop span,
 .flipBottom span,
 .flipTopNext span{
-  display:block;
-  transform:translateY(10%);
-  font-size:24px;
-  letter-spacing:.04em;
+  display: block;
+  font-size: 20px;
+  line-height: 1;
+  transform: translateY(18%);
+  letter-spacing: .03em;
 }
 
 .flipSecondCard .flipTop span,
 .flipSecondCard .flipBottom span,
 .flipSecondCard .flipTopNext span{
-  font-size:20px;
+  font-size: 16px;
+  transform: translateY(16%);
 }
 
 .flipTopNext{
-  z-index:3;
-  transform:rotateX(90deg);
+  z-index: 3;
+  transform: rotateX(90deg);
 }
 
 .flipCard.is-flipping .flipTopNext,
 .flipSecondCard.is-flipping .flipTopNext{
-  animation: flipDown .48s ease forwards;
+  animation: flipDown .42s ease forwards;
 }
 
 @keyframes flipDown{
   0%{
-    transform:rotateX(90deg);
+    transform: rotateX(90deg);
+    opacity: .4;
   }
   100%{
-    transform:rotateX(0deg);
+    transform: rotateX(0deg);
+    opacity: 1;
   }
 }
 
-.worldClockItem{
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-start;
-  align-items:stretch;
-  padding:14px;
-  border-radius:18px;
-  background:rgba(255,255,255,.38);
-  border:1px solid rgba(255,255,255,.5);
+@media (max-width: 900px){
+  .worldClockItem{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .parkName{
+    min-width: auto;
+  }
 }
 
-.parkName{
-  font-size:13px;
-  font-weight:800;
-  color:#56727c;
+@media (max-width: 520px){
+  .flipCard{
+    width: 48px;
+    height: 54px;
+  }
+
+  .flipSecondCard{
+    width: 42px;
+    height: 48px;
+  }
+
+  .flipTop span,
+  .flipBottom span,
+  .flipTopNext span{
+    font-size: 18px;
+  }
+
+  .flipSecondCard .flipTop span,
+  .flipSecondCard .flipBottom span,
+  .flipSecondCard .flipTopNext span{
+    font-size: 15px;
+  }
 }
