@@ -371,22 +371,135 @@ listenEvents((events)=>{
 <script type="module">
   import { listenEvents } from "./events-db.js";
 
-  listenEvents((events) => {
-    if (!events || !events.length) {
-      window.setRealtimeNextEvent(null);
+  let currentDate = new Date();
+  let selectedDateKey = null;
+  let allEvents = [];
+
+  const monthLabel = document.getElementById("calendarMonthLabel");
+  const grid = document.getElementById("miniCalendarGrid");
+  const selectedDateLabel = document.getElementById("selectedDateLabel");
+  const selectedDayEvents = document.getElementById("selectedDayEvents");
+  const prevMonthBtn = document.getElementById("prevMonthBtn");
+  const nextMonthBtn = document.getElementById("nextMonthBtn");
+
+  function formatDateKey(date) {
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, "0");
+    const dd = String(date.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  function formatDateJP(date) {
+    const week = ["日", "月", "火", "水", "木", "金", "土"];
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const weekday = week[date.getDay()];
+    return `${month}/${day} (${weekday})`;
+  }
+
+  function formatTimeJP(dateString) {
+    const date = new Date(dateString);
+    const hh = String(date.getHours()).padStart(2, "0");
+    const mm = String(date.getMinutes()).padStart(2, "0");
+    return `${hh}:${mm}`;
+  }
+
+  function getEventsByDateKey(dateKey) {
+    return allEvents.filter(event => {
+      const eventDate = new Date(event.start);
+      return formatDateKey(eventDate) === dateKey;
+    }).sort((a, b) => new Date(a.start) - new Date(b.start));
+  }
+
+  function renderSelectedDay() {
+    if (!selectedDateKey) {
+      selectedDateLabel.textContent = "日付を選ぶと予定が表示されます。";
+      selectedDayEvents.innerHTML = `<p class="hint">この日の予定はありません。</p>`;
       return;
     }
 
-    events.sort((a, b) => new Date(a.start) - new Date(b.start));
+    const selectedDate = new Date(selectedDateKey);
+    selectedDateLabel.textContent = formatDateJP(selectedDate);
 
-    const next = events[0];
+    const dayEvents = getEventsByDateKey(selectedDateKey);
 
-    window.setRealtimeNextEvent({
-      title: next.title,
-      location: next.location,
-      start: new Date(next.start),
-      end: new Date(next.end)
-    });
+    if (!dayEvents.length) {
+      selectedDayEvents.innerHTML = `<p class="hint">この日の予定はありません。</p>`;
+      return;
+    }
+
+    selectedDayEvents.innerHTML = dayEvents.map(event => `
+      <div class="dayEventItem">
+        <div class="dayEventTitle">${event.title}</div>
+        <div class="dayEventMeta">
+          ${formatTimeJP(event.start)}〜${formatTimeJP(event.end)} / ${event.location}
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function renderCalendar() {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+
+    monthLabel.textContent = `${year}年${month + 1}月`;
+    grid.innerHTML = "";
+
+    const firstDay = new Date(year, month, 1);
+    const startWeekday = firstDay.getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    const today = new Date();
+    const todayKey = formatDateKey(today);
+
+    for (let i = 0; i < startWeekday; i++) {
+      const emptyCell = document.createElement("div");
+      emptyCell.className = "calendarCell isMuted";
+      grid.appendChild(emptyCell);
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const cellDate = new Date(year, month, day);
+      const dateKey = formatDateKey(cellDate);
+      const dayEvents = getEventsByDateKey(dateKey);
+
+      const cell = document.createElement("button");
+      cell.type = "button";
+      cell.className = "calendarCell";
+
+      if (dateKey === todayKey) {
+        cell.classList.add("isToday");
+      }
+
+      if (selectedDateKey === dateKey) {
+        cell.classList.add("isSelected");
+      }
+
+      if (dayEvents.length) {
+        cell.classList.add("hasEvent");
+      }
+
+      const dotsHtml = dayEvents.slice(0, 3).map(() => `<span class="calendarDot"></span>`).join("");
+
+      cell.innerHTML = `
+        <div class="calendarDate">${day}</div>
+        <div class="calendarDots">${dotsHtml}</div>
+      `;
+
+      cell.addEventListener("click", () => {
+        selectedDateKey = dateKey;
+        renderCalendar();
+        renderSelectedDay();
+      });
+
+      grid.appendChild(cell);
+    }
+  }
+
+  listenEvents((events) => {
+    allEvents = events || [];
+    renderCalendar();
+    renderSelectedDay();
   });
 </script>
 </body>
