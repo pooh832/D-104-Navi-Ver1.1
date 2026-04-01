@@ -888,89 +888,122 @@ text-decoration:none;
 }
 }
 
-/* ===== World Clock ===== */
+/* ===== Flip World Clock ===== */
 
-.worldClockCard{
-  margin-top:18px;
-  padding:18px;
-  border-radius:24px;
-  background:rgba(255,255,255,.22);
-  border:1px solid rgba(255,255,255,.55);
-  box-shadow:0 10px 30px rgba(0,0,0,.08);
-  backdrop-filter: blur(10px);
-}
-
-.worldClockTitle{
-  font-size:14px;
-  font-weight:800;
-  letter-spacing:.12em;
-  color:#4f6f7a;
-  margin-bottom:12px;
-  text-transform:uppercase;
-}
-
-.worldClockGrid{
-  display:grid;
-  grid-template-columns:repeat(3, minmax(0, 1fr));
+.flipClock{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
   gap:10px;
+  width:100%;
+  margin-top:10px;
+}
+
+.flipGroup{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.flipSeparator{
+  font-size:20px;
+  font-weight:900;
+  color:#21424d;
+  transform:translateY(-2px);
+}
+
+.flipCard,
+.flipSecondCard{
+  position:relative;
+  width:58px;
+  height:64px;
+  perspective:800px;
+}
+
+.flipSecondCard{
+  width:52px;
+}
+
+.flipTop,
+.flipBottom,
+.flipTopNext{
+  position:absolute;
+  left:0;
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  font-weight:900;
+  color:#21424d;
+  background:rgba(255,255,255,.55);
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
+  backface-visibility:hidden;
+}
+
+.flipTop,
+.flipTopNext{
+  top:0;
+  height:50%;
+  border-radius:14px 14px 8px 8px;
+  transform-origin:bottom;
+}
+
+.flipBottom{
+  bottom:0;
+  height:50%;
+  border-radius:8px 8px 14px 14px;
+  transform-origin:top;
+}
+
+.flipTop span,
+.flipBottom span,
+.flipTopNext span{
+  display:block;
+  transform:translateY(10%);
+  font-size:24px;
+  letter-spacing:.04em;
+}
+
+.flipSecondCard .flipTop span,
+.flipSecondCard .flipBottom span,
+.flipSecondCard .flipTopNext span{
+  font-size:20px;
+}
+
+.flipTopNext{
+  z-index:3;
+  transform:rotateX(90deg);
+}
+
+.flipCard.is-flipping .flipTopNext,
+.flipSecondCard.is-flipping .flipTopNext{
+  animation: flipDown .48s ease forwards;
+}
+
+@keyframes flipDown{
+  0%{
+    transform:rotateX(90deg);
+  }
+  100%{
+    transform:rotateX(0deg);
+  }
 }
 
 .worldClockItem{
   display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:12px 14px;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items:stretch;
+  padding:14px;
   border-radius:18px;
   background:rgba(255,255,255,.38);
   border:1px solid rgba(255,255,255,.5);
-  overflow:hidden;
 }
 
 .parkName{
   font-size:13px;
-  font-weight:700;
+  font-weight:800;
   color:#56727c;
-}
-
-.parkTime{
-  display:inline-block;
-  min-width:72px;
-  text-align:right;
-  font-size:15px;
-  font-weight:900;
-  color:#21424d;
-  transform-origin:center top;
-  backface-visibility:hidden;
-}
-
-/* 日めくりっぽい軽いフリップ */
-.timeFlip{
-  animation: timeFlipAnim .42s ease;
-}
-
-@keyframes timeFlipAnim{
-  0%{
-    transform: rotateX(90deg);
-    opacity:.2;
-  }
-  60%{
-    transform: rotateX(-8deg);
-    opacity:1;
-  }
-  100%{
-    transform: rotateX(0deg);
-    opacity:1;
-  }
-}
-
-@media (max-width: 768px){
-  .worldClockGrid{
-    grid-template-columns:repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 520px){
-  .worldClockGrid{
-    grid-template-columns:1fr;
-  }
 }
