@@ -4,14 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>D'104 Navi</title>
-
-  
-  <!-- ✅ キャッシュ対策：更新したら v=2, v=3... に変える -->
-  <link rel="stylesheet" href="styles.css?v=1" />
+  <link rel="stylesheet" href="styles.css?v=3" />
 </head>
 <body>
 
-  <!-- Top / Global Nav -->
   <header class="topbar" id="top">
     <div class="brand">
       <div class="brandIcon" aria-hidden="true">📘</div>
@@ -29,7 +25,6 @@
     </nav>
   </header>
 
-  <!-- Hero -->
   <section class="hero" aria-label="ヒーローセクション">
     <div class="heroInner">
       <p class="heroEyebrow">For D'104 Members</p>
@@ -55,7 +50,6 @@
 
   <main class="container">
 
-    <!-- Next Event -->
     <section class="card" id="next" aria-labelledby="nextTitle">
       <div class="cardHead">
         <h2 class="cardTitle" id="nextTitle">
@@ -80,111 +74,106 @@
         </div>
       </div>
 
-     <div class="actions">
-       <button class="btnPrimary" disabled>
-         予定は自動更新されます
-      </button>
-  <button class="btnGhost" id="clearBtn" type="button">
-    リセット
-  </button>
-  <button class="btnGhost" id="addGoogleCalendarBtn" type="button">
-    Googleカレンダー
-  </button>
-  <button class="btnGhost" id="downloadIcsBtn" type="button">
-    iPhoneカレンダー
-  </button>
-</div>
-
+      <div class="actions">
+        <button class="btnPrimary" type="button" disabled>
+          予定は自動更新されます
+        </button>
+        <button class="btnGhost" id="clearBtn" type="button">
+          リセット
+        </button>
+        <button class="btnGhost" id="addGoogleCalendarBtn" type="button">
+          Googleカレンダー
+        </button>
+        <button class="btnGhost" id="downloadIcsBtn" type="button">
+          iPhoneカレンダー
+        </button>
+      </div>
     </section>
-
 
     <div class="sectionTitle">CALENDAR</div>
 
-<section class="card" aria-label="カレンダー">
-  <div class="cardHead">
-    <h2 class="cardTitle">
-      <span class="badge" aria-hidden="true">🗓️</span>
-      mini calendar
-    </h2>
-    <div class="calendarNav">
-      <button class="btnGhost calendarMonthBtn" id="prevMonthBtn" type="button">‹</button>
-      <span id="calendarMonthLabel" class="pill">2026年4月</span>
-      <button class="btnGhost calendarMonthBtn" id="nextMonthBtn" type="button">›</button>
-    </div>
-  </div>
-
-  <div class="miniCalendarWrap">
-    <div class="calendarWeekdays">
-      <div>Sun</div>
-      <div>Mon</div>
-      <div>Tue</div>
-      <div>Wed</div>
-      <div>Thu</div>
-      <div>Fri</div>
-      <div>Sat</div>
-    </div>
-
-    <div id="miniCalendarGrid" class="miniCalendarGrid"></div>
-  </div>
-
-  <div class="selectedDayBox">
-    <div class="cardHead" style="margin-bottom:8px;">
-      <h3 class="cardTitle">
-        <span class="badge" aria-hidden="true">📍</span>
-        selected day
-      </h3>
-    </div>
-
-    <div id="selectedDateLabel" class="hint">日付を選ぶと予定が表示されます。</div>
-    <div id="selectedDayEvents" style="margin-top:10px;">
-      <p class="hint">この日の予定はありません。</p>
-    </div>
-  </div>
-</section>
-    
-    <!-- Divider -->
-    <div class="sectionTitle" id="menu">MENU</div>
-
-    <!-- Menu tiles -->
-    <section class="grid" aria-label="メニュー">
-      <a class="tile" href="video.html">
-      <span class="emoji" aria-hidden="true">🎥</span>
-      <div class="tileText">
-       <h3>部室への行き方</h3>
-       <p>動画でチェック</p>
+    <section class="card" aria-label="カレンダー">
+      <div class="cardHead">
+        <h2 class="cardTitle">
+          <span class="badge" aria-hidden="true">🗓️</span>
+          mini calendar
+        </h2>
+        <div class="calendarNav">
+          <button class="btnGhost calendarMonthBtn" id="prevMonthBtn" type="button">‹</button>
+          <span id="calendarMonthLabel" class="pill">2026年4月</span>
+          <button class="btnGhost calendarMonthBtn" id="nextMonthBtn" type="button">›</button>
+        </div>
       </div>
-      <span class="arrow" aria-hidden="true">›</span>
-　　　　</a>
 
-      <a class="tile" href="calendar.html">
-  <span class="emoji" aria-hidden="true">🗓️</span>
-  <div class="tileText">
-    <h3>カレンダー</h3>
-    <p>予定一覧を見る</p>
-  </div>
-  <span class="arrow" aria-hidden="true">›</span>
-</a>
+      <div class="miniCalendarWrap">
+        <div class="calendarWeekdays">
+          <div>Sun</div>
+          <div>Mon</div>
+          <div>Tue</div>
+          <div>Wed</div>
+          <div>Thu</div>
+          <div>Fri</div>
+          <div>Sat</div>
+        </div>
 
-    <a class="tile" href="faq.html">
-  <span class="emoji" aria-hidden="true">💬</span>
-  <div class="tileText">
-    <h3>FAQ</h3>
-    <p>よくある質問を見る</p>
-  </div>
-  <span class="arrow" aria-hidden="true">›</span>
-</a>
+        <div id="miniCalendarGrid" class="miniCalendarGrid"></div>
+      </div>
 
-      <a class="tile" href="question.html">
-  <span class="emoji" aria-hidden="true">❓</span>
-  <div class="tileText">
-    <h3>質問する</h3>
-    <p>質問を送信する</p>
-  </div>
-  <span class="arrow" aria-hidden="true">›</span>
-</a>
+      <div class="selectedDayBox">
+        <div class="cardHead" style="margin-bottom:8px;">
+          <h3 class="cardTitle">
+            <span class="badge" aria-hidden="true">📍</span>
+            selected day
+          </h3>
+        </div>
+
+        <div id="selectedDateLabel" class="hint">日付を選ぶと予定が表示されます。</div>
+        <div id="selectedDayEvents" style="margin-top:10px;">
+          <p class="hint">この日の予定はありません。</p>
+        </div>
+      </div>
     </section>
 
-    <!-- News -->
+    <div class="sectionTitle" id="menu">MENU</div>
+
+    <section class="grid" aria-label="メニュー">
+      <a class="tile" href="video.html">
+        <span class="emoji" aria-hidden="true">🎥</span>
+        <div class="tileText">
+          <h3>部室への行き方</h3>
+          <p>動画でチェック</p>
+        </div>
+        <span class="arrow" aria-hidden="true">›</span>
+      </a>
+
+      <a class="tile" href="calendar.html">
+        <span class="emoji" aria-hidden="true">🗓️</span>
+        <div class="tileText">
+          <h3>カレンダー</h3>
+          <p>予定一覧を見る</p>
+        </div>
+        <span class="arrow" aria-hidden="true">›</span>
+      </a>
+
+      <a class="tile" href="faq.html">
+        <span class="emoji" aria-hidden="true">💬</span>
+        <div class="tileText">
+          <h3>FAQ</h3>
+          <p>よくある質問を見る</p>
+        </div>
+        <span class="arrow" aria-hidden="true">›</span>
+      </a>
+
+      <a class="tile" href="question.html">
+        <span class="emoji" aria-hidden="true">❓</span>
+        <div class="tileText">
+          <h3>質問する</h3>
+          <p>質問を送信する</p>
+        </div>
+        <span class="arrow" aria-hidden="true">›</span>
+      </a>
+    </section>
+
     <div class="sectionTitle" id="news">NEWS</div>
 
     <section class="card" aria-label="お知らせ">
@@ -214,42 +203,42 @@
     <small>© Circle Hub</small>
   </footer>
 
-    <script>
-    (function(){
+  <script>
+    (function () {
       const d = new Date();
-      const mm = String(d.getMonth() + 1).padStart(2, '0');
-      const dd = String(d.getDate()).padStart(2, '0');
-      const el = document.getElementById('today');
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const dd = String(d.getDate()).padStart(2, "0");
+      const el = document.getElementById("today");
       if (el) el.textContent = `${mm}/${dd}`;
     })();
 
-    const clearBtn = document.getElementById('clearBtn');
-    const addGoogleCalendarBtn = document.getElementById('addGoogleCalendarBtn');
-    const downloadIcsBtn = document.getElementById('downloadIcsBtn');
+    const clearBtn = document.getElementById("clearBtn");
+    const addGoogleCalendarBtn = document.getElementById("addGoogleCalendarBtn");
+    const downloadIcsBtn = document.getElementById("downloadIcsBtn");
 
     let nextEvent = null;
 
     function formatDateJP(date) {
-      const week = ['日', '月', '火', '水', '木', '金', '土'];
+      const week = ["日", "月", "火", "水", "木", "金", "土"];
       const month = date.getMonth() + 1;
       const day = date.getDate();
       const weekday = week[date.getDay()];
-      const hour = String(date.getHours()).padStart(2, '0');
-      const min = String(date.getMinutes()).padStart(2, '0');
+      const hour = String(date.getHours()).padStart(2, "0");
+      const min = String(date.getMinutes()).padStart(2, "0");
       return `${month}/${day} (${weekday}) ${hour}:${min}`;
     }
 
     function renderNextEvent() {
-      const nextDateEl = document.getElementById('nextDate');
-      const nextWhatEl = document.getElementById('nextWhat');
-      const nextWhereEl = document.getElementById('nextWhere');
-      const countdownEl = document.getElementById('countdown');
+      const nextDateEl = document.getElementById("nextDate");
+      const nextWhatEl = document.getElementById("nextWhat");
+      const nextWhereEl = document.getElementById("nextWhere");
+      const countdownEl = document.getElementById("countdown");
 
       if (!nextEvent) {
-        nextDateEl.textContent = '未設定';
-        nextWhatEl.textContent = '未設定';
-        nextWhereEl.textContent = '未設定';
-        countdownEl.textContent = '未設定';
+        nextDateEl.textContent = "未設定";
+        nextWhatEl.textContent = "未設定";
+        nextWhereEl.textContent = "未設定";
+        countdownEl.textContent = "未設定";
         return;
       }
 
@@ -265,10 +254,10 @@
     }
 
     function updateCountdown() {
-      const countdownEl = document.getElementById('countdown');
+      const countdownEl = document.getElementById("countdown");
 
       if (!nextEvent) {
-        countdownEl.textContent = '未設定';
+        countdownEl.textContent = "未設定";
         return;
       }
 
@@ -276,7 +265,7 @@
       const diff = nextEvent.start - now;
 
       if (diff <= 0) {
-        countdownEl.textContent = '開催中 / 開催済み';
+        countdownEl.textContent = "開催中 / 開催済み";
         return;
       }
 
@@ -298,48 +287,47 @@
 
     function formatGoogleCalendarDate(date) {
       const yyyy = date.getFullYear();
-      const mm = String(date.getMonth() + 1).padStart(2, '0');
-      const dd = String(date.getDate()).padStart(2, '0');
-      const hh = String(date.getHours()).padStart(2, '0');
-      const min = String(date.getMinutes()).padStart(2, '0');
-      const ss = '00';
+      const mm = String(date.getMonth() + 1).padStart(2, "0");
+      const dd = String(date.getDate()).padStart(2, "0");
+      const hh = String(date.getHours()).padStart(2, "0");
+      const min = String(date.getMinutes()).padStart(2, "0");
+      const ss = "00";
       return `${yyyy}${mm}${dd}T${hh}${min}${ss}`;
     }
 
     function openGoogleCalendar() {
       if (!nextEvent) {
-        alert('予定がありません。');
+        alert("予定がありません。");
         return;
       }
 
       const start = formatGoogleCalendarDate(nextEvent.start);
       const end = formatGoogleCalendarDate(nextEvent.end);
-
       const details = "D'104 Naviから追加した活動予定です。";
 
       const url =
-        'https://calendar.google.com/calendar/render?action=TEMPLATE' +
-        '&text=' + encodeURIComponent(nextEvent.title) +
-        '&dates=' + encodeURIComponent(`${start}/${end}`) +
-        '&location=' + encodeURIComponent(nextEvent.location) +
-        '&details=' + encodeURIComponent(details);
+        "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+        "&text=" + encodeURIComponent(nextEvent.title) +
+        "&dates=" + encodeURIComponent(`${start}/${end}`) +
+        "&location=" + encodeURIComponent(nextEvent.location) +
+        "&details=" + encodeURIComponent(details);
 
-      window.open(url, '_blank');
+      window.open(url, "_blank");
     }
 
     function formatICSDate(date) {
       const yyyy = date.getFullYear();
-      const mm = String(date.getMonth() + 1).padStart(2, '0');
-      const dd = String(date.getDate()).padStart(2, '0');
-      const hh = String(date.getHours()).padStart(2, '0');
-      const min = String(date.getMinutes()).padStart(2, '0');
-      const ss = '00';
+      const mm = String(date.getMonth() + 1).padStart(2, "0");
+      const dd = String(date.getDate()).padStart(2, "0");
+      const hh = String(date.getHours()).padStart(2, "0");
+      const min = String(date.getMinutes()).padStart(2, "0");
+      const ss = "00";
       return `${yyyy}${mm}${dd}T${hh}${min}${ss}`;
     }
 
     function downloadICS() {
       if (!nextEvent) {
-        alert('予定がありません。');
+        alert("予定がありません。");
         return;
       }
 
@@ -363,25 +351,25 @@ DESCRIPTION:D'104 Naviから追加した活動予定です。
 END:VEVENT
 END:VCALENDAR`;
 
-      const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+      const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
       const url = URL.createObjectURL(blob);
 
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
-      a.download = 'd104-event.ics';
+      a.download = "d104-event.ics";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     }
 
-    if (clearBtn) clearBtn.addEventListener('click', clearNext);
-    if (addGoogleCalendarBtn) addGoogleCalendarBtn.addEventListener('click', openGoogleCalendar);
-    if (downloadIcsBtn) downloadIcsBtn.addEventListener('click', downloadICS);
+    if (clearBtn) clearBtn.addEventListener("click", clearNext);
+    if (addGoogleCalendarBtn) addGoogleCalendarBtn.addEventListener("click", openGoogleCalendar);
+    if (downloadIcsBtn) downloadIcsBtn.addEventListener("click", downloadICS);
 
     renderNextEvent();
 
-    window.setRealtimeNextEvent = function(event) {
+    window.setRealtimeNextEvent = function (event) {
       nextEvent = event;
       renderNextEvent();
     };
@@ -389,10 +377,12 @@ END:VCALENDAR`;
 
   <script type="module">
     import { listenEvents } from "./events-db.js";
+    import { listenDisneyEvents } from "./disney-events-db.js";
 
     let currentDate = new Date();
     let selectedDateKey = null;
     let allEvents = [];
+    let allDisneyEvents = [];
 
     const monthLabel = document.getElementById("calendarMonthLabel");
     const grid = document.getElementById("miniCalendarGrid");
@@ -424,10 +414,16 @@ END:VCALENDAR`;
     }
 
     function getEventsByDateKey(dateKey) {
-      return allEvents.filter(event => {
-        const eventDate = new Date(event.start);
-        return formatDateKey(eventDate) === dateKey;
-      }).sort((a, b) => new Date(a.start) - new Date(b.start));
+      return allEvents
+        .filter(event => {
+          const eventDate = new Date(event.start);
+          return formatDateKey(eventDate) === dateKey;
+        })
+        .sort((a, b) => new Date(a.start) - new Date(b.start));
+    }
+
+    function getDisneyEventsByDateKey(dateKey) {
+      return allDisneyEvents.filter(event => event.date === dateKey);
     }
 
     function renderSelectedDay() {
@@ -441,13 +437,14 @@ END:VCALENDAR`;
       selectedDateLabel.textContent = formatDateJP(selectedDate);
 
       const dayEvents = getEventsByDateKey(selectedDateKey);
+      const disneyEvents = getDisneyEventsByDateKey(selectedDateKey);
 
-      if (!dayEvents.length) {
+      if (!dayEvents.length && !disneyEvents.length) {
         selectedDayEvents.innerHTML = `<p class="hint">この日の予定はありません。</p>`;
         return;
       }
 
-      selectedDayEvents.innerHTML = dayEvents.map(event => `
+      const clubHtml = dayEvents.map(event => `
         <div class="dayEventItem">
           <div class="dayEventTitle">${event.title}</div>
           <div class="dayEventMeta">
@@ -455,6 +452,18 @@ END:VCALENDAR`;
           </div>
         </div>
       `).join("");
+
+      const disneyHtml = disneyEvents.map(event => `
+        <div class="dayEventItem">
+          <div class="dayEventTitle">🎀 ${event.title}</div>
+          <div class="dayEventMeta">
+            ${event.note || ""}
+            ${event.link ? ` / <a href="${event.link}" target="_blank" rel="noopener noreferrer">詳細</a>` : ""}
+          </div>
+        </div>
+      `).join("");
+
+      selectedDayEvents.innerHTML = clubHtml + disneyHtml;
     }
 
     function renderCalendar() {
@@ -480,7 +489,9 @@ END:VCALENDAR`;
       for (let day = 1; day <= daysInMonth; day++) {
         const cellDate = new Date(year, month, day);
         const dateKey = formatDateKey(cellDate);
+
         const dayEvents = getEventsByDateKey(dateKey);
+        const disneyEvents = getDisneyEventsByDateKey(dateKey);
 
         const cell = document.createElement("button");
         cell.type = "button";
@@ -488,9 +499,21 @@ END:VCALENDAR`;
 
         if (dateKey === todayKey) cell.classList.add("isToday");
         if (selectedDateKey === dateKey) cell.classList.add("isSelected");
-        if (dayEvents.length) cell.classList.add("hasEvent");
+        if (dayEvents.length || disneyEvents.length) cell.classList.add("hasEvent");
 
-        const dotsHtml = dayEvents.slice(0, 3).map(() => `<span class="calendarDot"></span>`).join("");
+        let dotsHtml = "";
+
+        if (dayEvents.length) {
+          dotsHtml += `<span class="calendarDot club"></span>`;
+        }
+
+        if (disneyEvents.some(event => event.type === "resort")) {
+          dotsHtml += `<span class="calendarDot disney"></span>`;
+        }
+
+        if (disneyEvents.some(event => event.type === "character")) {
+          dotsHtml += `<span class="calendarDot character"></span>`;
+        }
 
         cell.innerHTML = `
           <div class="calendarDate">${day}</div>
@@ -544,60 +567,32 @@ END:VCALENDAR`;
       renderCalendar();
     });
 
-    listenEvents((events) => {
-      allEvents = (events || []).slice();
-
+    function rerenderAll() {
       updateNextEventFromDB(allEvents);
 
-      if (!selectedDateKey && allEvents.length) {
+      if (!selectedDateKey) {
         const upcoming = allEvents
           .filter(event => new Date(event.end) >= new Date())
           .sort((a, b) => new Date(a.start) - new Date(b.start));
 
         if (upcoming.length) {
-          const firstEventDate = new Date(upcoming[0].start);
-          selectedDateKey = formatDateKey(firstEventDate);
+          selectedDateKey = formatDateKey(new Date(upcoming[0].start));
         }
       }
 
       renderCalendar();
       renderSelectedDay();
+    }
+
+    listenEvents((events) => {
+      allEvents = (events || []).slice();
+      rerenderAll();
+    });
+
+    listenDisneyEvents((events) => {
+      allDisneyEvents = (events || []).slice();
+      rerenderAll();
     });
   </script>
-
-  <script type="module">
-  import { db } from "./firebase-config.js";
-  import { ref, get, set } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-database.js";
-
-  const disneyRef = ref(db, "disneyEvents");
-
-  get(disneyRef).then((snapshot) => {
-    if (!snapshot.exists()) {
-      set(disneyRef, {
-        event1: {
-          title: "東京ディズニーシー 25周年開始",
-          date: "2026-04-08",
-          type: "resort",
-          link: "https://www.tokyodisneyresort.jp/",
-          note: "イベント開始日"
-        },
-        event2: {
-          title: "ミッキー スクリーンデビュー日",
-          date: "2026-11-18",
-          type: "character",
-          link: "https://www.disney.co.jp/",
-          note: "スクリーンデビュー記念日"
-        }
-      });
-      console.log("disneyEvents を作成しました");
-    } else {
-      console.log("disneyEvents はすでに存在します");
-    }
-  }).catch((error) => {
-    console.error("disneyEvents 作成エラー:", error);
-  });
-</script>
 </body>
 </html>
-
-丸々コピーしたものなんだけど、エラーになりそうなとことかない？？ plus 前よりもうちょっと綺麗にできるとこあればしてほしいദ്ദി(៸៸›ᴗ‹៸៸ )ერიოരുമ
