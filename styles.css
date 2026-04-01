@@ -993,8 +993,9 @@ text-decoration:none;
 .flipBottom,
 .flipTopNext{
   position:absolute;
-  left:0;
+  inset:0;
   width:100%;
+  height:100%;
   overflow:hidden;
   display:flex;
   align-items:center;
@@ -1005,6 +1006,7 @@ text-decoration:none;
   backface-visibility:hidden;
   color:#1f404b;
   font-weight:900;
+  border-radius:12px;
 }
 
 .worldClockRow.isNight .flipTop,
@@ -1016,47 +1018,21 @@ text-decoration:none;
   box-shadow:0 6px 18px rgba(0,0,0,.18);
 }
 
-.flipTop,
+.flipBottom,
 .flipTopNext{
-  top:0;
-  height:50%;
-  border-radius:12px 12px 6px 6px;
-  transform-origin:bottom;
+  display:none;
 }
 
-.flipBottom{
-  bottom:0;
-  height:50%;
-  border-radius:6px 6px 12px 12px;
-  transform-origin:top;
-}
-
-.flipTop span,
-.flipTopNext span{
+.flipTop span{
   display:block;
   font-size:18px;
   line-height:1;
   letter-spacing:.03em;
-  transform:translateY(34%);
+  transform:none;
 }
 
-.flipBottom span{
-  display:block;
-  font-size:18px;
-  line-height:1;
-  letter-spacing:.03em;
-  transform:translateY(-12%);
-}
-
-.compactSecondCard .flipTop span,
-.compactSecondCard .flipTopNext span{
+.compactSecondCard .flipTop span{
   font-size:14px;
-  transform:translateY(30%);
-}
-
-.compactSecondCard .flipBottom span{
-  font-size:14px;
-  transform:translateY(-10%);
 }
 
 .flipTopNext{
