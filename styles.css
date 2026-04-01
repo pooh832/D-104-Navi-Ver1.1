@@ -1080,11 +1080,7 @@ text-decoration:none;
   }
 }
 
-@media (max-width: 900px){
-  .compactWorldClockGrid{
-    grid-template-columns:1fr;
-  }
-}
+
 
 @media (max-width: 520px){
   .worldClockRow{
