@@ -38,10 +38,21 @@ body{
   line-height:1.65;
 
   background:
-    radial-gradient(1100px 520px at 50% -12%, rgba(255,255,255,.86), transparent 55%),
-    radial-gradient(900px 520px at 12% 18%, rgba(255,255,255,.45), transparent 60%),
-    radial-gradient(900px 520px at 88% 26%, rgba(255,255,255,.35), transparent 62%),
-    linear-gradient(180deg, var(--bgTop) 0%, var(--bgMid) 55%, var(--bgBottom) 100%);
+    radial-gradient(1200px 620px at 50% -14%, rgba(255,255,255,.88), transparent 58%),
+    radial-gradient(980px 560px at 10% 22%, rgba(255,255,255,.42), transparent 64%),
+    radial-gradient(980px 560px at 90% 28%, rgba(255,255,255,.34), transparent 66%),
+    radial-gradient(900px 520px at 50% 118%, rgba(255,255,255,.16), transparent 72%),
+    linear-gradient(
+      180deg,
+      #d9f2f8 0%,
+      #c7eaf3 26%,
+      #b8e0eb 52%,
+      #b5dce7 76%,
+      #c5e8f1 100%
+    );
+
+  min-height:100vh;
+  background-attachment: fixed;
 }
 
 /* Subtle sparkles (控えめ) */
@@ -54,9 +65,11 @@ body::after{
     radial-gradient(1.4px 1.4px at 14% 16%, rgba(255,255,255,.70), transparent 60%),
     radial-gradient(1.2px 1.2px at 64% 12%, rgba(255,255,255,.55), transparent 60%),
     radial-gradient(1.2px 1.2px at 86% 30%, rgba(255,255,255,.50), transparent 60%),
-    radial-gradient(1.1px 1.1px at 24% 46%, rgba(255,255,255,.40), transparent 60%),
-    radial-gradient(1.1px 1.1px at 58% 60%, rgba(255,255,255,.30), transparent 60%);
-  opacity:.30;
+    radial-gradient(1.1px 1.1px at 24% 46%, rgba(255,255,255,.38), transparent 60%),
+    radial-gradient(1.1px 1.1px at 58% 60%, rgba(255,255,255,.28), transparent 60%),
+    radial-gradient(1px 1px at 35% 78%, rgba(255,255,255,.26), transparent 60%),
+    radial-gradient(1px 1px at 78% 74%, rgba(255,255,255,.22), transparent 60%);
+  opacity:.26;
 }
 
 /* =========================
