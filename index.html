@@ -97,6 +97,51 @@
 
     </section>
 
+
+    <div class="sectionTitle">CALENDAR</div>
+
+<section class="card" aria-label="カレンダー">
+  <div class="cardHead">
+    <h2 class="cardTitle">
+      <span class="badge" aria-hidden="true">🗓️</span>
+      mini calendar
+    </h2>
+    <div class="calendarNav">
+      <button class="btnGhost calendarMonthBtn" id="prevMonthBtn" type="button">‹</button>
+      <span id="calendarMonthLabel" class="pill">2026年4月</span>
+      <button class="btnGhost calendarMonthBtn" id="nextMonthBtn" type="button">›</button>
+    </div>
+  </div>
+
+  <div class="miniCalendarWrap">
+    <div class="calendarWeekdays">
+      <div>Sun</div>
+      <div>Mon</div>
+      <div>Tue</div>
+      <div>Wed</div>
+      <div>Thu</div>
+      <div>Fri</div>
+      <div>Sat</div>
+    </div>
+
+    <div id="miniCalendarGrid" class="miniCalendarGrid"></div>
+  </div>
+
+  <div class="selectedDayBox">
+    <div class="cardHead" style="margin-bottom:8px;">
+      <h3 class="cardTitle">
+        <span class="badge" aria-hidden="true">📍</span>
+        selected day
+      </h3>
+    </div>
+
+    <div id="selectedDateLabel" class="hint">日付を選ぶと予定が表示されます。</div>
+    <div id="selectedDayEvents" style="margin-top:10px;">
+      <p class="hint">この日の予定はありません。</p>
+    </div>
+  </div>
+</section>
+    
     <!-- Divider -->
     <div class="sectionTitle" id="menu">MENU</div>
 
