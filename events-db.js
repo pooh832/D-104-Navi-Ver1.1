@@ -30,5 +30,10 @@ export function listenEvents(callback) {
     callback(events);
 
   });
+  // disneyEvents を作成（1回だけ実行）
+import { set } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-database.js";
+
+const disneyRef = ref(db, "disneyEvents");
+set(disneyRef, {});
 
 }
