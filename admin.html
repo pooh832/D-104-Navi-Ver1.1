@@ -344,6 +344,82 @@ let editingDisneyEventId = null;
         </div>
       `).join("");
 
+      function resetDisneyEventForm() {
+  editingDisneyEventId = null;
+  disneyTitleInput.value = "";
+  disneyDateInput.value = "";
+  disneyTypeInput.value = "resort";
+  disneyNoteInput.value = "";
+  disneyLinkInput.value = "";
+  saveDisneyEventBtn.textContent = "Disney予定を追加";
+  cancelDisneyEditBtn.style.display = "none";
+}
+
+function startEditingDisneyEvent(event) {
+  editingDisneyEventId = event.id;
+  disneyTitleInput.value = event.title || "";
+  disneyDateInput.value = event.date || "";
+  disneyTypeInput.value = event.type || "resort";
+  disneyNoteInput.value = event.note || "";
+  disneyLinkInput.value = event.link || "";
+  saveDisneyEventBtn.textContent = "Disney予定を更新";
+  cancelDisneyEditBtn.style.display = "inline-flex";
+  disneyAdminMessage.textContent = "Disney予定を編集中です。";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function renderDisneyEvents(events) {
+  if (!events || !events.length) {
+    adminDisneyEventList.innerHTML = `<p class="hint">まだDisney予定はありません。</p>`;
+    return;
+  }
+
+  const sorted = [...events].sort((a, b) => String(a.date).localeCompare(String(b.date)));
+
+  adminDisneyEventList.innerHTML = sorted.map(event => `
+    <div class="card" style="margin-bottom:14px;">
+      <div class="cardHead">
+        <h3 class="cardTitle"><span class="badge">🏰</span> ${escapeHtml(event.title)}</h3>
+      </div>
+
+      <p class="hint">${escapeHtml(event.date)} / ${escapeHtml(event.type)}</p>
+      <p style="margin:8px 0 0;">${escapeHtml(event.note || "")}</p>
+      ${event.link ? `<p style="margin:8px 0 0;"><a href="${escapeHtml(event.link)}" target="_blank" rel="noopener noreferrer">リンクを開く</a></p>` : ""}
+
+      <div class="actions" style="margin-top:12px;">
+        <button class="btnPrimary edit-disney-btn" data-id="${event.id}" type="button">編集</button>
+        <button class="btnGhost delete-disney-btn" data-id="${event.id}" type="button">削除</button>
+      </div>
+    </div>
+  `).join("");
+
+  document.querySelectorAll(".edit-disney-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const target = sorted.find(event => event.id === btn.dataset.id);
+      if (target) startEditingDisneyEvent(target);
+    });
+  });
+
+  document.querySelectorAll(".delete-disney-btn").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const ok = confirm("このDisney予定を削除しますか？");
+      if (!ok) return;
+
+      try {
+        await deleteDisneyEvent(btn.dataset.id);
+        disneyAdminMessage.textContent = "Disney予定を削除しました。";
+
+        if (editingDisneyEventId === btn.dataset.id) {
+          resetDisneyEventForm();
+        }
+      } catch (error) {
+        console.error(error);
+        disneyAdminMessage.textContent = "削除に失敗しました。";
+      }
+    });
+  });
+}
+
       document.querySelectorAll(".answer-btn").forEach(btn => {
         btn.addEventListener("click", async () => {
           const id = btn.dataset.id;
@@ -412,6 +488,45 @@ let editingDisneyEventId = null;
     listenQuestions((questions) => {
       renderQuestions(questions);
     });
+
+    saveDisneyEventBtn.addEventListener("click", async () => {
+  const title = disneyTitleInput.value.trim();
+  const date = disneyDateInput.value;
+  const type = disneyTypeInput.value;
+  const note = disneyNoteInput.value.trim();
+  const link = disneyLinkInput.value.trim();
+
+  if (!title || !date || !type) {
+    disneyAdminMessage.textContent = "タイトル・日付・種類を入力してください。";
+    return;
+  }
+
+  const disneyEventData = { title, date, type, note, link };
+
+  try {
+    if (editingDisneyEventId) {
+      await updateDisneyEvent(editingDisneyEventId, disneyEventData);
+      disneyAdminMessage.textContent = "Disney予定を更新しました。";
+    } else {
+      await addDisneyEvent(disneyEventData);
+      disneyAdminMessage.textContent = "Disney予定を保存しました。";
+    }
+
+    resetDisneyEventForm();
+  } catch (error) {
+    console.error(error);
+    disneyAdminMessage.textContent = "保存に失敗しました。";
+  }
+});
+
+cancelDisneyEditBtn.addEventListener("click", () => {
+  resetDisneyEventForm();
+  disneyAdminMessage.textContent = "Disney予定の編集をキャンセルしました。";
+});
+
+listenDisneyEvents((events) => {
+  renderDisneyEvents(events);
+});
   </script>
 
   <script type="module">
