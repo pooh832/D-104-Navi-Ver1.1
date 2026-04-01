@@ -1,12 +1,12 @@
 const ADMIN_EMAILS = [
   "s11502401307@toyo.jp",
-  "member2@toyo.jp",
-  "member3@toyo.jp",
-  "member4@toyo.jp",
-  "member5@toyo.jp",
-  "member6@toyo.jp",
-  "member7@toyo.jp",
-  "member8@toyo.jp"
+  "s11502400250@toyo.jp",
+  "s13202401047@toyo.jp",
+  "s14102500159@toyo.jp",
+  "s15402501698@toyo.jp",
+  "s15502500738@toyo.jp",
+  "s15502500772@toyo.jp",
+  "s21402500217@toyo.jp"
 ];
 
 import { auth } from "./firebase-config.js";
