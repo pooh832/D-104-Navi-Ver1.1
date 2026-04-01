@@ -97,6 +97,64 @@
       </div>
     </section>
 
+    <section class="card">
+  <div class="cardHead">
+    <h2 class="cardTitle"><span class="badge">🏰</span> disney events editor</h2>
+  </div>
+
+  <div class="nextBox" style="gap:14px;">
+    <div>
+      <label class="k" for="disneyTitle">タイトル</label>
+      <input id="disneyTitle" type="text" placeholder="例：ミッキー スクリーンデビュー日"
+        style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.12);font-size:14px;">
+    </div>
+
+    <div>
+      <label class="k" for="disneyDate">日付</label>
+      <input id="disneyDate" type="date"
+        style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.12);font-size:14px;">
+    </div>
+
+    <div>
+      <label class="k" for="disneyType">種類</label>
+      <select id="disneyType"
+        style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.12);font-size:14px;">
+        <option value="resort">resort（パークイベント）</option>
+        <option value="character">character（キャラクター関連）</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="k" for="disneyNote">メモ</label>
+      <input id="disneyNote" type="text" placeholder="例：スクリーンデビュー記念日"
+        style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.12);font-size:14px;">
+    </div>
+
+    <div>
+      <label class="k" for="disneyLink">リンク</label>
+      <input id="disneyLink" type="url" placeholder="https://..."
+        style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;border:1px solid rgba(0,0,0,.12);font-size:14px;">
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btnPrimary" id="saveDisneyEventBtn" type="button">Disney予定を追加</button>
+    <button class="btnGhost" id="cancelDisneyEditBtn" type="button" style="display:none;">編集をキャンセル</button>
+  </div>
+
+  <p id="disneyAdminMessage" class="hint"></p>
+</section>
+
+<section class="card">
+  <div class="cardHead">
+    <h2 class="cardTitle"><span class="badge">🌏</span> saved disney events</h2>
+  </div>
+
+  <div id="adminDisneyEventList">
+    <p class="hint">Disney予定を読み込み中...</p>
+  </div>
+</section>
+
   </main>
 
   <script type="module">
