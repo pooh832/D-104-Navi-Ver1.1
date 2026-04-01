@@ -13,7 +13,10 @@ export function listenDisneyEvents(callback) {
 
     if (data) {
       for (const id in data) {
-        disneyEvents.push(data[id]);
+        disneyEvents.push({
+          id,
+          ...data[id]
+        });
       }
     }
 
