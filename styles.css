@@ -888,7 +888,7 @@ text-decoration:none;
 }
 }
 
-/* ===== World Disney Time ===== */
+/* ===== World Clock ===== */
 
 .worldClockCard{
   margin-top:18px;
@@ -923,6 +923,7 @@ text-decoration:none;
   border-radius:18px;
   background:rgba(255,255,255,.38);
   border:1px solid rgba(255,255,255,.5);
+  overflow:hidden;
 }
 
 .parkName{
@@ -932,9 +933,34 @@ text-decoration:none;
 }
 
 .parkTime{
+  display:inline-block;
+  min-width:72px;
+  text-align:right;
   font-size:15px;
   font-weight:900;
   color:#21424d;
+  transform-origin:center top;
+  backface-visibility:hidden;
+}
+
+/* 日めくりっぽい軽いフリップ */
+.timeFlip{
+  animation: timeFlipAnim .42s ease;
+}
+
+@keyframes timeFlipAnim{
+  0%{
+    transform: rotateX(90deg);
+    opacity:.2;
+  }
+  60%{
+    transform: rotateX(-8deg);
+    opacity:1;
+  }
+  100%{
+    transform: rotateX(0deg);
+    opacity:1;
+  }
 }
 
 @media (max-width: 768px){
