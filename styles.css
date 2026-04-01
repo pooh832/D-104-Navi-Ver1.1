@@ -914,6 +914,11 @@ text-decoration:none;
   grid-template-columns:repeat(2, minmax(0, 1fr));
   gap:12px 18px;
 }
+@media (max-width: 680px){
+  .compactWorldClockGrid{
+    grid-template-columns:1fr;
+  }
+}
 
 .worldClockRow{
   display:flex;
