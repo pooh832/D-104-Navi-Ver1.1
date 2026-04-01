@@ -887,3 +887,64 @@ text-decoration:none;
   border: 2px solid #ffd93d;
 }
 }
+
+/* ===== World Disney Time ===== */
+
+.worldClockCard{
+  margin-top:18px;
+  padding:18px;
+  border-radius:24px;
+  background:rgba(255,255,255,.22);
+  border:1px solid rgba(255,255,255,.55);
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+  backdrop-filter: blur(10px);
+}
+
+.worldClockTitle{
+  font-size:14px;
+  font-weight:800;
+  letter-spacing:.12em;
+  color:#4f6f7a;
+  margin-bottom:12px;
+  text-transform:uppercase;
+}
+
+.worldClockGrid{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+  gap:10px;
+}
+
+.worldClockItem{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 14px;
+  border-radius:18px;
+  background:rgba(255,255,255,.38);
+  border:1px solid rgba(255,255,255,.5);
+}
+
+.parkName{
+  font-size:13px;
+  font-weight:700;
+  color:#56727c;
+}
+
+.parkTime{
+  font-size:15px;
+  font-weight:900;
+  color:#21424d;
+}
+
+@media (max-width: 768px){
+  .worldClockGrid{
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px){
+  .worldClockGrid{
+    grid-template-columns:1fr;
+  }
+}
