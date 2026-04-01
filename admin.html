@@ -159,8 +159,16 @@
 
   <script type="module">
     import "./auth.js";
-    import { addEvent, listenEvents, updateEvent, deleteEvent } from "./events-db.js";
-    import { listenQuestions, answerQuestion } from "./questions-db.js";
+import { addEvent, listenEvents, updateEvent, deleteEvent } from "./events-db.js";
+import { listenQuestions, answerQuestion } from "./questions-db.js";
+import {
+  listenDisneyEvents,
+  addDisneyEvent,
+  updateDisneyEvent,
+  deleteDisneyEvent
+} from "./disney-events-db.js";
+
+    
 
     window.protectAdminPage();
 
@@ -176,6 +184,21 @@
     const eventEndInput = document.getElementById("eventEnd");
 
     let editingEventId = null;
+
+    // ===== Disney Events =====
+
+const adminDisneyEventList = document.getElementById("adminDisneyEventList");
+const saveDisneyEventBtn = document.getElementById("saveDisneyEventBtn");
+const cancelDisneyEditBtn = document.getElementById("cancelDisneyEditBtn");
+const disneyAdminMessage = document.getElementById("disneyAdminMessage");
+
+const disneyTitleInput = document.getElementById("disneyTitle");
+const disneyDateInput = document.getElementById("disneyDate");
+const disneyTypeInput = document.getElementById("disneyType");
+const disneyNoteInput = document.getElementById("disneyNote");
+const disneyLinkInput = document.getElementById("disneyLink");
+
+let editingDisneyEventId = null;
 
     function escapeHtml(str) {
       return String(str ?? "")
