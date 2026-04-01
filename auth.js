@@ -1,4 +1,13 @@
-const ADMIN_EMAIL = "s11502401307@toyo.jp";
+const ADMIN_EMAILS = [
+  "s11502401307@toyo.jp",
+  "member2@toyo.jp",
+  "member3@toyo.jp",
+  "member4@toyo.jp",
+  "member5@toyo.jp",
+  "member6@toyo.jp",
+  "member7@toyo.jp",
+  "member8@toyo.jp"
+];
 
 import { auth } from "./firebase-config.js";
 import {
@@ -8,10 +17,19 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
 
+function isAdminEmail(email) {
+  return ADMIN_EMAILS.includes(email);
+}
+
 window.registerUser = async function () {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
   const message = document.getElementById("message");
+
+  if (!isAdminEmail(email)) {
+    message.textContent = "幹部アカウントのみ登録できます。";
+    return;
+  }
 
   try {
     await createUserWithEmailAndPassword(auth, email, password);
@@ -26,17 +44,22 @@ window.loginUser = async function () {
   const password = document.getElementById("password").value.trim();
   const message = document.getElementById("message");
 
+  if (!isAdminEmail(email)) {
+    message.textContent = "幹部アカウントのみログインできます。";
+    return;
+  }
+
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-    if (userCredential.user.email !== ADMIN_EMAIL) {
-      message.textContent = "このアカウントは管理者ではありません";
+    if (!isAdminEmail(userCredential.user.email)) {
+      message.textContent = "このアカウントは管理者ではありません。";
       await signOut(auth);
       return;
     }
 
     message.textContent = "ログイン成功";
-    window.location.href = "admin.html";
+    location.href = "admin.html";
   } catch (error) {
     console.error("login error:", error);
     message.textContent = `ログイン失敗: ${error.code} / ${error.message}`;
@@ -55,7 +78,7 @@ window.protectAdminPage = function () {
       return;
     }
 
-    if (user.email !== ADMIN_EMAIL) {
+    if (!isAdminEmail(user.email)) {
       await signOut(auth);
       location.href = "login.html";
       return;
