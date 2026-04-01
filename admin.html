@@ -366,10 +366,16 @@
           if (editingDisneyEventId === btn.dataset.id) {
             resetDisneyEventForm();
           }
-        } catch (error) {
-          console.error(error);
-          disneyAdminMessage.textContent = "削除に失敗しました: " + error.message;
-        }
+      } catch (error) {
+  console.error("Disney save error:", error);
+  disneyAdminMessage.textContent =
+    "保存に失敗しました: " +
+    (error?.message || error?.code || String(error));
+  alert(
+    "保存に失敗しました:\n" +
+    (error?.message || error?.code || String(error))
+  );
+}
       });
     });
   }
