@@ -871,3 +871,294 @@ text-decoration:none;
 }
 }
 
+/* ========================================
+   UI Upgrade Pack
+   add at end of styles.css
+======================================== */
+
+/* ===== 全体の奥行き ===== */
+
+body{
+  overflow-x:hidden;
+}
+
+/* 背景をほんの少し動かす */
+body::before{
+  animation:bgFloat 18s ease-in-out infinite alternate;
+}
+
+@keyframes bgFloat{
+  from{
+    transform:translateY(0px);
+  }
+  to{
+    transform:translateY(-18px);
+  }
+}
+
+/* ===== Hero 強化 ===== */
+
+.hero{
+  padding-top:56px;
+  padding-bottom:24px;
+}
+
+.heroTitle{
+  font-size:38px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-shadow:
+    0 10px 30px rgba(0,0,0,.10),
+    0 2px 10px rgba(255,255,255,.35);
+}
+
+.heroLead{
+  font-size:14px;
+  opacity:.82;
+}
+
+/* ===== 主役カード感 ===== */
+
+.nextEventCard{
+  transform:translateY(-6px);
+
+  box-shadow:
+    0 28px 50px rgba(6,38,46,.18),
+    0 0 0 1px rgba(255,255,255,.6) inset,
+    0 10px 30px rgba(255,255,255,.35) inset;
+}
+
+/* ===== カードの立体感UP ===== */
+
+.card{
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease;
+}
+
+.card:hover{
+  transform:translateY(-2px);
+
+  box-shadow:
+    0 24px 42px rgba(6,38,46,.16),
+    0 0 0 1px rgba(255,255,255,.55) inset,
+    0 10px 24px rgba(255,255,255,.35) inset;
+}
+
+/* ===== カレンダー強化 ===== */
+
+.calendarCell{
+  transition:
+    transform .15s ease,
+    box-shadow .15s ease,
+    background .15s ease;
+}
+
+.calendarCell.isSelected{
+  transform:translateY(-2px) scale(1.02);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.62),
+      rgba(255,255,255,.38)
+    );
+
+  box-shadow:
+    0 14px 28px rgba(44,147,178,.18),
+    0 0 0 1px rgba(255,255,255,.7) inset;
+}
+
+.calendarCell:hover{
+  transform:translateY(-2px);
+}
+
+/* ===== 今日感 ===== */
+
+.calendarCell.isToday{
+  outline:2px solid rgba(44,147,178,.72);
+
+  box-shadow:
+    0 0 0 4px rgba(127,214,230,.14),
+    0 10px 24px rgba(44,147,178,.12);
+}
+
+/* ===== ボタン強化 ===== */
+
+.btnPrimary{
+  letter-spacing:.04em;
+  transition:
+    transform .16s ease,
+    box-shadow .16s ease;
+}
+
+.btnPrimary:hover{
+  transform:translateY(-1px);
+
+  box-shadow:
+    0 18px 34px rgba(44,147,178,.28),
+    0 0 0 1px rgba(255,255,255,.55) inset;
+}
+
+.btnPrimary:active{
+  transform:scale(.98);
+}
+
+/* ===== タイル強化 ===== */
+
+.tile{
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease,
+    background .18s ease;
+}
+
+.tile:hover{
+  transform:translateY(-3px);
+
+  box-shadow:
+    0 24px 40px rgba(6,38,46,.16);
+}
+
+/* ===== ガラス感を少し上品に ===== */
+
+.card,
+.tile,
+.newsItem,
+.chip{
+  backdrop-filter: blur(12px);
+}
+
+/* ===== 丸みを少し増やす ===== */
+
+:root{
+  --radius-xl:32px;
+  --radius-lg:26px;
+  --radius-md:20px;
+}
+
+/* ===== セクションタイトル強化 ===== */
+
+.sectionTitle{
+  letter-spacing:.24em;
+  text-shadow:
+    0 6px 18px rgba(255,255,255,.42);
+}
+
+/* ===== ワールドクロック高級感 ===== */
+
+.worldClockRow{
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease;
+}
+
+.worldClockRow:hover{
+  transform:translateY(-2px);
+
+  box-shadow:
+    0 18px 30px rgba(0,0,0,.10);
+}
+
+/* ===== subtle fade ===== */
+
+.card,
+.tile,
+.worldClockRow,
+.calendarCell{
+  animation:fadeUp .45s ease both;
+}
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(8px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* ===== スクロール質感 ===== */
+
+html{
+  scroll-behavior:smooth;
+}
+
+/* ===== iPad / mobile polish ===== */
+
+*{
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ===== 高級感あるTopbar ===== */
+
+.topbar{
+  backdrop-filter:blur(16px);
+
+  box-shadow:
+    0 10px 30px rgba(6,38,46,.08);
+}
+
+/* ===== subtle glow ===== */
+
+.hero::before{
+  filter:blur(8px);
+  opacity:.9;
+}
+
+.hero{
+  padding:64px 20px 34px;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  width:520px;
+  height:520px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle,
+      rgba(255,255,255,.55),
+      rgba(127,214,230,.18),
+      transparent 70%);
+  top:-240px;
+  left:50%;
+  transform:translateX(-50%);
+  filter:blur(10px);
+  opacity:.9;
+}
+
+/* 浮遊オーブ */
+.heroOrb{
+  position:absolute;
+  border-radius:50%;
+  background:rgba(255,255,255,.18);
+  backdrop-filter:blur(6px);
+  animation:floatOrb 8s ease-in-out infinite;
+}
+
+.heroOrb.one{
+  width:80px;
+  height:80px;
+  top:110px;
+  left:12%;
+}
+
+.heroOrb.two{
+  width:120px;
+  height:120px;
+  right:10%;
+  top:80px;
+  animation-delay:2s;
+}
+
+@keyframes floatOrb{
+  0%{ transform:translateY(0px); }
+  50%{ transform:translateY(-12px); }
+  100%{ transform:translateY(0px); }
+}
