@@ -1,21 +1,25 @@
 /* =========================
-   Clean DisneySea Lounge UI
-   readable / soft / elegant
+   D'104 Navi
+   Night DisneySea Glass UI
 ========================= */
 
 :root{
-  --bg:#dff3f8;
+  --bgTop:#071521;
+  --bgBottom:#0d2234;
 
-  --ink:#08303A;
-  --muted:rgba(8,48,58,.62);
+  --ink:#f4fbff;
+  --muted:rgba(255,255,255,.62);
 
-  --card:rgba(255,255,255,.74);
-  --cardBorder:rgba(255,255,255,.90);
+  --glass:rgba(255,255,255,.08);
+  --glassStrong:rgba(255,255,255,.12);
 
-  --accent:#5cb6cc;
+  --border:rgba(255,255,255,.14);
+
+  --accent:#5fd3ff;
+  --accentDeep:#2f93c9;
 
   --shadow:
-    0 10px 24px rgba(6,38,46,.08);
+    0 10px 30px rgba(0,0,0,.24);
 
   --radius-xl:30px;
   --radius-lg:24px;
@@ -49,28 +53,37 @@ body{
   color:var(--ink);
   line-height:1.65;
 
-  background:var(--bg);
+  background:
+    linear-gradient(
+      180deg,
+      var(--bgTop) 0%,
+      var(--bgBottom) 100%
+    );
 
   overflow-x:hidden;
 
   -webkit-tap-highlight-color:transparent;
 }
 
-/* subtle sparkle */
+/* subtle stars */
 
 body::after{
   content:"";
   position:fixed;
   inset:0;
-  z-index:0;
+
   pointer-events:none;
+  z-index:0;
 
   background:
-    radial-gradient(1.4px 1.4px at 18% 22%, rgba(255,255,255,.65), transparent 60%),
-    radial-gradient(1.2px 1.2px at 72% 34%, rgba(255,255,255,.5), transparent 60%),
-    radial-gradient(1.3px 1.3px at 46% 74%, rgba(255,255,255,.4), transparent 60%);
+    radial-gradient(1.5px 1.5px at 12% 18%, rgba(255,255,255,.85), transparent 60%),
+    radial-gradient(1.2px 1.2px at 22% 72%, rgba(255,255,255,.55), transparent 60%),
+    radial-gradient(1.4px 1.4px at 38% 44%, rgba(255,255,255,.65), transparent 60%),
+    radial-gradient(1.3px 1.3px at 58% 20%, rgba(255,255,255,.55), transparent 60%),
+    radial-gradient(1.5px 1.5px at 76% 62%, rgba(255,255,255,.50), transparent 60%),
+    radial-gradient(1.2px 1.2px at 88% 28%, rgba(255,255,255,.70), transparent 60%);
 
-  opacity:.24;
+  opacity:.38;
 }
 
 /* =========================
@@ -86,9 +99,9 @@ body::after{
 }
 
 .container{
-  max-width:880px;
+  max-width:900px;
   margin:0 auto;
-  padding:14px 16px 34px;
+  padding:18px 16px 40px;
 }
 
 /* =========================
@@ -107,17 +120,17 @@ body::after{
 
   gap:12px;
 
-  padding:12px 14px;
+  padding:14px 16px;
 
-  background:rgba(255,255,255,.72);
+  background:rgba(7,21,33,.68);
+
+  backdrop-filter:blur(16px);
 
   border-bottom:
-    1px solid rgba(255,255,255,.88);
-
-  backdrop-filter:blur(12px);
+    1px solid rgba(255,255,255,.08);
 
   box-shadow:
-    0 4px 18px rgba(6,38,46,.06);
+    0 6px 24px rgba(0,0,0,.18);
 }
 
 .brand{
@@ -135,19 +148,22 @@ body::after{
 
   border-radius:16px;
 
-  background:rgba(255,255,255,.86);
+  background:rgba(255,255,255,.10);
 
-  box-shadow:var(--shadow);
+  border:
+    1px solid rgba(255,255,255,.14);
 }
 
 .brandTitle{
   font-size:14px;
   font-weight:900;
+
   letter-spacing:.06em;
 }
 
 .brandSub{
   font-size:11px;
+
   color:var(--muted);
 }
 
@@ -159,7 +175,7 @@ body::after{
 .navLink{
   text-decoration:none;
 
-  color:var(--ink);
+  color:white;
 
   font-size:12px;
   font-weight:800;
@@ -168,10 +184,10 @@ body::after{
 
   border-radius:999px;
 
-  background:rgba(255,255,255,.65);
+  background:rgba(255,255,255,.06);
 
   border:
-    1px solid rgba(255,255,255,.92);
+    1px solid rgba(255,255,255,.10);
 }
 
 /* =========================
@@ -179,30 +195,34 @@ body::after{
 ========================= */
 
 .hero{
-  padding:56px 20px 28px;
+  padding:70px 20px 34px;
+
   text-align:center;
 }
 
 .heroTitle{
   margin:0;
 
-  font-size:36px;
+  font-size:40px;
   font-weight:900;
 
-  letter-spacing:.06em;
+  letter-spacing:.08em;
+
+  color:white;
 
   text-shadow:
-    0 2px 10px rgba(255,255,255,.45);
+    0 0 24px rgba(95,211,255,.28),
+    0 4px 20px rgba(0,0,0,.32);
 }
 
 .heroLead{
-  margin:12px auto 0;
+  margin:14px auto 0;
 
-  max-width:34em;
+  max-width:36em;
 
   font-size:14px;
 
-  color:var(--muted);
+  color:rgba(255,255,255,.72);
 }
 
 /* =========================
@@ -212,18 +232,23 @@ body::after{
 .card,
 .tile,
 .newsItem,
-.chip{
-  background:var(--card);
+.chip,
+.calendarCell,
+.selectedDayBox,
+.dayEventItem{
+  background:var(--glass);
 
   border:
-    1px solid var(--cardBorder);
+    1px solid var(--border);
 
-  backdrop-filter:blur(8px);
+  backdrop-filter:blur(14px);
 
   box-shadow:var(--shadow);
 }
 
 .card{
+  position:relative;
+
   padding:20px;
 
   border-radius:var(--radius-xl);
@@ -237,8 +262,34 @@ body::after{
   transform:translateY(-2px);
 
   box-shadow:
-    0 16px 30px rgba(6,38,46,.10);
+    0 18px 36px rgba(0,0,0,.30);
 }
+
+/* subtle shine */
+
+.card::before,
+.tile::before{
+  content:"";
+  position:absolute;
+  inset:0;
+
+  border-radius:inherit;
+
+  pointer-events:none;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.18),
+      transparent 45%
+    );
+
+  opacity:.55;
+}
+
+/* =========================
+   Card header
+========================= */
 
 .cardHead{
   display:flex;
@@ -255,6 +306,8 @@ body::after{
 
   font-size:16px;
   font-weight:900;
+
+  color:white;
 }
 
 .pill{
@@ -262,10 +315,15 @@ body::after{
 
   border-radius:999px;
 
+  background:rgba(255,255,255,.08);
+
+  border:
+    1px solid rgba(255,255,255,.12);
+
   font-size:11px;
   font-weight:900;
 
-  background:rgba(255,255,255,.75);
+  color:rgba(255,255,255,.72);
 }
 
 /* =========================
@@ -284,7 +342,10 @@ body::after{
 
   border-radius:24px;
 
-  background:rgba(255,255,255,.52);
+  background:rgba(255,255,255,.04);
+
+  border:
+    1px solid rgba(255,255,255,.08);
 }
 
 .kv{
@@ -304,6 +365,8 @@ body::after{
 .v{
   font-size:14px;
   font-weight:800;
+
+  color:white;
 }
 
 /* =========================
@@ -323,7 +386,7 @@ body::after{
 
   border:none;
 
-  padding:14px 16px;
+  padding:14px 18px;
 
   border-radius:999px;
 
@@ -331,18 +394,26 @@ body::after{
 
   color:white;
 
-  background:var(--accent);
+  background:
+    linear-gradient(
+      180deg,
+      var(--accent),
+      var(--accentDeep)
+    );
 
   box-shadow:
-    0 8px 20px rgba(44,147,178,.18);
+    0 0 24px rgba(95,211,255,.18);
 
   transition:
-    transform .15s ease,
-    box-shadow .15s ease;
+    transform .16s ease,
+    box-shadow .16s ease;
 }
 
 .btnPrimary:hover{
   transform:translateY(-1px);
+
+  box-shadow:
+    0 0 32px rgba(95,211,255,.28);
 }
 
 .btnPrimary:active{
@@ -354,31 +425,45 @@ body::after{
 
   border-radius:999px;
 
-  border:none;
+  border:
+    1px solid rgba(255,255,255,.12);
 
-  background:rgba(255,255,255,.7);
+  background:rgba(255,255,255,.06);
+
+  color:white;
 
   font-weight:800;
-
-  color:var(--ink);
 }
 
 /* =========================
-   Menu
+   Section Title
 ========================= */
 
 .sectionTitle{
-  margin:26px 0 14px;
+  margin:24px 0 14px;
 
   text-align:center;
 
   font-size:13px;
   font-weight:900;
 
-  letter-spacing:.20em;
+  letter-spacing:.24em;
 
-  color:rgba(8,48,58,.56);
+  color:rgba(255,255,255,.58);
 }
+
+.sectionTitle::before,
+.sectionTitle::after{
+  content:"✦";
+
+  margin:0 8px;
+
+  color:rgba(95,211,255,.75);
+}
+
+/* =========================
+   Menu tiles
+========================= */
 
 .grid{
   display:grid;
@@ -393,6 +478,8 @@ body::after{
 }
 
 .tile{
+  position:relative;
+
   display:flex;
   align-items:center;
   gap:14px;
@@ -402,7 +489,8 @@ body::after{
   border-radius:var(--radius-lg);
 
   text-decoration:none;
-  color:var(--ink);
+
+  color:white;
 
   transition:
     transform .18s ease,
@@ -413,7 +501,7 @@ body::after{
   transform:translateY(-3px);
 
   box-shadow:
-    0 16px 30px rgba(6,38,46,.10);
+    0 18px 36px rgba(0,0,0,.28);
 }
 
 .emoji{
@@ -425,7 +513,10 @@ body::after{
 
   border-radius:18px;
 
-  background:rgba(255,255,255,.82);
+  background:rgba(255,255,255,.10);
+
+  border:
+    1px solid rgba(255,255,255,.12);
 
   font-size:20px;
 }
@@ -441,7 +532,7 @@ body::after{
 
   font-size:12px;
 
-  color:var(--muted);
+  color:rgba(255,255,255,.62);
 }
 
 .arrow{
@@ -449,7 +540,7 @@ body::after{
 
   font-size:22px;
 
-  color:rgba(8,48,58,.35);
+  color:rgba(255,255,255,.34);
 }
 
 /* =========================
@@ -470,11 +561,6 @@ body::after{
 
   border-radius:18px;
 
-  background:rgba(255,255,255,.62);
-
-  border:
-    1px solid rgba(255,255,255,.92);
-
   transition:
     transform .15s ease,
     box-shadow .15s ease;
@@ -485,25 +571,35 @@ body::after{
 }
 
 .calendarCell.isToday{
-  outline:
-    2px solid rgba(44,147,178,.72);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(95,211,255,.22),
+      rgba(255,255,255,.06)
+    );
+
+  border:
+    1px solid rgba(95,211,255,.42);
 
   box-shadow:
-    0 0 0 4px rgba(127,214,230,.14);
+    0 0 20px rgba(95,211,255,.14);
 }
 
 .calendarCell.isSelected{
   transform:translateY(-2px);
 
-  background:white;
+  border:
+    1px solid rgba(95,211,255,.48);
 
   box-shadow:
-    0 10px 24px rgba(44,147,178,.14);
+    0 0 26px rgba(95,211,255,.18);
 }
 
 .calendarDate{
   font-size:13px;
   font-weight:800;
+
+  color:white;
 }
 
 .calendarDots{
@@ -563,7 +659,7 @@ body::after{
   font-size:12px;
   font-weight:900;
 
-  color:var(--muted);
+  color:rgba(255,255,255,.52);
 }
 
 .dot{
@@ -578,6 +674,8 @@ body::after{
 .text{
   font-size:13px;
   font-weight:700;
+
+  color:white;
 }
 
 /* =========================
@@ -585,13 +683,13 @@ body::after{
 ========================= */
 
 .footer{
-  padding:24px 10px 36px;
+  padding:26px 10px 40px;
 
   text-align:center;
 
   font-size:12px;
 
-  color:var(--muted);
+  color:rgba(255,255,255,.48);
 }
 
 .toTop{
@@ -605,7 +703,10 @@ body::after{
 
   text-decoration:none;
 
-  color:var(--ink);
+  color:white;
 
-  background:rgba(255,255,255,.72);
+  background:rgba(255,255,255,.06);
+
+  border:
+    1px solid rgba(255,255,255,.10);
 }
