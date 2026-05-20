@@ -1,37 +1,35 @@
 /* =========================
-   D'104 Navi
-   Night DisneySea Glass UI
+   D'104 Navi UI Refresh
+   glass / clean / readable
 ========================= */
 
 :root{
-  --bgTop:#071521;
-  --bgBottom:#0d2234;
+  --bg:#eef8fb;
 
-  --ink:#f4fbff;
-  --muted:rgba(255,255,255,.62);
+  --ink:#12343d;
+  --muted:#5e7b84;
 
-  --glass:rgba(255,255,255,.08);
-  --glassStrong:rgba(255,255,255,.12);
+  --glass:rgba(255,255,255,.52);
+  --glassStrong:rgba(255,255,255,.72);
 
-  --border:rgba(255,255,255,.14);
-
-  --accent:#5fd3ff;
-  --accentDeep:#2f93c9;
+  --border:rgba(255,255,255,.82);
 
   --shadow:
-    0 10px 30px rgba(0,0,0,.24);
+    0 12px 30px rgba(20,60,80,.08);
+
+  --shadowSoft:
+    0 8px 20px rgba(20,60,80,.06);
+
+  --accent:#69bfd3;
 
   --radius-xl:30px;
-  --radius-lg:24px;
-  --radius-md:18px;
+  --radius-lg:22px;
+  --radius-md:16px;
 }
-
-/* =========================
-   Base
-========================= */
 
 *{
   box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
 html{
@@ -47,28 +45,23 @@ body{
     BlinkMacSystemFont,
     "Hiragino Sans",
     "Noto Sans JP",
-    system-ui,
     sans-serif;
 
   color:var(--ink);
   line-height:1.65;
 
-  background:
-    linear-gradient(
-      180deg,
-      var(--bgTop) 0%,
-      var(--bgBottom) 100%
-    );
+  background:#edf8fb;
 
   overflow-x:hidden;
-
-  -webkit-tap-highlight-color:transparent;
 }
 
-/* subtle stars */
+/* =========================
+   subtle background
+========================= */
 
-body::after{
+body::before{
   content:"";
+
   position:fixed;
   inset:0;
 
@@ -76,18 +69,29 @@ body::after{
   z-index:0;
 
   background:
-    radial-gradient(1.5px 1.5px at 12% 18%, rgba(255,255,255,.85), transparent 60%),
-    radial-gradient(1.2px 1.2px at 22% 72%, rgba(255,255,255,.55), transparent 60%),
-    radial-gradient(1.4px 1.4px at 38% 44%, rgba(255,255,255,.65), transparent 60%),
-    radial-gradient(1.3px 1.3px at 58% 20%, rgba(255,255,255,.55), transparent 60%),
-    radial-gradient(1.5px 1.5px at 76% 62%, rgba(255,255,255,.50), transparent 60%),
-    radial-gradient(1.2px 1.2px at 88% 28%, rgba(255,255,255,.70), transparent 60%);
+    radial-gradient(
+      700px 400px at 50% -10%,
+      rgba(255,255,255,.9),
+      transparent 70%
+    ),
 
-  opacity:.38;
+    radial-gradient(
+      500px 300px at 15% 20%,
+      rgba(255,255,255,.45),
+      transparent 72%
+    ),
+
+    radial-gradient(
+      500px 300px at 85% 24%,
+      rgba(255,255,255,.32),
+      transparent 72%
+    );
+
+  opacity:.9;
 }
 
 /* =========================
-   Layout
+   layout
 ========================= */
 
 .topbar,
@@ -99,71 +103,67 @@ body::after{
 }
 
 .container{
-  max-width:900px;
-  margin:0 auto;
-  padding:18px 16px 40px;
+  max-width:920px;
+  margin:auto;
+  padding:18px;
 }
 
 /* =========================
-   Topbar
+   topbar
 ========================= */
 
 .topbar{
   position:sticky;
   top:0;
-
   z-index:20;
 
   display:flex;
   align-items:center;
   justify-content:space-between;
 
-  gap:12px;
+  padding:14px 18px;
 
-  padding:14px 16px;
+  background:rgba(255,255,255,.55);
 
-  background:rgba(7,21,33,.68);
-
-  backdrop-filter:blur(16px);
+  backdrop-filter:blur(14px);
 
   border-bottom:
-    1px solid rgba(255,255,255,.08);
+    1px solid rgba(255,255,255,.8);
 
   box-shadow:
-    0 6px 24px rgba(0,0,0,.18);
+    0 8px 22px rgba(20,60,80,.05);
 }
 
 .brand{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:12px;
 }
 
 .brandIcon{
-  width:40px;
-  height:40px;
+  width:42px;
+  height:42px;
 
   display:grid;
   place-items:center;
 
   border-radius:16px;
 
-  background:rgba(255,255,255,.10);
+  background:rgba(255,255,255,.75);
 
-  border:
-    1px solid rgba(255,255,255,.14);
+  border:1px solid var(--border);
+
+  box-shadow:var(--shadowSoft);
 }
 
 .brandTitle{
   font-size:14px;
   font-weight:900;
-
-  letter-spacing:.06em;
+  letter-spacing:.08em;
 }
 
 .brandSub{
   font-size:11px;
-
   color:var(--muted);
 }
 
@@ -175,27 +175,29 @@ body::after{
 .navLink{
   text-decoration:none;
 
-  color:white;
+  padding:9px 14px;
+
+  border-radius:999px;
 
   font-size:12px;
   font-weight:800;
 
-  padding:8px 12px;
+  color:var(--ink);
 
-  border-radius:999px;
+  background:rgba(255,255,255,.45);
 
-  background:rgba(255,255,255,.06);
-
-  border:
-    1px solid rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.8);
 }
 
 /* =========================
-   Hero
+   hero
 ========================= */
 
 .hero{
-  padding:70px 20px 34px;
+  padding:
+    54px
+    20px
+    24px;
 
   text-align:center;
 }
@@ -208,43 +210,74 @@ body::after{
 
   letter-spacing:.08em;
 
-  color:white;
-
   text-shadow:
-    0 0 24px rgba(95,211,255,.28),
-    0 4px 20px rgba(0,0,0,.32);
+    0 8px 24px rgba(255,255,255,.6);
 }
 
 .heroLead{
-  margin:14px auto 0;
+  margin:12px auto 0;
 
-  max-width:36em;
+  max-width:34em;
 
   font-size:14px;
 
-  color:rgba(255,255,255,.72);
+  color:var(--muted);
 }
 
 /* =========================
-   Cards
+   glass chips
 ========================= */
 
-.card,
-.tile,
-.newsItem,
-.chip,
-.calendarCell,
-.selectedDayBox,
-.dayEventItem{
+.heroChips{
+  margin-top:22px;
+
+  display:flex;
+  justify-content:center;
+  gap:12px;
+
+  flex-wrap:wrap;
+}
+
+.chip{
+  min-width:110px;
+
+  padding:
+    12px
+    16px;
+
+  border-radius:22px;
+
   background:var(--glass);
 
-  border:
-    1px solid var(--border);
+  border:1px solid var(--border);
 
-  backdrop-filter:blur(14px);
+  backdrop-filter:blur(16px);
 
-  box-shadow:var(--shadow);
+  box-shadow:
+    0 10px 24px rgba(20,60,80,.08),
+    inset 0 1px 0 rgba(255,255,255,.65);
+
+  text-align:left;
 }
+
+.chipKey{
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.14em;
+
+  color:var(--muted);
+
+  margin-bottom:4px;
+}
+
+.chipVal{
+  font-size:15px;
+  font-weight:900;
+}
+
+/* =========================
+   cards
+========================= */
 
 .card{
   position:relative;
@@ -252,6 +285,14 @@ body::after{
   padding:20px;
 
   border-radius:var(--radius-xl);
+
+  background:var(--glass);
+
+  border:1px solid var(--border);
+
+  backdrop-filter:blur(14px);
+
+  box-shadow:var(--shadow);
 
   transition:
     transform .18s ease,
@@ -262,14 +303,12 @@ body::after{
   transform:translateY(-2px);
 
   box-shadow:
-    0 18px 36px rgba(0,0,0,.30);
+    0 18px 36px rgba(20,60,80,.10);
 }
 
-/* subtle shine */
-
-.card::before,
-.tile::before{
+.card::before{
   content:"";
+
   position:absolute;
   inset:0;
 
@@ -280,167 +319,22 @@ body::after{
   background:
     linear-gradient(
       135deg,
-      rgba(255,255,255,.18),
+      rgba(255,255,255,.55),
       transparent 45%
     );
 
-  opacity:.55;
+  opacity:.7;
 }
 
 /* =========================
-   Card header
-========================= */
-
-.cardHead{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-
-  gap:10px;
-
-  margin-bottom:14px;
-}
-
-.cardTitle{
-  margin:0;
-
-  font-size:16px;
-  font-weight:900;
-
-  color:white;
-}
-
-.pill{
-  padding:7px 10px;
-
-  border-radius:999px;
-
-  background:rgba(255,255,255,.08);
-
-  border:
-    1px solid rgba(255,255,255,.12);
-
-  font-size:11px;
-  font-weight:900;
-
-  color:rgba(255,255,255,.72);
-}
-
-/* =========================
-   Next Event
-========================= */
-
-.nextEventCard{
-  transform:translateY(-6px);
-}
-
-.nextBox{
-  display:grid;
-  gap:12px;
-
-  padding:16px;
-
-  border-radius:24px;
-
-  background:rgba(255,255,255,.04);
-
-  border:
-    1px solid rgba(255,255,255,.08);
-}
-
-.kv{
-  display:grid;
-  grid-template-columns:72px 1fr;
-
-  gap:12px;
-}
-
-.k{
-  font-size:12px;
-  font-weight:900;
-
-  color:var(--muted);
-}
-
-.v{
-  font-size:14px;
-  font-weight:800;
-
-  color:white;
-}
-
-/* =========================
-   Buttons
-========================= */
-
-.actions{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-
-  margin-top:16px;
-}
-
-.btnPrimary{
-  flex:1;
-
-  border:none;
-
-  padding:14px 18px;
-
-  border-radius:999px;
-
-  font-weight:900;
-
-  color:white;
-
-  background:
-    linear-gradient(
-      180deg,
-      var(--accent),
-      var(--accentDeep)
-    );
-
-  box-shadow:
-    0 0 24px rgba(95,211,255,.18);
-
-  transition:
-    transform .16s ease,
-    box-shadow .16s ease;
-}
-
-.btnPrimary:hover{
-  transform:translateY(-1px);
-
-  box-shadow:
-    0 0 32px rgba(95,211,255,.28);
-}
-
-.btnPrimary:active{
-  transform:scale(.98);
-}
-
-.btnGhost{
-  padding:14px 16px;
-
-  border-radius:999px;
-
-  border:
-    1px solid rgba(255,255,255,.12);
-
-  background:rgba(255,255,255,.06);
-
-  color:white;
-
-  font-weight:800;
-}
-
-/* =========================
-   Section Title
+   section title
 ========================= */
 
 .sectionTitle{
-  margin:24px 0 14px;
+  margin:
+    28px
+    0
+    14px;
 
   text-align:center;
 
@@ -449,20 +343,11 @@ body::after{
 
   letter-spacing:.24em;
 
-  color:rgba(255,255,255,.58);
-}
-
-.sectionTitle::before,
-.sectionTitle::after{
-  content:"✦";
-
-  margin:0 8px;
-
-  color:rgba(95,211,255,.75);
+  color:#6b8790;
 }
 
 /* =========================
-   Menu tiles
+   menu grid
 ========================= */
 
 .grid{
@@ -471,26 +356,31 @@ body::after{
   gap:14px;
 }
 
-@media(min-width:640px){
+@media (min-width:640px){
   .grid{
     grid-template-columns:1fr 1fr;
   }
 }
 
 .tile{
-  position:relative;
-
   display:flex;
   align-items:center;
   gap:14px;
 
-  padding:16px;
-
-  border-radius:var(--radius-lg);
-
   text-decoration:none;
+  color:var(--ink);
 
-  color:white;
+  padding:18px;
+
+  border-radius:24px;
+
+  background:rgba(255,255,255,.5);
+
+  border:1px solid rgba(255,255,255,.85);
+
+  backdrop-filter:blur(12px);
+
+  box-shadow:var(--shadowSoft);
 
   transition:
     transform .18s ease,
@@ -498,32 +388,30 @@ body::after{
 }
 
 .tile:hover{
-  transform:translateY(-3px);
+  transform:translateY(-2px);
 
   box-shadow:
-    0 18px 36px rgba(0,0,0,.28);
+    0 16px 30px rgba(20,60,80,.10);
 }
 
 .emoji{
   width:48px;
   height:48px;
 
+  border-radius:18px;
+
   display:grid;
   place-items:center;
 
-  border-radius:18px;
+  background:rgba(255,255,255,.75);
 
-  background:rgba(255,255,255,.10);
-
-  border:
-    1px solid rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.9);
 
   font-size:20px;
 }
 
 .tileText h3{
   margin:0;
-
   font-size:15px;
 }
 
@@ -532,7 +420,7 @@ body::after{
 
   font-size:12px;
 
-  color:rgba(255,255,255,.62);
+  color:var(--muted);
 }
 
 .arrow{
@@ -540,12 +428,69 @@ body::after{
 
   font-size:22px;
 
-  color:rgba(255,255,255,.34);
+  color:#89a7af;
 }
 
 /* =========================
-   Calendar
+   buttons
 ========================= */
+
+.btnPrimary{
+  border:none;
+
+  padding:
+    14px
+    18px;
+
+  border-radius:999px;
+
+  font-weight:900;
+
+  color:white;
+
+  background:#6abfd3;
+
+  box-shadow:
+    0 10px 24px rgba(106,191,211,.28);
+
+  transition:
+    transform .15s ease,
+    box-shadow .15s ease;
+}
+
+.btnPrimary:hover{
+  transform:translateY(-1px);
+
+  box-shadow:
+    0 14px 28px rgba(106,191,211,.34);
+}
+
+.btnGhost{
+  border:none;
+
+  padding:
+    14px
+    18px;
+
+  border-radius:999px;
+
+  font-weight:800;
+
+  background:rgba(255,255,255,.5);
+
+  color:var(--ink);
+
+  border:1px solid rgba(255,255,255,.85);
+}
+
+/* =========================
+   calendar
+========================= */
+
+/* ← Sun〜Satを消す */
+.calendarWeekdays{
+  display:none;
+}
 
 .miniCalendarGrid{
   display:grid;
@@ -555,11 +500,18 @@ body::after{
 }
 
 .calendarCell{
-  min-height:64px;
+  min-height:66px;
 
   padding:8px;
 
   border-radius:18px;
+
+  background:rgba(255,255,255,.42);
+
+  border:1px solid rgba(255,255,255,.8);
+
+  box-shadow:
+    0 8px 18px rgba(20,60,80,.05);
 
   transition:
     transform .15s ease,
@@ -571,35 +523,24 @@ body::after{
 }
 
 .calendarCell.isToday{
-  background:
-    linear-gradient(
-      180deg,
-      rgba(95,211,255,.22),
-      rgba(255,255,255,.06)
-    );
-
-  border:
-    1px solid rgba(95,211,255,.42);
+  background:rgba(255,255,255,.68);
 
   box-shadow:
-    0 0 20px rgba(95,211,255,.14);
+    0 0 0 3px rgba(106,191,211,.16),
+    0 12px 24px rgba(106,191,211,.10);
 }
 
 .calendarCell.isSelected{
   transform:translateY(-2px);
 
-  border:
-    1px solid rgba(95,211,255,.48);
+  background:rgba(255,255,255,.78);
 
-  box-shadow:
-    0 0 26px rgba(95,211,255,.18);
+  border:1px solid rgba(106,191,211,.6);
 }
 
 .calendarDate{
   font-size:13px;
-  font-weight:800;
-
-  color:white;
+  font-weight:900;
 }
 
 .calendarDots{
@@ -614,99 +555,22 @@ body::after{
 
   border-radius:50%;
 
-  background:var(--accent);
-}
-
-.calendarDot.disney{
-  background:#ff6b81;
-}
-
-.calendarDot.character{
-  background:#ffd93d;
-}
-
-.calendarDot.club{
-  background:#5aa9c5;
+  background:#6abfd3;
 }
 
 /* =========================
-   News
-========================= */
-
-.newsList{
-  list-style:none;
-
-  padding:0;
-  margin:0;
-
-  display:grid;
-  gap:10px;
-}
-
-.newsItem{
-  display:flex;
-  align-items:center;
-  gap:10px;
-
-  padding:12px 14px;
-
-  border-radius:20px;
-}
-
-.date{
-  min-width:84px;
-
-  font-size:12px;
-  font-weight:900;
-
-  color:rgba(255,255,255,.52);
-}
-
-.dot{
-  width:6px;
-  height:6px;
-
-  border-radius:50%;
-
-  background:var(--accent);
-}
-
-.text{
-  font-size:13px;
-  font-weight:700;
-
-  color:white;
-}
-
-/* =========================
-   Footer
+   footer
 ========================= */
 
 .footer{
-  padding:26px 10px 40px;
+  padding:
+    30px
+    20px
+    40px;
 
   text-align:center;
 
   font-size:12px;
 
-  color:rgba(255,255,255,.48);
-}
-
-.toTop{
-  display:inline-block;
-
-  margin-bottom:12px;
-
-  padding:10px 14px;
-
-  border-radius:999px;
-
-  text-decoration:none;
-
-  color:white;
-
-  background:rgba(255,255,255,.06);
-
-  border:
-    1px solid rgba(255,255,255,.10);
+  color:#7c969e;
 }
