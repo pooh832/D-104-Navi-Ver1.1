@@ -1,49 +1,41 @@
 /* =========================
    D'104 Navi
    Premium Navy Glass UI
-   Deep Navy / Soft Light
 ========================= */
 
 :root{
 
   /* background */
-  --bg:#07111b;
+  --bg:#0a1622;
 
   /* surfaces */
-  --surface:#0f1b28;
-  --surface2:#132131;
-  --surfaceSoft:#17283a;
+  --surface:#182534;
+  --surfaceSoft:#1d2b3d;
 
   /* text */
-  --ink:#f5f9ff;
-  --muted:#93a8ba;
+  --ink:#f4f8fc;
+  --muted:#9caebe;
 
   /* glass */
   --glass:rgba(255,255,255,.045);
-  --glassStrong:rgba(255,255,255,.07);
-  --glassHover:rgba(255,255,255,.09);
+  --glassHover:rgba(255,255,255,.065);
 
   /* borders */
-  --border:rgba(255,255,255,.065);
+  --border:rgba(255,255,255,.06);
 
   /* accent */
-  --accent:#47bfff;
-  --accentSoft:#7fd8ff;
-  --accentGlow:rgba(71,191,255,.42);
-
-  /* warm light */
-  --light:
-    0 0 24px rgba(110,200,255,.12);
+  --accent:#43bfff;
+  --accent2:#63d1ff;
 
   /* shadows */
   --shadow:
-    0 24px 48px rgba(0,0,0,.44);
+    0 20px 40px rgba(0,0,0,.34);
 
   --shadowSoft:
-    0 14px 28px rgba(0,0,0,.28);
+    0 12px 24px rgba(0,0,0,.22);
 
   /* radius */
-  --radius-xl:36px;
+  --radius-xl:34px;
   --radius-lg:28px;
   --radius-md:20px;
 }
@@ -80,26 +72,20 @@ body{
   background:
 
     radial-gradient(
-      1000px 600px at 50% -10%,
-      rgba(71,191,255,.10),
-      transparent 72%
-    ),
-
-    radial-gradient(
-      700px 420px at 0% 100%,
-      rgba(71,191,255,.06),
+      900px 500px at 50% -10%,
+      rgba(70,170,255,.08),
       transparent 70%
     ),
 
     linear-gradient(
       180deg,
-      #0b1622 0%,
-      #07111b 100%
+      #0f1b28 0%,
+      #0a1622 100%
     );
 }
 
 /* =========================
-   ambient glow
+   background glow
 ========================= */
 
 body::before{
@@ -114,21 +100,15 @@ body::before{
   background:
 
     radial-gradient(
-      500px 300px at 18% 18%,
+      500px 300px at 20% 20%,
       rgba(255,255,255,.04),
-      transparent 72%
+      transparent 70%
     ),
 
     radial-gradient(
-      540px 340px at 84% 22%,
-      rgba(71,191,255,.08),
-      transparent 72%
-    ),
-
-    radial-gradient(
-      700px 400px at 50% 100%,
-      rgba(71,191,255,.05),
-      transparent 75%
+      500px 300px at 80% 25%,
+      rgba(67,191,255,.06),
+      transparent 70%
     );
 
   opacity:1;
@@ -147,7 +127,7 @@ body::before{
 }
 
 .container{
-  max-width:980px;
+  max-width:960px;
   margin:auto;
   padding:18px;
 }
@@ -168,17 +148,16 @@ body::before{
   padding:14px 18px;
 
   background:
-    rgba(10,18,28,.72);
+    rgba(12,20,30,.72);
 
   border-bottom:
-    1px solid rgba(255,255,255,.05);
+    1px solid rgba(255,255,255,.04);
 
   backdrop-filter:
-    blur(22px)
-    saturate(140%);
+    blur(18px);
 
   box-shadow:
-    0 10px 30px rgba(0,0,0,.34);
+    0 10px 30px rgba(0,0,0,.28);
 }
 
 .brand{
@@ -188,27 +167,21 @@ body::before{
 }
 
 .brandIcon{
-  width:46px;
-  height:46px;
+  width:44px;
+  height:44px;
 
   display:grid;
   place-items:center;
 
-  border-radius:18px;
+  border-radius:16px;
 
   background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,.07),
-      rgba(255,255,255,.03)
-    );
+    rgba(255,255,255,.04);
 
   border:
-    1px solid rgba(255,255,255,.08);
+    1px solid rgba(255,255,255,.06);
 
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.08),
-    0 0 20px rgba(71,191,255,.10);
+  box-shadow:var(--shadowSoft);
 }
 
 .brandTitle{
@@ -232,7 +205,7 @@ body::before{
 
   padding:
     10px
-    16px;
+    15px;
 
   border-radius:999px;
 
@@ -245,18 +218,11 @@ body::before{
     rgba(255,255,255,.04);
 
   border:
-    1px solid rgba(255,255,255,.06);
-
-  backdrop-filter:
-    blur(16px);
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.05);
+    1px solid rgba(255,255,255,.05);
 
   transition:
     transform .15s ease,
-    background .15s ease,
-    box-shadow .15s ease;
+    background .15s ease;
 }
 
 .navLink:hover{
@@ -264,9 +230,6 @@ body::before{
 
   background:
     rgba(255,255,255,.08);
-
-  box-shadow:
-    0 0 20px rgba(71,191,255,.10);
 }
 
 /* =========================
@@ -275,9 +238,9 @@ body::before{
 
 .hero{
   padding:
-    64px
+    56px
     20px
-    26px;
+    24px;
 
   text-align:center;
 }
@@ -285,19 +248,16 @@ body::before{
 .heroTitle{
   margin:0;
 
-  font-size:44px;
+  font-size:42px;
   font-weight:900;
 
   letter-spacing:.08em;
 
-  color:#f7fbff;
-
-  text-shadow:
-    0 0 28px rgba(71,191,255,.16);
+  color:#f8fbff;
 }
 
 .heroLead{
-  margin:14px auto 0;
+  margin:12px auto 0;
 
   max-width:34em;
 
@@ -311,17 +271,17 @@ body::before{
 ========================= */
 
 .heroChips{
-  margin-top:24px;
+  margin-top:22px;
 
   display:flex;
   justify-content:center;
-  gap:14px;
+  gap:12px;
 
   flex-wrap:wrap;
 }
 
 .chip{
-  min-width:125px;
+  min-width:120px;
 
   padding:
     14px
@@ -329,60 +289,31 @@ body::before{
 
   border-radius:24px;
 
-  position:relative;
-
-  overflow:hidden;
-
   background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,.05),
-      rgba(255,255,255,.02)
-    );
+    rgba(255,255,255,.04);
 
   border:
-    1px solid rgba(255,255,255,.07);
+    1px solid rgba(255,255,255,.05);
+
+  box-shadow:var(--shadowSoft);
 
   backdrop-filter:
-    blur(18px);
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.06),
-    var(--light),
-    var(--shadowSoft);
-}
-
-.chip::before{
-  content:"";
-
-  position:absolute;
-  inset:0;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,.08),
-      transparent 42%
-    );
+    blur(12px);
 }
 
 .chipKey{
-  position:relative;
-
   font-size:10px;
   font-weight:900;
 
-  letter-spacing:.16em;
+  letter-spacing:.14em;
 
-  color:#9ab0c2;
+  color:var(--muted);
+
+  margin-bottom:4px;
 }
 
 .chipVal{
-  position:relative;
-
-  margin-top:4px;
-
-  font-size:16px;
+  font-size:15px;
   font-weight:900;
 }
 
@@ -392,7 +323,7 @@ body::before{
 
 .sectionTitle{
   margin:
-    34px
+    32px
     0
     14px;
 
@@ -401,9 +332,9 @@ body::before{
   font-size:13px;
   font-weight:900;
 
-  letter-spacing:.26em;
+  letter-spacing:.24em;
 
-  color:#88a5bb;
+  color:#8ca3b5;
 }
 
 /* =========================
@@ -415,28 +346,30 @@ body::before{
 
   overflow:hidden;
 
-  padding:26px;
+  padding:24px;
 
-  border-radius:38px;
+  border-radius:36px;
 
   background:
     linear-gradient(
       135deg,
-      rgba(255,255,255,.05),
+      rgba(255,255,255,.045),
       rgba(255,255,255,.02)
     );
 
   border:
-    1px solid rgba(255,255,255,.07);
-
-  backdrop-filter:
-    blur(22px)
-    saturate(160%);
+    1px solid rgba(255,255,255,.06);
 
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.06),
-    0 30px 60px rgba(0,0,0,.42);
+    inset 0 1px 0 rgba(255,255,255,.04),
+    0 24px 48px rgba(0,0,0,.36);
+
+  backdrop-filter:
+    blur(14px)
+    saturate(140%);
 }
+
+/* background image */
 
 .nextEvent::before{
   content:"";
@@ -446,36 +379,49 @@ body::before{
 
   background:
 
-    radial-gradient(
-      600px 340px at 90% 0%,
-      rgba(71,191,255,.14),
-      transparent 72%
-    ),
-
     linear-gradient(
       180deg,
-      rgba(255,255,255,.03),
-      rgba(0,0,0,.30)
-    );
+      rgba(8,14,22,.18),
+      rgba(8,14,22,.78)
+    ),
+
+    url("maihama-night.jpg")
+    center/cover no-repeat;
+
+  opacity:.52;
+
+  transform:scale(1.05);
+
+  filter:
+    blur(2px)
+    saturate(115%);
 
   z-index:0;
 }
+
+/* blue glow */
 
 .nextEvent::after{
   content:"";
 
   position:absolute;
 
-  inset:0;
+  width:420px;
+  height:420px;
+
+  right:-120px;
+  top:-120px;
+
+  border-radius:50%;
 
   background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,.09),
-      transparent 36%
+    radial-gradient(
+      circle,
+      rgba(67,191,255,.16),
+      transparent 70%
     );
 
-  pointer-events:none;
+  z-index:0;
 }
 
 .nextEventInner{
@@ -484,7 +430,7 @@ body::before{
 }
 
 /* =========================
-   top
+   event top
 ========================= */
 
 .eventTop{
@@ -497,63 +443,49 @@ body::before{
 
 .eventMain{
   display:flex;
-  align-items:center;
   gap:18px;
+  align-items:center;
 }
 
 /* =========================
-   glass icon block
+   date block
 ========================= */
 
 .eventDate{
-  position:relative;
+  width:92px;
+  min-width:92px;
+  height:110px;
 
-  width:102px;
-  min-width:102px;
-  height:118px;
+  border-radius:28px;
 
-  border-radius:30px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.08),
+      rgba(255,255,255,.03)
+    );
 
-  overflow:hidden;
+  border:
+    1px solid rgba(255,255,255,.08);
+
+  backdrop-filter:
+    blur(18px);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 12px 24px rgba(0,0,0,.24);
 
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
 
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,.10),
-      rgba(255,255,255,.03)
-    );
+  overflow:hidden;
 
-  border:
-    1px solid rgba(255,255,255,.10);
-
-  backdrop-filter:
-    blur(22px);
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.10),
-    0 0 30px rgba(71,191,255,.12),
-    0 18px 36px rgba(0,0,0,.28);
+  position:relative;
 }
 
 .eventDate::before{
-  content:"📅";
-
-  position:absolute;
-
-  top:10px;
-  right:12px;
-
-  font-size:14px;
-
-  opacity:.8;
-}
-
-.eventDate::after{
   content:"";
 
   position:absolute;
@@ -562,36 +494,26 @@ body::before{
   background:
     linear-gradient(
       180deg,
-      rgba(255,255,255,.12),
-      transparent 42%
+      rgba(255,255,255,.08),
+      transparent 40%
     );
 }
 
 .eventDateDay{
-  position:relative;
-  z-index:2;
-
-  font-size:42px;
+  font-size:38px;
   font-weight:900;
-
   line-height:1;
-
-  text-shadow:
-    0 0 18px rgba(71,191,255,.18);
 }
 
 .eventDateWeek{
-  position:relative;
-  z-index:2;
-
   margin-top:8px;
 
   font-size:12px;
-  font-weight:900;
+  font-weight:800;
 
   letter-spacing:.18em;
 
-  color:#9fd4f2;
+  color:#9bc7e2;
 }
 
 /* =========================
@@ -605,26 +527,25 @@ body::before{
 }
 
 .eventMini{
-  font-size:11px;
-  font-weight:900;
+  font-size:12px;
+  font-weight:800;
 
-  letter-spacing:.18em;
+  letter-spacing:.16em;
 
-  color:#8fb4ca;
+  color:#8fb3c8;
+
+  text-transform:uppercase;
 }
 
 .eventTitle{
-  margin-top:8px;
+  margin-top:6px;
 
-  font-size:34px;
+  font-size:32px;
   font-weight:900;
 
   line-height:1.15;
 
   color:white;
-
-  text-shadow:
-    0 0 28px rgba(71,191,255,.14);
 }
 
 .eventSub{
@@ -632,11 +553,11 @@ body::before{
 
   font-size:14px;
 
-  color:#b7c8d6;
+  color:#adc0cf;
 }
 
 /* =========================
-   badge
+   important badge
 ========================= */
 
 .eventBadge{
@@ -647,33 +568,33 @@ body::before{
   border-radius:999px;
 
   background:
-    rgba(255,255,255,.05);
+    rgba(255,255,255,.06);
 
   border:
     1px solid rgba(255,255,255,.08);
 
-  color:#ffe1e1;
-
   font-size:12px;
   font-weight:900;
 
+  color:#ffd8d8;
+
   backdrop-filter:
-    blur(18px);
+    blur(14px);
 
   box-shadow:
-    0 0 24px rgba(255,255,255,.04);
+    0 8px 18px rgba(0,0,0,.18);
 }
 
 /* =========================
-   panel
+   detail panel
 ========================= */
 
 .eventPanel{
   margin-top:24px;
 
-  padding:22px;
+  padding:20px;
 
-  border-radius:32px;
+  border-radius:30px;
 
   background:
     rgba(255,255,255,.045);
@@ -685,13 +606,13 @@ body::before{
     blur(20px);
 
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.05),
-    0 0 30px rgba(71,191,255,.06);
+    inset 0 1px 0 rgba(255,255,255,.04);
 }
 
 .eventMeta{
   display:flex;
   flex-wrap:wrap;
+
   gap:12px;
 }
 
@@ -706,49 +627,23 @@ body::before{
 
   padding:
     12px
-    18px;
+    16px;
 
   border-radius:999px;
 
-  position:relative;
-
-  overflow:hidden;
-
   background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,.06),
-      rgba(255,255,255,.03)
-    );
+    rgba(255,255,255,.05);
 
   border:
-    1px solid rgba(255,255,255,.07);
+    1px solid rgba(255,255,255,.06);
 
   backdrop-filter:
-    blur(16px);
+    blur(14px);
 
   font-size:13px;
   font-weight:800;
 
-  color:#eef7ff;
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.06),
-    0 0 18px rgba(71,191,255,.08);
-}
-
-.metaChip::before{
-  content:"";
-
-  position:absolute;
-  inset:0;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,.10),
-      transparent 46%
-    );
+  color:#edf7ff;
 }
 
 /* =========================
@@ -756,36 +651,32 @@ body::before{
 ========================= */
 
 .countdown{
-  margin-top:22px;
+  margin-top:20px;
 
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:10px;
 }
 
 .countLabel{
   font-size:12px;
-  font-weight:900;
+  font-weight:800;
 
   letter-spacing:.14em;
 
-  color:#90b7ce;
+  color:#8fb2c8;
 }
 
 .countBar{
   flex:1;
-
   height:10px;
-
-  overflow:hidden;
 
   border-radius:999px;
 
+  overflow:hidden;
+
   background:
     rgba(255,255,255,.05);
-
-  box-shadow:
-    inset 0 0 10px rgba(0,0,0,.24);
 }
 
 .countFill{
@@ -797,16 +688,16 @@ body::before{
   background:
     linear-gradient(
       90deg,
-      #72d8ff,
-      #43bfff
+      #5ecbff,
+      #3faeff
     );
 
   box-shadow:
-    0 0 24px rgba(71,191,255,.54);
+    0 0 20px rgba(67,191,255,.45);
 }
 
 /* =========================
-   buttons
+   event buttons
 ========================= */
 
 .eventActions{
@@ -822,7 +713,7 @@ body::before{
 
   border:none;
 
-  min-height:64px;
+  min-height:62px;
 
   padding:
     16px
@@ -838,13 +729,13 @@ body::before{
   background:
     linear-gradient(
       180deg,
-      #68d6ff,
-      #3db7ff
+      #63d1ff,
+      #3db5ff
     );
 
   box-shadow:
-    0 0 30px rgba(71,191,255,.34),
-    0 18px 36px rgba(71,191,255,.24);
+    0 0 26px rgba(67,191,255,.30),
+    0 16px 32px rgba(67,191,255,.22);
 
   transition:
     transform .15s ease,
@@ -855,14 +746,14 @@ body::before{
   transform:translateY(-1px);
 
   box-shadow:
-    0 0 40px rgba(71,191,255,.44),
-    0 20px 40px rgba(71,191,255,.30);
+    0 0 34px rgba(67,191,255,.42),
+    0 18px 36px rgba(67,191,255,.28);
 }
 
 .eventBtn{
   border:none;
 
-  min-height:64px;
+  min-height:62px;
 
   padding:
     16px
@@ -873,24 +764,20 @@ body::before{
   font-size:14px;
   font-weight:800;
 
-  color:#edf7ff;
+  color:#edf6ff;
 
   background:
-    rgba(255,255,255,.045);
+    rgba(255,255,255,.05);
 
   border:
     1px solid rgba(255,255,255,.06);
 
   backdrop-filter:
-    blur(16px);
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.05);
+    blur(14px);
 
   transition:
-    transform .15s ease,
     background .15s ease,
-    box-shadow .15s ease;
+    transform .15s ease;
 }
 
 .eventBtn:hover{
@@ -898,54 +785,223 @@ body::before{
 
   background:
     rgba(255,255,255,.08);
-
-  box-shadow:
-    0 0 24px rgba(71,191,255,.08);
 }
 
 /* =========================
-   cards
+   menu grid
 ========================= */
 
-.card{
-  position:relative;
+.grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px;
+}
 
-  overflow:hidden;
+@media (min-width:640px){
 
-  padding:22px;
+  .grid{
+    grid-template-columns:1fr 1fr;
+  }
 
-  border-radius:32px;
+}
+
+/* =========================
+   menu tile
+========================= */
+
+.tile{
+  display:flex;
+  align-items:center;
+  gap:14px;
+
+  text-decoration:none;
+  color:var(--ink);
+
+  padding:18px;
+
+  border-radius:28px;
 
   background:
     linear-gradient(
       135deg,
-      rgba(255,255,255,.045),
-      rgba(255,255,255,.02)
+      rgba(255,255,255,.035),
+      rgba(255,255,255,.015)
     );
 
   border:
-    1px solid rgba(255,255,255,.06);
+    1px solid rgba(255,255,255,.05);
 
-  backdrop-filter:
-    blur(18px);
+  box-shadow:var(--shadowSoft);
 
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.05),
-    var(--shadow);
+  transition:
+    transform .18s ease,
+    background .18s ease;
 }
 
-.card::before{
-  content:"";
-
-  position:absolute;
-  inset:0;
+.tile:hover{
+  transform:translateY(-2px);
 
   background:
     linear-gradient(
       135deg,
-      rgba(255,255,255,.08),
-      transparent 42%
+      rgba(255,255,255,.05),
+      rgba(255,255,255,.025)
     );
+}
+
+.emoji{
+  width:52px;
+  height:52px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:18px;
+
+  font-size:22px;
+
+  background:
+    rgba(255,255,255,.04);
+
+  border:
+    1px solid rgba(255,255,255,.05);
+}
+
+.tileText h3{
+  margin:0;
+
+  font-size:15px;
+  font-weight:800;
+}
+
+.tileText p{
+  margin:4px 0 0;
+
+  font-size:12px;
+
+  color:var(--muted);
+}
+
+.arrow{
+  margin-left:auto;
+
+  font-size:22px;
+
+  color:#7ca7c4;
+}
+
+/* =========================
+   calendar
+========================= */
+
+.calendarWeekdays{
+  display:none;
+}
+
+.miniCalendarGrid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+
+  gap:8px;
+}
+
+.calendarCell{
+  min-height:66px;
+
+  padding:8px;
+
+  border-radius:18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.03),
+      rgba(255,255,255,.015)
+    );
+
+  border:
+    1px solid rgba(255,255,255,.05);
+
+  box-shadow:
+    0 10px 20px rgba(0,0,0,.18);
+
+  transition:
+    transform .15s ease,
+    background .15s ease;
+}
+
+.calendarCell:hover{
+  transform:translateY(-2px);
+}
+
+.calendarCell.isToday{
+  border:
+    1px solid rgba(67,191,255,.22);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(67,191,255,.12),
+      rgba(67,191,255,.04)
+    );
+
+  box-shadow:
+    0 0 0 3px rgba(67,191,255,.06),
+    0 12px 28px rgba(67,191,255,.12);
+}
+
+.calendarCell.isSelected{
+  transform:translateY(-2px);
+
+  border:
+    1px solid rgba(67,191,255,.28);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(67,191,255,.16),
+      rgba(67,191,255,.06)
+    );
+}
+
+.calendarDate{
+  font-size:13px;
+  font-weight:900;
+}
+
+.calendarDots{
+  display:flex;
+  gap:4px;
+  flex-wrap:wrap;
+}
+
+.calendarDot{
+  width:7px;
+  height:7px;
+
+  border-radius:50%;
+
+  background:var(--accent);
+
+  box-shadow:
+    0 0 10px rgba(67,191,255,.7);
+}
+
+/* =========================
+   footer
+========================= */
+
+.footer{
+  padding:
+    34px
+    20px
+    44px;
+
+  text-align:center;
+
+  font-size:12px;
+
+  color:#8094a4;
 }
 
 /* =========================
@@ -960,7 +1016,6 @@ body::before{
 
   .eventMain{
     width:100%;
-    align-items:flex-start;
   }
 
   .eventTitle{
@@ -968,9 +1023,9 @@ body::before{
   }
 
   .eventDate{
-    width:88px;
-    min-width:88px;
-    height:104px;
+    width:84px;
+    min-width:84px;
+    height:102px;
   }
 
   .eventActions{
@@ -978,3 +1033,9 @@ body::before{
   }
 
 }
+
+これを
+・全体的にネイビー調に
+・ガラス感はキープ
+・見やすさ意識で各項目に間接照明的な感じで灯りを追加
+・ネクストイベントのところを文字だけでなくガラス調のアイコンに
