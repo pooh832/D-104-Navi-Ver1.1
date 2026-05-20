@@ -1,48 +1,31 @@
 /* =========================
-   D'104 Navi
-   Premium Navy Glass UI
+   D'104 Navi UI Refresh
+   glass / clean / readable
 ========================= */
 
 :root{
+  --bg:#eef8fb;
 
-  /* background */
-  --bg:#0a1622;
+  --ink:#12343d;
+  --muted:#5e7b84;
 
-  /* surfaces */
-  --surface:#182534;
-  --surfaceSoft:#1d2b3d;
+  --glass:rgba(255,255,255,.52);
+  --glassStrong:rgba(255,255,255,.72);
 
-  /* text */
-  --ink:#f4f8fc;
-  --muted:#9caebe;
+  --border:rgba(255,255,255,.82);
 
-  /* glass */
-  --glass:rgba(255,255,255,.045);
-  --glassHover:rgba(255,255,255,.065);
-
-  /* borders */
-  --border:rgba(255,255,255,.06);
-
-  /* accent */
-  --accent:#43bfff;
-  --accent2:#63d1ff;
-
-  /* shadows */
   --shadow:
-    0 20px 40px rgba(0,0,0,.34);
+    0 12px 30px rgba(20,60,80,.08);
 
   --shadowSoft:
-    0 12px 24px rgba(0,0,0,.22);
+    0 8px 20px rgba(20,60,80,.06);
 
-  /* radius */
-  --radius-xl:34px;
-  --radius-lg:28px;
-  --radius-md:20px;
+  --accent:#69bfd3;
+
+  --radius-xl:30px;
+  --radius-lg:22px;
+  --radius-md:16px;
 }
-
-/* =========================
-   reset
-========================= */
 
 *{
   box-sizing:border-box;
@@ -57,8 +40,6 @@ body{
   margin:0;
   min-height:100vh;
 
-  overflow-x:hidden;
-
   font-family:
     -apple-system,
     BlinkMacSystemFont,
@@ -69,23 +50,13 @@ body{
   color:var(--ink);
   line-height:1.65;
 
-  background:
+  background:#edf8fb;
 
-    radial-gradient(
-      900px 500px at 50% -10%,
-      rgba(70,170,255,.08),
-      transparent 70%
-    ),
-
-    linear-gradient(
-      180deg,
-      #0f1b28 0%,
-      #0a1622 100%
-    );
+  overflow-x:hidden;
 }
 
 /* =========================
-   background glow
+   subtle background
 ========================= */
 
 body::before{
@@ -98,20 +69,25 @@ body::before{
   z-index:0;
 
   background:
-
     radial-gradient(
-      500px 300px at 20% 20%,
-      rgba(255,255,255,.04),
+      700px 400px at 50% -10%,
+      rgba(255,255,255,.9),
       transparent 70%
     ),
 
     radial-gradient(
-      500px 300px at 80% 25%,
-      rgba(67,191,255,.06),
-      transparent 70%
+      500px 300px at 15% 20%,
+      rgba(255,255,255,.45),
+      transparent 72%
+    ),
+
+    radial-gradient(
+      500px 300px at 85% 24%,
+      rgba(255,255,255,.32),
+      transparent 72%
     );
 
-  opacity:1;
+  opacity:.9;
 }
 
 /* =========================
@@ -127,7 +103,7 @@ body::before{
 }
 
 .container{
-  max-width:960px;
+  max-width:920px;
   margin:auto;
   padding:18px;
 }
@@ -139,7 +115,7 @@ body::before{
 .topbar{
   position:sticky;
   top:0;
-  z-index:40;
+  z-index:20;
 
   display:flex;
   align-items:center;
@@ -147,17 +123,15 @@ body::before{
 
   padding:14px 18px;
 
-  background:
-    rgba(12,20,30,.72);
+  background:rgba(255,255,255,.55);
+
+  backdrop-filter:blur(14px);
 
   border-bottom:
-    1px solid rgba(255,255,255,.04);
-
-  backdrop-filter:
-    blur(18px);
+    1px solid rgba(255,255,255,.8);
 
   box-shadow:
-    0 10px 30px rgba(0,0,0,.28);
+    0 8px 22px rgba(20,60,80,.05);
 }
 
 .brand{
@@ -167,19 +141,17 @@ body::before{
 }
 
 .brandIcon{
-  width:44px;
-  height:44px;
+  width:42px;
+  height:42px;
 
   display:grid;
   place-items:center;
 
   border-radius:16px;
 
-  background:
-    rgba(255,255,255,.04);
+  background:rgba(255,255,255,.75);
 
-  border:
-    1px solid rgba(255,255,255,.06);
+  border:1px solid var(--border);
 
   box-shadow:var(--shadowSoft);
 }
@@ -203,9 +175,7 @@ body::before{
 .navLink{
   text-decoration:none;
 
-  padding:
-    10px
-    15px;
+  padding:9px 14px;
 
   border-radius:999px;
 
@@ -214,22 +184,9 @@ body::before{
 
   color:var(--ink);
 
-  background:
-    rgba(255,255,255,.04);
+  background:rgba(255,255,255,.45);
 
-  border:
-    1px solid rgba(255,255,255,.05);
-
-  transition:
-    transform .15s ease,
-    background .15s ease;
-}
-
-.navLink:hover{
-  transform:translateY(-1px);
-
-  background:
-    rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.8);
 }
 
 /* =========================
@@ -238,7 +195,7 @@ body::before{
 
 .hero{
   padding:
-    56px
+    54px
     20px
     24px;
 
@@ -248,12 +205,13 @@ body::before{
 .heroTitle{
   margin:0;
 
-  font-size:42px;
+  font-size:40px;
   font-weight:900;
 
   letter-spacing:.08em;
 
-  color:#f8fbff;
+  text-shadow:
+    0 8px 24px rgba(255,255,255,.6);
 }
 
 .heroLead{
@@ -267,7 +225,7 @@ body::before{
 }
 
 /* =========================
-   hero chips
+   glass chips
 ========================= */
 
 .heroChips{
@@ -281,30 +239,30 @@ body::before{
 }
 
 .chip{
-  min-width:120px;
+  min-width:110px;
 
   padding:
-    14px
+    12px
     16px;
 
-  border-radius:24px;
+  border-radius:22px;
 
-  background:
-    rgba(255,255,255,.04);
+  background:var(--glass);
 
-  border:
-    1px solid rgba(255,255,255,.05);
+  border:1px solid var(--border);
 
-  box-shadow:var(--shadowSoft);
+  backdrop-filter:blur(16px);
 
-  backdrop-filter:
-    blur(12px);
+  box-shadow:
+    0 10px 24px rgba(20,60,80,.08),
+    inset 0 1px 0 rgba(255,255,255,.65);
+
+  text-align:left;
 }
 
 .chipKey{
   font-size:10px;
   font-weight:900;
-
   letter-spacing:.14em;
 
   color:var(--muted);
@@ -318,12 +276,63 @@ body::before{
 }
 
 /* =========================
+   cards
+========================= */
+
+.card{
+  position:relative;
+
+  padding:20px;
+
+  border-radius:var(--radius-xl);
+
+  background:var(--glass);
+
+  border:1px solid var(--border);
+
+  backdrop-filter:blur(14px);
+
+  box-shadow:var(--shadow);
+
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease;
+}
+
+.card:hover{
+  transform:translateY(-2px);
+
+  box-shadow:
+    0 18px 36px rgba(20,60,80,.10);
+}
+
+.card::before{
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  border-radius:inherit;
+
+  pointer-events:none;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.55),
+      transparent 45%
+    );
+
+  opacity:.7;
+}
+
+/* =========================
    section title
 ========================= */
 
 .sectionTitle{
   margin:
-    32px
+    28px
     0
     14px;
 
@@ -334,457 +343,7 @@ body::before{
 
   letter-spacing:.24em;
 
-  color:#8ca3b5;
-}
-
-/* =========================
-   next event
-========================= */
-
-.nextEvent{
-  position:relative;
-
-  overflow:hidden;
-
-  padding:24px;
-
-  border-radius:36px;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,.045),
-      rgba(255,255,255,.02)
-    );
-
-  border:
-    1px solid rgba(255,255,255,.06);
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.04),
-    0 24px 48px rgba(0,0,0,.36);
-
-  backdrop-filter:
-    blur(14px)
-    saturate(140%);
-}
-
-/* background image */
-
-.nextEvent::before{
-  content:"";
-
-  position:absolute;
-  inset:0;
-
-  background:
-
-    linear-gradient(
-      180deg,
-      rgba(8,14,22,.18),
-      rgba(8,14,22,.78)
-    ),
-
-    url("maihama-night.jpg")
-    center/cover no-repeat;
-
-  opacity:.52;
-
-  transform:scale(1.05);
-
-  filter:
-    blur(2px)
-    saturate(115%);
-
-  z-index:0;
-}
-
-/* blue glow */
-
-.nextEvent::after{
-  content:"";
-
-  position:absolute;
-
-  width:420px;
-  height:420px;
-
-  right:-120px;
-  top:-120px;
-
-  border-radius:50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(67,191,255,.16),
-      transparent 70%
-    );
-
-  z-index:0;
-}
-
-.nextEventInner{
-  position:relative;
-  z-index:2;
-}
-
-/* =========================
-   event top
-========================= */
-
-.eventTop{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-
-  gap:18px;
-}
-
-.eventMain{
-  display:flex;
-  gap:18px;
-  align-items:center;
-}
-
-/* =========================
-   date block
-========================= */
-
-.eventDate{
-  width:92px;
-  min-width:92px;
-  height:110px;
-
-  border-radius:28px;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,.08),
-      rgba(255,255,255,.03)
-    );
-
-  border:
-    1px solid rgba(255,255,255,.08);
-
-  backdrop-filter:
-    blur(18px);
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.06),
-    0 12px 24px rgba(0,0,0,.24);
-
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-
-  overflow:hidden;
-
-  position:relative;
-}
-
-.eventDate::before{
-  content:"";
-
-  position:absolute;
-  inset:0;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,.08),
-      transparent 40%
-    );
-}
-
-.eventDateDay{
-  font-size:38px;
-  font-weight:900;
-  line-height:1;
-}
-
-.eventDateWeek{
-  margin-top:8px;
-
-  font-size:12px;
-  font-weight:800;
-
-  letter-spacing:.18em;
-
-  color:#9bc7e2;
-}
-
-/* =========================
-   event info
-========================= */
-
-.eventInfo{
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-}
-
-.eventMini{
-  font-size:12px;
-  font-weight:800;
-
-  letter-spacing:.16em;
-
-  color:#8fb3c8;
-
-  text-transform:uppercase;
-}
-
-.eventTitle{
-  margin-top:6px;
-
-  font-size:32px;
-  font-weight:900;
-
-  line-height:1.15;
-
-  color:white;
-}
-
-.eventSub{
-  margin-top:8px;
-
-  font-size:14px;
-
-  color:#adc0cf;
-}
-
-/* =========================
-   important badge
-========================= */
-
-.eventBadge{
-  padding:
-    12px
-    16px;
-
-  border-radius:999px;
-
-  background:
-    rgba(255,255,255,.06);
-
-  border:
-    1px solid rgba(255,255,255,.08);
-
-  font-size:12px;
-  font-weight:900;
-
-  color:#ffd8d8;
-
-  backdrop-filter:
-    blur(14px);
-
-  box-shadow:
-    0 8px 18px rgba(0,0,0,.18);
-}
-
-/* =========================
-   detail panel
-========================= */
-
-.eventPanel{
-  margin-top:24px;
-
-  padding:20px;
-
-  border-radius:30px;
-
-  background:
-    rgba(255,255,255,.045);
-
-  border:
-    1px solid rgba(255,255,255,.06);
-
-  backdrop-filter:
-    blur(20px);
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.04);
-}
-
-.eventMeta{
-  display:flex;
-  flex-wrap:wrap;
-
-  gap:12px;
-}
-
-/* =========================
-   meta chips
-========================= */
-
-.metaChip{
-  display:flex;
-  align-items:center;
-  gap:8px;
-
-  padding:
-    12px
-    16px;
-
-  border-radius:999px;
-
-  background:
-    rgba(255,255,255,.05);
-
-  border:
-    1px solid rgba(255,255,255,.06);
-
-  backdrop-filter:
-    blur(14px);
-
-  font-size:13px;
-  font-weight:800;
-
-  color:#edf7ff;
-}
-
-/* =========================
-   countdown
-========================= */
-
-.countdown{
-  margin-top:20px;
-
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.countLabel{
-  font-size:12px;
-  font-weight:800;
-
-  letter-spacing:.14em;
-
-  color:#8fb2c8;
-}
-
-.countBar{
-  flex:1;
-  height:10px;
-
-  border-radius:999px;
-
-  overflow:hidden;
-
-  background:
-    rgba(255,255,255,.05);
-}
-
-.countFill{
-  width:72%;
-  height:100%;
-
-  border-radius:inherit;
-
-  background:
-    linear-gradient(
-      90deg,
-      #5ecbff,
-      #3faeff
-    );
-
-  box-shadow:
-    0 0 20px rgba(67,191,255,.45);
-}
-
-/* =========================
-   event buttons
-========================= */
-
-.eventActions{
-  margin-top:24px;
-
-  display:flex;
-  flex-wrap:wrap;
-  gap:12px;
-}
-
-.eventBtnPrimary{
-  flex:1;
-
-  border:none;
-
-  min-height:62px;
-
-  padding:
-    16px
-    22px;
-
-  border-radius:999px;
-
-  font-size:15px;
-  font-weight:900;
-
-  color:white;
-
-  background:
-    linear-gradient(
-      180deg,
-      #63d1ff,
-      #3db5ff
-    );
-
-  box-shadow:
-    0 0 26px rgba(67,191,255,.30),
-    0 16px 32px rgba(67,191,255,.22);
-
-  transition:
-    transform .15s ease,
-    box-shadow .15s ease;
-}
-
-.eventBtnPrimary:hover{
-  transform:translateY(-1px);
-
-  box-shadow:
-    0 0 34px rgba(67,191,255,.42),
-    0 18px 36px rgba(67,191,255,.28);
-}
-
-.eventBtn{
-  border:none;
-
-  min-height:62px;
-
-  padding:
-    16px
-    22px;
-
-  border-radius:999px;
-
-  font-size:14px;
-  font-weight:800;
-
-  color:#edf6ff;
-
-  background:
-    rgba(255,255,255,.05);
-
-  border:
-    1px solid rgba(255,255,255,.06);
-
-  backdrop-filter:
-    blur(14px);
-
-  transition:
-    background .15s ease,
-    transform .15s ease;
-}
-
-.eventBtn:hover{
-  transform:translateY(-1px);
-
-  background:
-    rgba(255,255,255,.08);
+  color:#6b8790;
 }
 
 /* =========================
@@ -798,16 +357,10 @@ body::before{
 }
 
 @media (min-width:640px){
-
   .grid{
     grid-template-columns:1fr 1fr;
   }
-
 }
-
-/* =========================
-   menu tile
-========================= */
 
 .tile{
   display:flex;
@@ -819,59 +372,47 @@ body::before{
 
   padding:18px;
 
-  border-radius:28px;
+  border-radius:24px;
 
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,.035),
-      rgba(255,255,255,.015)
-    );
+  background:rgba(255,255,255,.5);
 
-  border:
-    1px solid rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.85);
+
+  backdrop-filter:blur(12px);
 
   box-shadow:var(--shadowSoft);
 
   transition:
     transform .18s ease,
-    background .18s ease;
+    box-shadow .18s ease;
 }
 
 .tile:hover{
   transform:translateY(-2px);
 
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,.05),
-      rgba(255,255,255,.025)
-    );
+  box-shadow:
+    0 16px 30px rgba(20,60,80,.10);
 }
 
 .emoji{
-  width:52px;
-  height:52px;
+  width:48px;
+  height:48px;
+
+  border-radius:18px;
 
   display:grid;
   place-items:center;
 
-  border-radius:18px;
+  background:rgba(255,255,255,.75);
 
-  font-size:22px;
+  border:1px solid rgba(255,255,255,.9);
 
-  background:
-    rgba(255,255,255,.04);
-
-  border:
-    1px solid rgba(255,255,255,.05);
+  font-size:20px;
 }
 
 .tileText h3{
   margin:0;
-
   font-size:15px;
-  font-weight:800;
 }
 
 .tileText p{
@@ -887,13 +428,66 @@ body::before{
 
   font-size:22px;
 
-  color:#7ca7c4;
+  color:#89a7af;
+}
+
+/* =========================
+   buttons
+========================= */
+
+.btnPrimary{
+  border:none;
+
+  padding:
+    14px
+    18px;
+
+  border-radius:999px;
+
+  font-weight:900;
+
+  color:white;
+
+  background:#6abfd3;
+
+  box-shadow:
+    0 10px 24px rgba(106,191,211,.28);
+
+  transition:
+    transform .15s ease,
+    box-shadow .15s ease;
+}
+
+.btnPrimary:hover{
+  transform:translateY(-1px);
+
+  box-shadow:
+    0 14px 28px rgba(106,191,211,.34);
+}
+
+.btnGhost{
+  border:none;
+
+  padding:
+    14px
+    18px;
+
+  border-radius:999px;
+
+  font-weight:800;
+
+  background:rgba(255,255,255,.5);
+
+  color:var(--ink);
+
+  border:1px solid rgba(255,255,255,.85);
 }
 
 /* =========================
    calendar
 ========================= */
 
+/* ← Sun〜Satを消す */
 .calendarWeekdays{
   display:none;
 }
@@ -912,22 +506,16 @@ body::before{
 
   border-radius:18px;
 
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,.03),
-      rgba(255,255,255,.015)
-    );
+  background:rgba(255,255,255,.42);
 
-  border:
-    1px solid rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.8);
 
   box-shadow:
-    0 10px 20px rgba(0,0,0,.18);
+    0 8px 18px rgba(20,60,80,.05);
 
   transition:
     transform .15s ease,
-    background .15s ease;
+    box-shadow .15s ease;
 }
 
 .calendarCell:hover{
@@ -935,33 +523,19 @@ body::before{
 }
 
 .calendarCell.isToday{
-  border:
-    1px solid rgba(67,191,255,.22);
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(67,191,255,.12),
-      rgba(67,191,255,.04)
-    );
+  background:rgba(255,255,255,.68);
 
   box-shadow:
-    0 0 0 3px rgba(67,191,255,.06),
-    0 12px 28px rgba(67,191,255,.12);
+    0 0 0 3px rgba(106,191,211,.16),
+    0 12px 24px rgba(106,191,211,.10);
 }
 
 .calendarCell.isSelected{
   transform:translateY(-2px);
 
-  border:
-    1px solid rgba(67,191,255,.28);
+  background:rgba(255,255,255,.78);
 
-  background:
-    linear-gradient(
-      180deg,
-      rgba(67,191,255,.16),
-      rgba(67,191,255,.06)
-    );
+  border:1px solid rgba(106,191,211,.6);
 }
 
 .calendarDate{
@@ -981,10 +555,7 @@ body::before{
 
   border-radius:50%;
 
-  background:var(--accent);
-
-  box-shadow:
-    0 0 10px rgba(67,191,255,.7);
+  background:#6abfd3;
 }
 
 /* =========================
@@ -993,43 +564,13 @@ body::before{
 
 .footer{
   padding:
-    34px
+    30px
     20px
-    44px;
+    40px;
 
   text-align:center;
 
   font-size:12px;
 
-  color:#8094a4;
-}
-
-/* =========================
-   responsive
-========================= */
-
-@media (max-width:700px){
-
-  .eventTop{
-    flex-direction:column;
-  }
-
-  .eventMain{
-    width:100%;
-  }
-
-  .eventTitle{
-    font-size:26px;
-  }
-
-  .eventDate{
-    width:84px;
-    min-width:84px;
-    height:102px;
-  }
-
-  .eventActions{
-    flex-direction:column;
-  }
-
+  color:#7c969e;
 }
