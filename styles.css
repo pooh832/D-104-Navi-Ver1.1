@@ -1,38 +1,36 @@
 /* =========================
    D'104 Navi
-   Navy Glass Refresh
+   Navy Glass UI
+   based on next event design
 ========================= */
 
 :root{
 
-  /* base */
-  --bg:#08121c;
+  --bg:#0a1622;
 
-  /* text */
-  --ink:#eef6ff;
-  --muted:#9bb0c0;
+  --surface:#182534;
+  --surfaceSoft:#1b2a3b;
 
-  /* glass */
-  --glass:rgba(16,24,38,.52);
-  --glassStrong:rgba(18,28,44,.72);
+  --glass:rgba(255,255,255,.045);
+  --glassHover:rgba(255,255,255,.065);
 
-  /* border */
-  --border:rgba(255,255,255,.08);
+  --border:rgba(255,255,255,.06);
 
-  /* accent */
-  --accent:#79c7ff;
+  --ink:#f4f8fc;
+  --muted:#9caebe;
 
-  /* shadows */
+  --accent:#43bfff;
+  --accent2:#5ed0ff;
+
   --shadow:
-    0 16px 40px rgba(0,0,0,.34);
+    0 20px 40px rgba(0,0,0,.34);
 
   --shadowSoft:
-    0 10px 24px rgba(0,0,0,.24);
+    0 12px 24px rgba(0,0,0,.22);
 
-  /* radius */
-  --radius-xl:30px;
-  --radius-lg:22px;
-  --radius-md:16px;
+  --radius-xl:34px;
+  --radius-lg:26px;
+  --radius-md:20px;
 }
 
 *{
@@ -61,48 +59,17 @@ body{
   line-height:1.65;
 
   background:
+    radial-gradient(
+      900px 500px at 50% -10%,
+      rgba(70,170,255,.08),
+      transparent 70%
+    ),
+
     linear-gradient(
       180deg,
-      #0b1724 0%,
-      #08121c 45%,
-      #060d16 100%
+      #0f1b28 0%,
+      #0a1622 100%
     );
-}
-
-/* =========================
-   background glow
-========================= */
-
-body::before{
-  content:"";
-
-  position:fixed;
-  inset:0;
-
-  pointer-events:none;
-  z-index:0;
-
-  background:
-
-    radial-gradient(
-      700px 420px at 50% -10%,
-      rgba(120,180,255,.10),
-      transparent 72%
-    ),
-
-    radial-gradient(
-      500px 320px at 15% 20%,
-      rgba(255,255,255,.05),
-      transparent 72%
-    ),
-
-    radial-gradient(
-      500px 320px at 85% 24%,
-      rgba(120,200,255,.06),
-      transparent 72%
-    );
-
-  opacity:1;
 }
 
 /* =========================
@@ -118,7 +85,7 @@ body::before{
 }
 
 .container{
-  max-width:920px;
+  max-width:960px;
   margin:auto;
   padding:18px;
 }
@@ -130,7 +97,7 @@ body::before{
 .topbar{
   position:sticky;
   top:0;
-  z-index:20;
+  z-index:30;
 
   display:flex;
   align-items:center;
@@ -138,17 +105,15 @@ body::before{
 
   padding:14px 18px;
 
-  background:rgba(10,18,28,.58);
-
-  backdrop-filter:
-    blur(24px)
-    saturate(180%);
+  background:rgba(16,25,36,.72);
 
   border-bottom:
-    1px solid rgba(255,255,255,.06);
+    1px solid rgba(255,255,255,.04);
+
+  backdrop-filter:blur(18px);
 
   box-shadow:
-    0 10px 24px rgba(0,0,0,.28);
+    0 10px 30px rgba(0,0,0,.28);
 }
 
 .brand{
@@ -166,11 +131,9 @@ body::before{
 
   border-radius:16px;
 
-  background:rgba(255,255,255,.06);
+  background:rgba(255,255,255,.04);
 
-  border:1px solid rgba(255,255,255,.08);
-
-  backdrop-filter:blur(18px);
+  border:1px solid var(--border);
 
   box-shadow:var(--shadowSoft);
 }
@@ -179,8 +142,6 @@ body::before{
   font-size:14px;
   font-weight:900;
   letter-spacing:.08em;
-
-  color:var(--ink);
 }
 
 .brandSub{
@@ -196,7 +157,7 @@ body::before{
 .navLink{
   text-decoration:none;
 
-  padding:9px 14px;
+  padding:10px 15px;
 
   border-radius:999px;
 
@@ -205,21 +166,19 @@ body::before{
 
   color:var(--ink);
 
-  background:rgba(255,255,255,.05);
+  background:rgba(255,255,255,.04);
 
-  border:1px solid rgba(255,255,255,.08);
-
-  backdrop-filter:blur(16px);
+  border:1px solid var(--border);
 
   transition:
-    transform .15s ease,
-    background .15s ease;
+    background .18s ease,
+    transform .18s ease;
 }
 
 .navLink:hover{
-  transform:translateY(-1px);
-
   background:rgba(255,255,255,.08);
+
+  transform:translateY(-1px);
 }
 
 /* =========================
@@ -228,7 +187,7 @@ body::before{
 
 .hero{
   padding:
-    58px
+    56px
     20px
     28px;
 
@@ -243,10 +202,7 @@ body::before{
 
   letter-spacing:.08em;
 
-  color:#f4fbff;
-
-  text-shadow:
-    0 0 28px rgba(121,199,255,.18);
+  color:#f8fbff;
 }
 
 .heroLead{
@@ -260,80 +216,7 @@ body::before{
 }
 
 /* =========================
-   glass chips
-========================= */
-
-.heroChips{
-  margin-top:24px;
-
-  display:flex;
-  justify-content:center;
-  gap:12px;
-
-  flex-wrap:wrap;
-}
-
-.chip{
-  min-width:118px;
-
-  padding:
-    13px
-    16px;
-
-  border-radius:24px;
-
-  background:var(--glass);
-
-  border:1px solid rgba(255,255,255,.08);
-
-  backdrop-filter:
-    blur(24px)
-    saturate(180%);
-
-  box-shadow:
-    0 12px 28px rgba(0,0,0,.24),
-    inset 0 1px 0 rgba(255,255,255,.06);
-
-  overflow:hidden;
-
-  position:relative;
-}
-
-.chip::before{
-  content:"";
-
-  position:absolute;
-  inset:0;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,.08),
-      transparent 40%
-    );
-
-  pointer-events:none;
-}
-
-.chipKey{
-  font-size:10px;
-  font-weight:900;
-  letter-spacing:.14em;
-
-  color:var(--muted);
-
-  margin-bottom:4px;
-}
-
-.chipVal{
-  font-size:15px;
-  font-weight:900;
-
-  color:var(--ink);
-}
-
-/* =========================
-   cards
+   next event style card
 ========================= */
 
 .card{
@@ -341,19 +224,24 @@ body::before{
 
   overflow:hidden;
 
-  padding:20px;
+  padding:22px;
 
   border-radius:var(--radius-xl);
 
-  background:var(--glass);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.03),
+      rgba(255,255,255,.015)
+    );
 
-  border:1px solid rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.06);
 
-  backdrop-filter:
-    blur(24px)
-    saturate(180%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.04),
+    0 20px 40px rgba(0,0,0,.34);
 
-  box-shadow:var(--shadow);
+  backdrop-filter:blur(12px);
 
   transition:
     transform .18s ease,
@@ -364,7 +252,8 @@ body::before{
   transform:translateY(-2px);
 
   box-shadow:
-    0 20px 42px rgba(0,0,0,.40);
+    inset 0 1px 0 rgba(255,255,255,.05),
+    0 24px 48px rgba(0,0,0,.42);
 }
 
 .card::before{
@@ -375,25 +264,9 @@ body::before{
 
   background:
     linear-gradient(
-      135deg,
-      rgba(255,255,255,.08),
-      transparent 45%
-    );
-
-  pointer-events:none;
-}
-
-.card::after{
-  content:"";
-
-  position:absolute;
-  inset:0;
-
-  background:
-    linear-gradient(
       180deg,
-      rgba(255,255,255,.06),
-      transparent 30%
+      rgba(255,255,255,.04),
+      transparent 28%
     );
 
   pointer-events:none;
@@ -416,7 +289,55 @@ body::before{
 
   letter-spacing:.24em;
 
-  color:#89a6b7;
+  color:#8ca3b5;
+}
+
+/* =========================
+   chips
+========================= */
+
+.heroChips{
+  margin-top:22px;
+
+  display:flex;
+  justify-content:center;
+  gap:12px;
+
+  flex-wrap:wrap;
+}
+
+.chip{
+  min-width:120px;
+
+  padding:
+    14px
+    16px;
+
+  border-radius:24px;
+
+  background:rgba(255,255,255,.04);
+
+  border:1px solid rgba(255,255,255,.05);
+
+  box-shadow:var(--shadowSoft);
+
+  backdrop-filter:blur(10px);
+}
+
+.chipKey{
+  font-size:10px;
+  font-weight:900;
+
+  letter-spacing:.14em;
+
+  color:var(--muted);
+
+  margin-bottom:4px;
+}
+
+.chipVal{
+  font-size:15px;
+  font-weight:900;
 }
 
 /* =========================
@@ -438,14 +359,10 @@ body::before{
 }
 
 /* =========================
-   tile
+   tiles
 ========================= */
 
 .tile{
-  position:relative;
-
-  overflow:hidden;
-
   display:flex;
   align-items:center;
   gap:14px;
@@ -455,62 +372,53 @@ body::before{
 
   padding:18px;
 
-  border-radius:24px;
+  border-radius:28px;
 
-  background:rgba(255,255,255,.05);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.035),
+      rgba(255,255,255,.015)
+    );
 
-  border:1px solid rgba(255,255,255,.08);
-
-  backdrop-filter:
-    blur(24px)
-    saturate(180%);
+  border:1px solid rgba(255,255,255,.05);
 
   box-shadow:var(--shadowSoft);
 
   transition:
     transform .18s ease,
+    background .18s ease,
     box-shadow .18s ease;
 }
 
 .tile:hover{
   transform:translateY(-2px);
 
-  box-shadow:
-    0 18px 34px rgba(0,0,0,.34);
-}
-
-.tile::before{
-  content:"";
-
-  position:absolute;
-  inset:0;
-
   background:
     linear-gradient(
-      180deg,
-      rgba(255,255,255,.06),
-      transparent 35%
+      135deg,
+      rgba(255,255,255,.05),
+      rgba(255,255,255,.025)
     );
 
-  pointer-events:none;
+  box-shadow:
+    0 18px 36px rgba(0,0,0,.34);
 }
 
 .emoji{
-  width:50px;
-  height:50px;
-
-  border-radius:18px;
+  width:52px;
+  height:52px;
 
   display:grid;
   place-items:center;
 
-  background:rgba(255,255,255,.06);
+  border-radius:18px;
 
-  border:1px solid rgba(255,255,255,.08);
+  font-size:22px;
 
-  backdrop-filter:blur(12px);
+  background:rgba(255,255,255,.04);
 
-  font-size:20px;
+  border:1px solid rgba(255,255,255,.05);
 }
 
 .tileText h3{
@@ -533,7 +441,7 @@ body::before{
 
   font-size:22px;
 
-  color:#7ea8c4;
+  color:#7ca7c4;
 }
 
 /* =========================
@@ -544,23 +452,26 @@ body::before{
   border:none;
 
   padding:
-    14px
-    18px;
+    15px
+    22px;
 
   border-radius:999px;
 
   font-weight:900;
+  font-size:14px;
 
-  color:#08121c;
+  color:white;
 
-  background:linear-gradient(
-    180deg,
-    #8ed8ff,
-    #67bff5
-  );
+  background:
+    linear-gradient(
+      180deg,
+      var(--accent2),
+      var(--accent)
+    );
 
   box-shadow:
-    0 10px 28px rgba(103,191,245,.30);
+    0 0 24px rgba(67,191,255,.30),
+    0 12px 28px rgba(67,191,255,.22);
 
   transition:
     transform .15s ease,
@@ -571,7 +482,8 @@ body::before{
   transform:translateY(-1px);
 
   box-shadow:
-    0 14px 34px rgba(103,191,245,.40);
+    0 0 30px rgba(67,191,255,.40),
+    0 18px 36px rgba(67,191,255,.28);
 }
 
 .btnGhost{
@@ -587,11 +499,12 @@ body::before{
 
   color:var(--ink);
 
-  background:rgba(255,255,255,.05);
+  background:rgba(255,255,255,.04);
 
-  border:1px solid rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.06);
 
-  backdrop-filter:blur(16px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.03);
 }
 
 /* =========================
@@ -616,42 +529,60 @@ body::before{
 
   border-radius:18px;
 
-  background:rgba(255,255,255,.04);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.03),
+      rgba(255,255,255,.015)
+    );
 
-  border:1px solid rgba(255,255,255,.06);
-
-  backdrop-filter:
-    blur(18px)
-    saturate(180%);
+  border:1px solid rgba(255,255,255,.05);
 
   box-shadow:
     0 10px 20px rgba(0,0,0,.18);
 
   transition:
     transform .15s ease,
-    box-shadow .15s ease;
+    background .15s ease;
 }
 
 .calendarCell:hover{
   transform:translateY(-2px);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.045),
+      rgba(255,255,255,.02)
+    );
 }
 
 .calendarCell.isToday{
-  background:rgba(121,199,255,.12);
+  border:1px solid rgba(67,191,255,.22);
 
-  border:1px solid rgba(121,199,255,.28);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(67,191,255,.12),
+      rgba(67,191,255,.04)
+    );
 
   box-shadow:
-    0 0 0 3px rgba(121,199,255,.10),
-    0 12px 26px rgba(121,199,255,.14);
+    0 0 0 3px rgba(67,191,255,.06),
+    0 12px 28px rgba(67,191,255,.12);
 }
 
 .calendarCell.isSelected{
   transform:translateY(-2px);
 
-  background:rgba(121,199,255,.16);
+  border:1px solid rgba(67,191,255,.28);
 
-  border:1px solid rgba(121,199,255,.40);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(67,191,255,.16),
+      rgba(67,191,255,.06)
+    );
 }
 
 .calendarDate{
@@ -671,10 +602,10 @@ body::before{
 
   border-radius:50%;
 
-  background:#79c7ff;
+  background:var(--accent);
 
   box-shadow:
-    0 0 10px rgba(121,199,255,.8);
+    0 0 10px rgba(67,191,255,.7);
 }
 
 /* =========================
@@ -691,5 +622,5 @@ body::before{
 
   font-size:12px;
 
-  color:#7f98a8;
+  color:#8094a4;
 }
