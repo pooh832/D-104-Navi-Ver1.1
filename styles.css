@@ -351,6 +351,27 @@ body::after{
   letter-spacing:.08em;
 }
 /* =========================
+   Hero Chips Layout
+========================= */
+
+.heroChips{
+
+  display:flex;
+
+  justify-content:center;
+  align-items:center;
+
+  gap:14px;
+
+  margin-top:22px;
+
+  flex-wrap:nowrap;
+}
+
+.chip{
+  white-space:nowrap;
+}
+/* =========================
    Hero Chips
 ========================= */
 
