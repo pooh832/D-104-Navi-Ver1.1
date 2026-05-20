@@ -1,27 +1,35 @@
 /* =========================
-   D'104 Navi UI Refresh
-   glass / clean / readable
+   D'104 Navi
+   Navy Glass Refresh
 ========================= */
 
 :root{
-  --bg:#eef8fb;
 
-  --ink:#12343d;
-  --muted:#5e7b84;
+  /* base */
+  --bg:#08121c;
 
-  --glass:rgba(255,255,255,.52);
-  --glassStrong:rgba(255,255,255,.72);
+  /* text */
+  --ink:#eef6ff;
+  --muted:#9bb0c0;
 
-  --border:rgba(255,255,255,.82);
+  /* glass */
+  --glass:rgba(16,24,38,.52);
+  --glassStrong:rgba(18,28,44,.72);
 
+  /* border */
+  --border:rgba(255,255,255,.08);
+
+  /* accent */
+  --accent:#79c7ff;
+
+  /* shadows */
   --shadow:
-    0 12px 30px rgba(20,60,80,.08);
+    0 16px 40px rgba(0,0,0,.34);
 
   --shadowSoft:
-    0 8px 20px rgba(20,60,80,.06);
+    0 10px 24px rgba(0,0,0,.24);
 
-  --accent:#69bfd3;
-
+  /* radius */
   --radius-xl:30px;
   --radius-lg:22px;
   --radius-md:16px;
@@ -40,6 +48,8 @@ body{
   margin:0;
   min-height:100vh;
 
+  overflow-x:hidden;
+
   font-family:
     -apple-system,
     BlinkMacSystemFont,
@@ -50,13 +60,17 @@ body{
   color:var(--ink);
   line-height:1.65;
 
-  background:#edf8fb;
-
-  overflow-x:hidden;
+  background:
+    linear-gradient(
+      180deg,
+      #0b1724 0%,
+      #08121c 45%,
+      #060d16 100%
+    );
 }
 
 /* =========================
-   subtle background
+   background glow
 ========================= */
 
 body::before{
@@ -69,25 +83,26 @@ body::before{
   z-index:0;
 
   background:
-    radial-gradient(
-      700px 400px at 50% -10%,
-      rgba(255,255,255,.9),
-      transparent 70%
-    ),
 
     radial-gradient(
-      500px 300px at 15% 20%,
-      rgba(255,255,255,.45),
+      700px 420px at 50% -10%,
+      rgba(120,180,255,.10),
       transparent 72%
     ),
 
     radial-gradient(
-      500px 300px at 85% 24%,
-      rgba(255,255,255,.32),
+      500px 320px at 15% 20%,
+      rgba(255,255,255,.05),
+      transparent 72%
+    ),
+
+    radial-gradient(
+      500px 320px at 85% 24%,
+      rgba(120,200,255,.06),
       transparent 72%
     );
 
-  opacity:.9;
+  opacity:1;
 }
 
 /* =========================
@@ -123,15 +138,17 @@ body::before{
 
   padding:14px 18px;
 
-  background:rgba(255,255,255,.55);
+  background:rgba(10,18,28,.58);
 
-  backdrop-filter:blur(14px);
+  backdrop-filter:
+    blur(24px)
+    saturate(180%);
 
   border-bottom:
-    1px solid rgba(255,255,255,.8);
+    1px solid rgba(255,255,255,.06);
 
   box-shadow:
-    0 8px 22px rgba(20,60,80,.05);
+    0 10px 24px rgba(0,0,0,.28);
 }
 
 .brand{
@@ -149,9 +166,11 @@ body::before{
 
   border-radius:16px;
 
-  background:rgba(255,255,255,.75);
+  background:rgba(255,255,255,.06);
 
-  border:1px solid var(--border);
+  border:1px solid rgba(255,255,255,.08);
+
+  backdrop-filter:blur(18px);
 
   box-shadow:var(--shadowSoft);
 }
@@ -160,6 +179,8 @@ body::before{
   font-size:14px;
   font-weight:900;
   letter-spacing:.08em;
+
+  color:var(--ink);
 }
 
 .brandSub{
@@ -184,9 +205,21 @@ body::before{
 
   color:var(--ink);
 
-  background:rgba(255,255,255,.45);
+  background:rgba(255,255,255,.05);
 
-  border:1px solid rgba(255,255,255,.8);
+  border:1px solid rgba(255,255,255,.08);
+
+  backdrop-filter:blur(16px);
+
+  transition:
+    transform .15s ease,
+    background .15s ease;
+}
+
+.navLink:hover{
+  transform:translateY(-1px);
+
+  background:rgba(255,255,255,.08);
 }
 
 /* =========================
@@ -195,9 +228,9 @@ body::before{
 
 .hero{
   padding:
-    54px
+    58px
     20px
-    24px;
+    28px;
 
   text-align:center;
 }
@@ -205,13 +238,15 @@ body::before{
 .heroTitle{
   margin:0;
 
-  font-size:40px;
+  font-size:42px;
   font-weight:900;
 
   letter-spacing:.08em;
 
+  color:#f4fbff;
+
   text-shadow:
-    0 8px 24px rgba(255,255,255,.6);
+    0 0 28px rgba(121,199,255,.18);
 }
 
 .heroLead{
@@ -229,7 +264,7 @@ body::before{
 ========================= */
 
 .heroChips{
-  margin-top:22px;
+  margin-top:24px;
 
   display:flex;
   justify-content:center;
@@ -239,25 +274,45 @@ body::before{
 }
 
 .chip{
-  min-width:110px;
+  min-width:118px;
 
   padding:
-    12px
+    13px
     16px;
 
-  border-radius:22px;
+  border-radius:24px;
 
   background:var(--glass);
 
-  border:1px solid var(--border);
+  border:1px solid rgba(255,255,255,.08);
 
-  backdrop-filter:blur(16px);
+  backdrop-filter:
+    blur(24px)
+    saturate(180%);
 
   box-shadow:
-    0 10px 24px rgba(20,60,80,.08),
-    inset 0 1px 0 rgba(255,255,255,.65);
+    0 12px 28px rgba(0,0,0,.24),
+    inset 0 1px 0 rgba(255,255,255,.06);
 
-  text-align:left;
+  overflow:hidden;
+
+  position:relative;
+}
+
+.chip::before{
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.08),
+      transparent 40%
+    );
+
+  pointer-events:none;
 }
 
 .chipKey{
@@ -273,6 +328,8 @@ body::before{
 .chipVal{
   font-size:15px;
   font-weight:900;
+
+  color:var(--ink);
 }
 
 /* =========================
@@ -282,15 +339,19 @@ body::before{
 .card{
   position:relative;
 
+  overflow:hidden;
+
   padding:20px;
 
   border-radius:var(--radius-xl);
 
   background:var(--glass);
 
-  border:1px solid var(--border);
+  border:1px solid rgba(255,255,255,.08);
 
-  backdrop-filter:blur(14px);
+  backdrop-filter:
+    blur(24px)
+    saturate(180%);
 
   box-shadow:var(--shadow);
 
@@ -303,7 +364,7 @@ body::before{
   transform:translateY(-2px);
 
   box-shadow:
-    0 18px 36px rgba(20,60,80,.10);
+    0 20px 42px rgba(0,0,0,.40);
 }
 
 .card::before{
@@ -312,18 +373,30 @@ body::before{
   position:absolute;
   inset:0;
 
-  border-radius:inherit;
-
-  pointer-events:none;
-
   background:
     linear-gradient(
       135deg,
-      rgba(255,255,255,.55),
+      rgba(255,255,255,.08),
       transparent 45%
     );
 
-  opacity:.7;
+  pointer-events:none;
+}
+
+.card::after{
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.06),
+      transparent 30%
+    );
+
+  pointer-events:none;
 }
 
 /* =========================
@@ -332,7 +405,7 @@ body::before{
 
 .sectionTitle{
   margin:
-    28px
+    30px
     0
     14px;
 
@@ -343,11 +416,11 @@ body::before{
 
   letter-spacing:.24em;
 
-  color:#6b8790;
+  color:#89a6b7;
 }
 
 /* =========================
-   menu grid
+   grid
 ========================= */
 
 .grid{
@@ -357,12 +430,22 @@ body::before{
 }
 
 @media (min-width:640px){
+
   .grid{
     grid-template-columns:1fr 1fr;
   }
+
 }
 
+/* =========================
+   tile
+========================= */
+
 .tile{
+  position:relative;
+
+  overflow:hidden;
+
   display:flex;
   align-items:center;
   gap:14px;
@@ -374,11 +457,13 @@ body::before{
 
   border-radius:24px;
 
-  background:rgba(255,255,255,.5);
+  background:rgba(255,255,255,.05);
 
-  border:1px solid rgba(255,255,255,.85);
+  border:1px solid rgba(255,255,255,.08);
 
-  backdrop-filter:blur(12px);
+  backdrop-filter:
+    blur(24px)
+    saturate(180%);
 
   box-shadow:var(--shadowSoft);
 
@@ -391,28 +476,48 @@ body::before{
   transform:translateY(-2px);
 
   box-shadow:
-    0 16px 30px rgba(20,60,80,.10);
+    0 18px 34px rgba(0,0,0,.34);
+}
+
+.tile::before{
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.06),
+      transparent 35%
+    );
+
+  pointer-events:none;
 }
 
 .emoji{
-  width:48px;
-  height:48px;
+  width:50px;
+  height:50px;
 
   border-radius:18px;
 
   display:grid;
   place-items:center;
 
-  background:rgba(255,255,255,.75);
+  background:rgba(255,255,255,.06);
 
-  border:1px solid rgba(255,255,255,.9);
+  border:1px solid rgba(255,255,255,.08);
+
+  backdrop-filter:blur(12px);
 
   font-size:20px;
 }
 
 .tileText h3{
   margin:0;
+
   font-size:15px;
+  font-weight:800;
 }
 
 .tileText p{
@@ -428,7 +533,7 @@ body::before{
 
   font-size:22px;
 
-  color:#89a7af;
+  color:#7ea8c4;
 }
 
 /* =========================
@@ -446,12 +551,16 @@ body::before{
 
   font-weight:900;
 
-  color:white;
+  color:#08121c;
 
-  background:#6abfd3;
+  background:linear-gradient(
+    180deg,
+    #8ed8ff,
+    #67bff5
+  );
 
   box-shadow:
-    0 10px 24px rgba(106,191,211,.28);
+    0 10px 28px rgba(103,191,245,.30);
 
   transition:
     transform .15s ease,
@@ -462,7 +571,7 @@ body::before{
   transform:translateY(-1px);
 
   box-shadow:
-    0 14px 28px rgba(106,191,211,.34);
+    0 14px 34px rgba(103,191,245,.40);
 }
 
 .btnGhost{
@@ -476,18 +585,19 @@ body::before{
 
   font-weight:800;
 
-  background:rgba(255,255,255,.5);
-
   color:var(--ink);
 
-  border:1px solid rgba(255,255,255,.85);
+  background:rgba(255,255,255,.05);
+
+  border:1px solid rgba(255,255,255,.08);
+
+  backdrop-filter:blur(16px);
 }
 
 /* =========================
    calendar
 ========================= */
 
-/* ← Sun〜Satを消す */
 .calendarWeekdays{
   display:none;
 }
@@ -506,12 +616,16 @@ body::before{
 
   border-radius:18px;
 
-  background:rgba(255,255,255,.42);
+  background:rgba(255,255,255,.04);
 
-  border:1px solid rgba(255,255,255,.8);
+  border:1px solid rgba(255,255,255,.06);
+
+  backdrop-filter:
+    blur(18px)
+    saturate(180%);
 
   box-shadow:
-    0 8px 18px rgba(20,60,80,.05);
+    0 10px 20px rgba(0,0,0,.18);
 
   transition:
     transform .15s ease,
@@ -523,19 +637,21 @@ body::before{
 }
 
 .calendarCell.isToday{
-  background:rgba(255,255,255,.68);
+  background:rgba(121,199,255,.12);
+
+  border:1px solid rgba(121,199,255,.28);
 
   box-shadow:
-    0 0 0 3px rgba(106,191,211,.16),
-    0 12px 24px rgba(106,191,211,.10);
+    0 0 0 3px rgba(121,199,255,.10),
+    0 12px 26px rgba(121,199,255,.14);
 }
 
 .calendarCell.isSelected{
   transform:translateY(-2px);
 
-  background:rgba(255,255,255,.78);
+  background:rgba(121,199,255,.16);
 
-  border:1px solid rgba(106,191,211,.6);
+  border:1px solid rgba(121,199,255,.40);
 }
 
 .calendarDate{
@@ -555,7 +671,10 @@ body::before{
 
   border-radius:50%;
 
-  background:#6abfd3;
+  background:#79c7ff;
+
+  box-shadow:
+    0 0 10px rgba(121,199,255,.8);
 }
 
 /* =========================
@@ -564,13 +683,13 @@ body::before{
 
 .footer{
   padding:
-    30px
+    34px
     20px
-    40px;
+    44px;
 
   text-align:center;
 
   font-size:12px;
 
-  color:#7c969e;
+  color:#7f98a8;
 }
