@@ -1080,3 +1080,32 @@ body::after{
     transition:none;
   }
 }
+.heroChips{
+  display:flex !important;
+  flex-direction:row !important;
+
+  justify-content:center !important;
+  align-items:center !important;
+
+  gap:14px !important;
+  flex-wrap:nowrap !important;
+
+  width:100%;
+}
+
+.heroChips .chip{
+  display:inline-flex !important;
+
+  flex-direction:row !important;
+  align-items:center !important;
+  justify-content:center !important;
+
+  gap:8px;
+
+  width:auto !important;
+  max-width:none !important;
+  min-width:max-content !important;
+
+  flex:0 0 auto !important;
+  white-space:nowrap !important;
+}
