@@ -5,22 +5,25 @@
 
 :root{
   /* Jubilee Blue palette */
-  --bgTop:#ECFAFF;
-  --bgMid:#CFEFF7;
-  --bgBottom:#A7DAE6;
+　  --bgTop:#EEF9FD;
 
-  --ink:#08303A;
-  --muted:rgba(8,48,58,.65);
+  --bgMid:#BFE7F1;
 
-  --glass:rgba(255,255,255,.46);
-  --glass2:rgba(255,255,255,.30);
-  --border:rgba(255,255,255,.72);
+  --bgBottom:#026881;
 
-  --shadow:0 18px 36px rgba(6,38,46,.12);
-  --shadowSoft:0 10px 24px rgba(6,38,46,.10);
+  --ink:#F4F8FC;
 
-  --accent:#2C93B2;
-  --accent2:#7FD6E6;
+  --muted:rgba(244,248,252,.72);
+
+  --glass:rgba(255,255,255,.14);
+
+  --glass2:rgba(255,255,255,.10);
+
+  --shadow:0 18px 36px rgba(2,104,129,.18);
+  
+  --accent:#026881;
+
+  --accent2:#39A7C4;
 
   --radius-xl:26px;
   --radius-lg:22px;
