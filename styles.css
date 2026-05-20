@@ -1,170 +1,127 @@
 /* =========================
-   D'104 Navi
-   Night DisneySea Glass UI
+  D'104 Navi - Jubilee Blue UI
+  Simple / Readable / DisneySea-ish (subtle)
 ========================= */
 
 :root{
-  --bgTop:#071521;
-  --bgBottom:#0d2234;
+  /* Jubilee Blue palette */
+  --bgTop:#ECFAFF;
+  --bgMid:#CFEFF7;
+  --bgBottom:#A7DAE6;
 
-  --ink:#f4fbff;
-  --muted:rgba(255,255,255,.62);
+  --ink:#08303A;
+  --muted:rgba(8,48,58,.65);
 
-  --glass:rgba(255,255,255,.08);
-  --glassStrong:rgba(255,255,255,.12);
+  --glass:rgba(255,255,255,.46);
+  --glass2:rgba(255,255,255,.30);
+  --border:rgba(255,255,255,.72);
 
-  --border:rgba(255,255,255,.14);
+  --shadow:0 18px 36px rgba(6,38,46,.12);
+  --shadowSoft:0 10px 24px rgba(6,38,46,.10);
 
-  --accent:#5fd3ff;
-  --accentDeep:#2f93c9;
+  --accent:#2C93B2;
+  --accent2:#7FD6E6;
 
-  --shadow:
-    0 10px 30px rgba(0,0,0,.24);
-
-  --radius-xl:30px;
-  --radius-lg:24px;
+  --radius-xl:26px;
+  --radius-lg:22px;
   --radius-md:18px;
 }
 
-/* =========================
-   Base
-========================= */
-
-*{
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
-}
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
 
 body{
   margin:0;
-  min-height:100vh;
-
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Hiragino Sans",
-    "Noto Sans JP",
-    system-ui,
-    sans-serif;
-
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
   color:var(--ink);
   line-height:1.65;
 
   background:
+    radial-gradient(1200px 620px at 50% -14%, rgba(255,255,255,.88), transparent 58%),
+    radial-gradient(980px 560px at 10% 22%, rgba(255,255,255,.42), transparent 64%),
+    radial-gradient(980px 560px at 90% 28%, rgba(255,255,255,.34), transparent 66%),
+    radial-gradient(900px 520px at 50% 118%, rgba(255,255,255,.16), transparent 72%),
     linear-gradient(
       180deg,
-      var(--bgTop) 0%,
-      var(--bgBottom) 100%
+      #d9f2f8 0%,
+      #c7eaf3 26%,
+      #b8e0eb 52%,
+      #b5dce7 76%,
+      #c5e8f1 100%
     );
 
-  overflow-x:hidden;
-
-  -webkit-tap-highlight-color:transparent;
+  min-height:100vh;
+  background-attachment: fixed;
 }
 
-/* subtle stars */
-
+/* Subtle sparkles (控えめ) */
 body::after{
   content:"";
   position:fixed;
   inset:0;
-
   pointer-events:none;
-  z-index:0;
-
   background:
-    radial-gradient(1.5px 1.5px at 12% 18%, rgba(255,255,255,.85), transparent 60%),
-    radial-gradient(1.2px 1.2px at 22% 72%, rgba(255,255,255,.55), transparent 60%),
-    radial-gradient(1.4px 1.4px at 38% 44%, rgba(255,255,255,.65), transparent 60%),
-    radial-gradient(1.3px 1.3px at 58% 20%, rgba(255,255,255,.55), transparent 60%),
-    radial-gradient(1.5px 1.5px at 76% 62%, rgba(255,255,255,.50), transparent 60%),
-    radial-gradient(1.2px 1.2px at 88% 28%, rgba(255,255,255,.70), transparent 60%);
-
-  opacity:.38;
+    radial-gradient(1.4px 1.4px at 14% 16%, rgba(255,255,255,.70), transparent 60%),
+    radial-gradient(1.2px 1.2px at 64% 12%, rgba(255,255,255,.55), transparent 60%),
+    radial-gradient(1.2px 1.2px at 86% 30%, rgba(255,255,255,.50), transparent 60%),
+    radial-gradient(1.1px 1.1px at 24% 46%, rgba(255,255,255,.38), transparent 60%),
+    radial-gradient(1.1px 1.1px at 58% 60%, rgba(255,255,255,.28), transparent 60%),
+    radial-gradient(1px 1px at 35% 78%, rgba(255,255,255,.26), transparent 60%),
+    radial-gradient(1px 1px at 78% 74%, rgba(255,255,255,.22), transparent 60%);
+  opacity:.26;
 }
 
 /* =========================
-   Layout
+  Topbar
 ========================= */
-
-.topbar,
-.hero,
-.container,
-.footer{
-  position:relative;
-  z-index:1;
-}
-
-.container{
-  max-width:900px;
-  margin:0 auto;
-  padding:18px 16px 40px;
-}
-
-/* =========================
-   Topbar
-========================= */
-
 .topbar{
   position:sticky;
   top:0;
-
-  z-index:20;
-
+  z-index:10;
+  padding:12px 14px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-
   gap:12px;
 
-  padding:14px 16px;
-
-  background:rgba(7,21,33,.68);
-
-  backdrop-filter:blur(16px);
-
-  border-bottom:
-    1px solid rgba(255,255,255,.08);
-
-  box-shadow:
-    0 6px 24px rgba(0,0,0,.18);
+  background:rgba(255,255,255,.40);
+  border-bottom:1px solid rgba(255,255,255,.55);
+  backdrop-filter: blur(10px);
 }
 
 .brand{
   display:flex;
   align-items:center;
   gap:10px;
+  min-width:0;
 }
 
 .brandIcon{
-  width:40px;
-  height:40px;
-
+  width:38px;
+  height:38px;
   display:grid;
   place-items:center;
-
   border-radius:16px;
-
-  background:rgba(255,255,255,.10);
-
-  border:
-    1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.65);
+  border:1px solid var(--border);
+  box-shadow:var(--shadowSoft);
 }
 
+.brandText{ min-width:0; }
 .brandTitle{
-  font-size:14px;
   font-weight:900;
-
   letter-spacing:.06em;
+  font-size:14px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
-
 .brandSub{
   font-size:11px;
-
   color:var(--muted);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
 .topNav{
@@ -174,471 +131,393 @@ body::after{
 
 .navLink{
   text-decoration:none;
-
-  color:white;
-
+  color:rgba(8,48,58,.75);
   font-size:12px;
   font-weight:800;
-
-  padding:8px 12px;
-
+  padding:8px 10px;
   border-radius:999px;
-
-  background:rgba(255,255,255,.06);
-
-  border:
-    1px solid rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.58);
+  background:rgba(255,255,255,.28);
 }
 
+.navLink:active{ transform:scale(.99); }
+
 /* =========================
-   Hero
+  Hero
 ========================= */
-
 .hero{
-  padding:70px 20px 34px;
+  padding:30px 16px 6px;
+  position:relative;
+  overflow:hidden;
+}
 
+.hero::before{
+  content:"";
+  position:absolute;
+  width:320px;
+  height:320px;
+  border-radius:50%;
+  left:50%;
+  top:-210px;
+  transform:translateX(-50%);
+  background:radial-gradient(circle, rgba(127,214,230,.35), rgba(255,255,255,0) 65%);
+  pointer-events:none;
+}
+
+.heroInner{
+  max-width:880px;
+  margin:0 auto;
   text-align:center;
+}
+
+.heroEyebrow{
+  margin:0 0 6px;
+  font-size:12px;
+  letter-spacing:.18em;
+  color:rgba(8,48,58,.55);
+  font-weight:900;
 }
 
 .heroTitle{
   margin:0;
-
-  font-size:40px;
-  font-weight:900;
-
+  font-size:30px;
   letter-spacing:.08em;
-
-  color:white;
-
-  text-shadow:
-    0 0 24px rgba(95,211,255,.28),
-    0 4px 20px rgba(0,0,0,.32);
 }
 
 .heroLead{
-  margin:14px auto 0;
-
+  margin:10px auto 0;
   max-width:36em;
+  font-size:13px;
+  color:var(--muted);
+}
 
-  font-size:14px;
+.heroChips{
+  margin:16px auto 0;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
 
-  color:rgba(255,255,255,.72);
+.chip{
+  display:flex;
+  align-items:baseline;
+  gap:8px;
+  padding:10px 12px;
+  border-radius:999px;
+  background:rgba(255,255,255,.40);
+  border:1px solid rgba(255,255,255,.65);
+  backdrop-filter: blur(8px);
+  box-shadow:0 10px 22px rgba(6,38,46,.08);
+}
+
+.chipKey{
+  font-size:11px;
+  color:rgba(8,48,58,.60);
+  font-weight:900;
+  letter-spacing:.08em;
+}
+.chipVal{
+  font-size:12px;
+  font-weight:900;
 }
 
 /* =========================
-   Cards
+  Layout
 ========================= */
-
-.card,
-.tile,
-.newsItem,
-.chip,
-.calendarCell,
-.selectedDayBox,
-.dayEventItem{
-  background:var(--glass);
-
-  border:
-    1px solid var(--border);
-
-  backdrop-filter:blur(14px);
-
-  box-shadow:var(--shadow);
+.container{
+  max-width:880px;
+  margin:0 auto;
+  padding:14px 16px 28px;
 }
 
+/* =========================
+  Cards
+========================= */
 .card{
-  position:relative;
-
-  padding:20px;
-
+  background:var(--glass);
+  border:1px solid var(--border);
   border-radius:var(--radius-xl);
-
-  transition:
-    transform .18s ease,
-    box-shadow .18s ease;
+  padding:18px;
+  box-shadow:var(--shadow);
+  backdrop-filter: blur(10px);
+  position:relative;
 }
 
-.card:hover{
-  transform:translateY(-2px);
-
-  box-shadow:
-    0 18px 36px rgba(0,0,0,.30);
-}
-
-/* subtle shine */
-
-.card::before,
-.tile::before{
+/* Jewel corner highlight */
+.card::before{
   content:"";
   position:absolute;
   inset:0;
-
   border-radius:inherit;
-
   pointer-events:none;
-
   background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,.18),
-      transparent 45%
-    );
-
-  opacity:.55;
+    linear-gradient(135deg,
+      rgba(255,255,255,.55),
+      rgba(255,255,255,0) 45%,
+      rgba(255,255,255,.35) 80%,
+      rgba(255,255,255,0));
+  mix-blend-mode: screen;
+  opacity:.40;
 }
-
-/* =========================
-   Card header
-========================= */
 
 .cardHead{
   display:flex;
   align-items:center;
   justify-content:space-between;
-
   gap:10px;
-
-  margin-bottom:14px;
+  margin-bottom:12px;
 }
 
 .cardTitle{
   margin:0;
-
+  display:flex;
+  align-items:center;
+  gap:10px;
   font-size:16px;
-  font-weight:900;
+  letter-spacing:.06em;
+  text-transform:none;
+}
 
-  color:white;
+.badge{
+  width:28px;
+  height:28px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  background:rgba(255,255,255,.62);
+  border:1px solid var(--border);
 }
 
 .pill{
-  padding:7px 10px;
-
-  border-radius:999px;
-
-  background:rgba(255,255,255,.08);
-
-  border:
-    1px solid rgba(255,255,255,.12);
-
   font-size:11px;
   font-weight:900;
-
-  color:rgba(255,255,255,.72);
+  color:rgba(8,48,58,.75);
+  padding:7px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.60);
+  background:rgba(255,255,255,.26);
 }
 
-/* =========================
-   Next Event
-========================= */
-
-.nextEventCard{
-  transform:translateY(-6px);
-}
-
+/* Next event box */
 .nextBox{
   display:grid;
-  gap:12px;
-
-  padding:16px;
-
-  border-radius:24px;
-
-  background:rgba(255,255,255,.04);
-
-  border:
-    1px solid rgba(255,255,255,.08);
+  gap:10px;
+  padding:14px;
+  border-radius:var(--radius-lg);
+  border:1px solid rgba(255,255,255,.62);
+  background:var(--glass2);
 }
 
 .kv{
   display:grid;
   grid-template-columns:72px 1fr;
-
   gap:12px;
+  align-items:center;
 }
 
 .k{
   font-size:12px;
-  font-weight:900;
-
   color:var(--muted);
+  font-weight:900;
+  letter-spacing:.02em;
 }
-
 .v{
   font-size:14px;
   font-weight:800;
-
-  color:white;
 }
 
-/* =========================
-   Buttons
-========================= */
-
+/* Actions */
 .actions{
   display:flex;
   gap:10px;
+  margin-top:14px;
   flex-wrap:wrap;
-
-  margin-top:16px;
 }
 
 .btnPrimary{
-  flex:1;
-
+  flex:1 1 220px;
   border:none;
-
-  padding:14px 18px;
-
   border-radius:999px;
-
+  padding:13px 16px;
   font-weight:900;
-
-  color:white;
-
-  background:
-    linear-gradient(
-      180deg,
-      var(--accent),
-      var(--accentDeep)
-    );
-
-  box-shadow:
-    0 0 24px rgba(95,211,255,.18);
-
-  transition:
-    transform .16s ease,
-    box-shadow .16s ease;
+  color:#06323C;
+  background:linear-gradient(180deg, var(--accent2), var(--accent));
+  box-shadow:0 14px 26px rgba(44,147,178,.22), 0 0 0 1px rgba(255,255,255,.55) inset;
+  position:relative;
+  overflow:hidden;
 }
 
-.btnPrimary:hover{
-  transform:translateY(-1px);
-
-  box-shadow:
-    0 0 32px rgba(95,211,255,.28);
+/* === Button shine (hover不要で自動) === */
+.btnPrimary{
+  position: relative;
+  overflow: hidden;
 }
 
-.btnPrimary:active{
-  transform:scale(.98);
+.btnPrimary::after{
+  content:"";
+  position:absolute;
+  inset:-40% -80%;
+  background: linear-gradient(
+    120deg,
+    transparent 35%,
+    rgba(255,255,255,.28) 50%,
+    transparent 65%
+  );
+  transform: translateX(-30%);
+  animation: btnShine 3.6s ease-in-out infinite;
+  pointer-events:none;
+  opacity: .85;
 }
+
+@keyframes btnShine{
+  0%   { transform: translateX(-55%); }
+  55%  { transform: translateX(55%); }
+  100% { transform: translateX(55%); }
+}
+
+/* 動きが苦手な人向け */
+@media (prefers-reduced-motion: reduce){
+  .btnPrimary::after{ animation: none; opacity: .45; }
+}
+
+.btnPrimary:active{ transform:scale(.99); }
 
 .btnGhost{
-  padding:14px 16px;
-
+  flex:0 0 auto;
   border-radius:999px;
+  padding:13px 16px;
+  font-weight:900;
+  border:1px solid rgba(255,255,255,.65);
+  background:rgba(255,255,255,.30);
+  color:rgba(8,48,58,.78);
+}
 
-  border:
-    1px solid rgba(255,255,255,.12);
+.btnGhost:active{ transform:scale(.99); }
 
-  background:rgba(255,255,255,.06);
-
-  color:white;
-
-  font-weight:800;
+.hint{
+  margin:10px 0 0;
+  font-size:12px;
+  color:var(--muted);
 }
 
 /* =========================
-   Section Title
+  Section Title (Art-deco-ish)
 ========================= */
-
 .sectionTitle{
-  margin:24px 0 14px;
-
+  margin:18px 0 10px;
   text-align:center;
-
-  font-size:13px;
   font-weight:900;
-
-  letter-spacing:.24em;
-
-  color:rgba(255,255,255,.58);
+  letter-spacing:.22em;
+  color:rgba(8,48,58,.55);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
 }
 
 .sectionTitle::before,
 .sectionTitle::after{
   content:"✦";
-
-  margin:0 8px;
-
-  color:rgba(95,211,255,.75);
+  font-size:14px;
+  color:rgba(255,255,255,.85);
+  text-shadow:0 2px 10px rgba(44,147,178,.22);
+  opacity:.85;
 }
 
 /* =========================
-   Menu tiles
+  Menu tiles
 ========================= */
-
 .grid{
   display:grid;
   grid-template-columns:1fr;
-  gap:14px;
-}
-
-@media(min-width:640px){
-  .grid{
-    grid-template-columns:1fr 1fr;
-  }
+  gap:12px;
 }
 
 .tile{
-  position:relative;
-
   display:flex;
   align-items:center;
   gap:14px;
+  text-decoration:none;
+  color:var(--ink);
 
   padding:16px;
-
   border-radius:var(--radius-lg);
+  background:rgba(255,255,255,.40);
+  border:1px solid rgba(255,255,255,.72);
+  box-shadow:var(--shadowSoft);
+  backdrop-filter: blur(10px);
 
-  text-decoration:none;
+  position:relative;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
 
-  color:white;
-
-  transition:
-    transform .18s ease,
-    box-shadow .18s ease;
+.tile::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  background:
+    linear-gradient(135deg,
+      rgba(255,255,255,.55),
+      rgba(255,255,255,0) 45%,
+      rgba(255,255,255,.30) 80%,
+      rgba(255,255,255,0));
+  mix-blend-mode: screen;
+  opacity:.35;
 }
 
 .tile:hover{
-  transform:translateY(-3px);
+  transform:translateY(-2px);
+  box-shadow:0 18px 34px rgba(6,38,46,.14);
+}
 
-  box-shadow:
-    0 18px 36px rgba(0,0,0,.28);
+.tile:active{
+  transform:scale(.99);
 }
 
 .emoji{
-  width:48px;
-  height:48px;
-
+  width:46px;
+  height:46px;
+  border-radius:18px;
   display:grid;
   place-items:center;
-
-  border-radius:18px;
-
-  background:rgba(255,255,255,.10);
-
-  border:
-    1px solid rgba(255,255,255,.12);
-
   font-size:20px;
+  background:rgba(255,255,255,.62);
+  border:1px solid var(--border);
 }
 
 .tileText h3{
   margin:0;
-
   font-size:15px;
 }
 
 .tileText p{
   margin:4px 0 0;
-
   font-size:12px;
-
-  color:rgba(255,255,255,.62);
+  color:var(--muted);
 }
 
 .arrow{
   margin-left:auto;
-
+  color:rgba(8,48,58,.45);
   font-size:22px;
+  font-weight:900;
+}
 
-  color:rgba(255,255,255,.34);
+.isDisabled{
+  opacity:.78;
+  pointer-events:none;
 }
 
 /* =========================
-   Calendar
+  News
 ========================= */
-
-.miniCalendarGrid{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-
-  gap:8px;
-}
-
-.calendarCell{
-  min-height:64px;
-
-  padding:8px;
-
-  border-radius:18px;
-
-  transition:
-    transform .15s ease,
-    box-shadow .15s ease;
-}
-
-.calendarCell:hover{
-  transform:translateY(-2px);
-}
-
-.calendarCell.isToday{
-  background:
-    linear-gradient(
-      180deg,
-      rgba(95,211,255,.22),
-      rgba(255,255,255,.06)
-    );
-
-  border:
-    1px solid rgba(95,211,255,.42);
-
-  box-shadow:
-    0 0 20px rgba(95,211,255,.14);
-}
-
-.calendarCell.isSelected{
-  transform:translateY(-2px);
-
-  border:
-    1px solid rgba(95,211,255,.48);
-
-  box-shadow:
-    0 0 26px rgba(95,211,255,.18);
-}
-
-.calendarDate{
-  font-size:13px;
-  font-weight:800;
-
-  color:white;
-}
-
-.calendarDots{
-  display:flex;
-  gap:4px;
-  flex-wrap:wrap;
-}
-
-.calendarDot{
-  width:7px;
-  height:7px;
-
-  border-radius:50%;
-
-  background:var(--accent);
-}
-
-.calendarDot.disney{
-  background:#ff6b81;
-}
-
-.calendarDot.character{
-  background:#ffd93d;
-}
-
-.calendarDot.club{
-  background:#5aa9c5;
-}
-
-/* =========================
-   News
-========================= */
-
 .newsList{
   list-style:none;
-
   padding:0;
   margin:0;
-
   display:grid;
   gap:10px;
 }
@@ -647,66 +526,603 @@ body::after{
   display:flex;
   align-items:center;
   gap:10px;
-
-  padding:12px 14px;
-
-  border-radius:20px;
+  padding:10px 12px;
+  border-radius:var(--radius-md);
+  border:1px solid rgba(255,255,255,.62);
+  background:rgba(255,255,255,.24);
 }
 
 .date{
-  min-width:84px;
-
   font-size:12px;
   font-weight:900;
-
-  color:rgba(255,255,255,.52);
+  color:rgba(8,48,58,.62);
+  min-width:88px;
 }
 
 .dot{
   width:6px;
   height:6px;
-
   border-radius:50%;
-
-  background:var(--accent);
+  background:rgba(44,147,178,.55);
+  box-shadow:0 0 0 3px rgba(127,214,230,.20);
 }
 
 .text{
   font-size:13px;
+  color:rgba(8,48,58,.78);
   font-weight:700;
-
-  color:white;
 }
 
 /* =========================
-   Footer
+  Footer
 ========================= */
-
 .footer{
-  padding:26px 10px 40px;
-
   text-align:center;
-
+  padding:18px 10px 30px;
+  color:rgba(8,48,58,.58);
   font-size:12px;
-
-  color:rgba(255,255,255,.48);
 }
 
 .toTop{
   display:inline-block;
-
-  margin-bottom:12px;
-
-  padding:10px 14px;
-
-  border-radius:999px;
-
+  margin-bottom:10px;
   text-decoration:none;
+  color:rgba(8,48,58,.72);
+  font-weight:900;
+  border:1px solid rgba(255,255,255,.62);
+  background:rgba(255,255,255,.30);
+  padding:10px 12px;
+  border-radius:999px;
+}
 
-  color:white;
+/* =========================
+  Responsive
+========================= */
+@media (min-width:640px){
+  .grid{ grid-template-columns:1fr 1fr; }
+  .heroTitle{ font-size:34px; }
+}
 
-  background:rgba(255,255,255,.06);
+/* =========================
+   Watercolor + Sparkle boost
+   (add at the END of styles.css)
+========================= */
 
-  border:
-    1px solid rgba(255,255,255,.10);
+/* 背景を水彩っぽく：柔らかい霧 + うねり */
+body{
+  background:
+    radial-gradient(1200px 700px at 50% -12%, rgba(255,255,255,.92), transparent 58%),
+    radial-gradient(900px 520px at 20% 20%, rgba(255,255,255,.55), transparent 62%),
+    radial-gradient(900px 520px at 80% 30%, rgba(255,255,255,.38), transparent 66%),
+    radial-gradient(1200px 900px at 50% 100%, rgba(110,190,210,.30), transparent 60%),
+    linear-gradient(180deg, #eafaff 0%, #cfeff7 55%, #a7dae6 100%);
+}
+
+/* 紙/水彩の“ざらっ”を疑似的に（超うっすら） */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background:
+    radial-gradient(1px 1px at 10% 20%, rgba(0,0,0,.05), transparent 60%),
+    radial-gradient(1px 1px at 40% 60%, rgba(0,0,0,.04), transparent 60%),
+    radial-gradient(1px 1px at 70% 30%, rgba(0,0,0,.035), transparent 60%),
+    radial-gradient(1px 1px at 90% 80%, rgba(0,0,0,.03), transparent 60%);
+  opacity:.18;
+  filter: blur(.2px);
+}
+
+/* キラ粒を“多め＆大小混在”に：iPadでも見えるよう少し強め */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background:
+    radial-gradient(1.6px 1.6px at 12% 18%, rgba(255,255,255,.90), transparent 60%),
+    radial-gradient(1.2px 1.2px at 18% 62%, rgba(255,255,255,.60), transparent 60%),
+    radial-gradient(1.4px 1.4px at 26% 36%, rgba(255,255,255,.70), transparent 60%),
+    radial-gradient(1.8px 1.8px at 34% 78%, rgba(255,255,255,.55), transparent 60%),
+    radial-gradient(1.2px 1.2px at 44% 22%, rgba(255,255,255,.55), transparent 60%),
+    radial-gradient(1.6px 1.6px at 58% 48%, rgba(255,255,255,.50), transparent 60%),
+    radial-gradient(1.2px 1.2px at 66% 14%, rgba(255,255,255,.60), transparent 60%),
+    radial-gradient(1.8px 1.8px at 74% 64%, rgba(255,255,255,.50), transparent 60%),
+    radial-gradient(1.4px 1.4px at 82% 26%, rgba(255,255,255,.65), transparent 60%),
+    radial-gradient(1.2px 1.2px at 90% 74%, rgba(255,255,255,.55), transparent 60%);
+  opacity:.42;
+  filter: blur(.15px);
+}
+
+/* コンテンツを前面に */
+.topbar, .hero, .container, .footer{
+  position:relative;
+  z-index:1;
+}
+
+/* カードを“白い縁取り＋内側の光”で絵の雰囲気に寄せる */
+.card, .tile, .newsItem, .chip{
+  border: 1.5px solid rgba(255,255,255,.78);
+  box-shadow:
+    0 18px 36px rgba(6,38,46,.12),
+    0 0 0 1px rgba(255,255,255,.55) inset,
+    0 10px 20px rgba(255,255,255,.35) inset;
+}
+
+/* 角の“きらん”感（上品） */
+.card::before, .tile::before{
+  opacity:.55;
+}
+
+/* 見出しを柔らかく：軽い光彩 */
+.heroTitle{
+  text-shadow: 0 10px 30px rgba(0,0,0,.10);
+}
+.heroEyebrow{
+  letter-spacing:.20em;
+  text-shadow: 0 6px 20px rgba(255,255,255,.55);
+}
+
+/* MENUの装飾を画像っぽく（曲線/きら） */
+.sectionTitle{
+  gap:12px;
+}
+.sectionTitle::before,
+.sectionTitle::after{
+  content:"✧";
+  font-size:16px;
+  color:rgba(255,255,255,.90);
+  text-shadow: 0 6px 22px rgba(44,147,178,.28);
+}
+
+/* タイルに“押し出し”感（ふわっと） */
+.tile{
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.tile:active{
+  transform: scale(.99);
+}
+
+/* ボタンの光沢：hover不要で自動（iPadでも見える） */
+.btnPrimary{
+  overflow:hidden;
+  position:relative;
+}
+.btnPrimary::after{
+  content:"";
+  position:absolute;
+  inset:-40% -80%;
+  background: linear-gradient(
+    120deg,
+    transparent 35%,
+    rgba(255,255,255,.26) 50%,
+    transparent 65%
+  );
+  transform: translateX(-55%);
+  animation: btnShine 3.6s ease-in-out infinite;
+  pointer-events:none;
+  opacity:.85;
+}
+@keyframes btnShine{
+  0%   { transform: translateX(-55%); }
+  55%  { transform: translateX(55%); }
+  100% { transform: translateX(55%); }
+}
+@media (prefers-reduced-motion: reduce){
+  .btnPrimary::after{ animation:none; opacity:.45; }
+}
+.pageHeader{
+text-align:center;
+padding:40px 20px;
+}
+
+.videoContainer{
+max-width:800px;
+margin:auto;
+padding:20px;
+}
+
+video{
+width:100%;
+border-radius:16px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+.backButton{
+display:block;
+width:200px;
+margin:40px auto;
+  
+padding:12px;
+text-align:center;
+background:#6fb5c6;
+color:white;
+border-radius:20px;
+text-decoration:none;
+}
+
+.calendarItemCard{
+  margin-bottom:16px;
+}
+
+.calendarItemCard:last-child{
+  margin-bottom:0;
+}
+
+/* =========================
+  Mini Calendar
+========================= */
+
+.calendarNav{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.calendarMonthBtn{
+  min-width:40px;
+  padding:10px 12px;
+}
+
+.miniCalendarWrap{
+  margin-top:10px;
+}
+
+.calendarWeekdays{
+  display:grid;
+  grid-template-columns:repeat(7, 1fr);
+  gap:8px;
+  margin-bottom:8px;
+}
+
+.calendarWeekdays div{
+  text-align:center;
+  font-size:12px;
+  font-weight:900;
+  color:var(--muted);
+  padding:6px 0;
+}
+
+.miniCalendarGrid{
+  display:grid;
+  grid-template-columns:repeat(7, 1fr);
+  gap:8px;
+}
+
+.calendarCell{
+  min-height:64px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.65);
+  background:rgba(255,255,255,.28);
+  box-shadow:0 8px 18px rgba(6,38,46,.08);
+  padding:8px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+
+.calendarCell:active{
+  transform:scale(.98);
+}
+
+.calendarCell.isMuted{
+  opacity:.35;
+}
+
+.calendarCell.isToday{
+  outline:2px solid rgba(44,147,178,.65);
+  background:rgba(255,255,255,.48);
+}
+
+.calendarCell.isSelected{
+  border:1px solid rgba(44,147,178,.75);
+  box-shadow:0 10px 22px rgba(44,147,178,.16);
+}
+
+.calendarCell.hasEvent .calendarDate{
+  font-weight:900;
+}
+
+.calendarDate{
+  font-size:13px;
+  font-weight:800;
+}
+
+.calendarDots{
+  display:flex;
+  gap:4px;
+  flex-wrap:wrap;
+  justify-content:flex-start;
+}
+
+.calendarDot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 0 3px rgba(127,214,230,.18);
+}
+
+.selectedDayBox{
+  margin-top:16px;
+  padding:14px;
+  border-radius:var(--radius-lg);
+  border:1px solid rgba(255,255,255,.62);
+  background:rgba(255,255,255,.24);
+}
+
+.dayEventItem{
+  padding:12px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.62);
+  background:rgba(255,255,255,.28);
+  margin-top:10px;
+}
+
+.dayEventItem:first-child{
+  margin-top:0;
+}
+
+.dayEventTitle{
+  font-weight:900;
+  margin-bottom:4px;
+}
+
+.dayEventMeta{
+  font-size:12px;
+  color:var(--muted);
+}
+
+@media (max-width: 520px){
+  .calendarCell{
+    min-height:56px;
+    padding:6px;
+  }
+
+  .calendarDate{
+    font-size:12px;
+  }
+
+  /* Disneyイベントの日 */
+
+.calendarCell.disney {
+  border: 2px solid #ff6b81;
+}
+
+/* キャラ誕生日 */
+
+.calendarCell.character {
+  border: 2px solid #ffd93d;
+}
+}
+
+/* ===== Compact World Disney Time ===== */
+
+.worldClockCard{
+  margin: 20px 0 28px;
+  padding: 20px;
+  border-radius: 28px;
+  background: rgba(255,255,255,.22);
+  border: 1px solid rgba(255,255,255,.55);
+  box-shadow: 0 12px 32px rgba(0,0,0,.08);
+  backdrop-filter: blur(10px);
+}
+
+.worldClockTitle{
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  color: #55727c;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.compactWorldClockGrid{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:12px 18px;
+}
+@media (max-width: 680px){
+  .compactWorldClockGrid{
+    grid-template-columns:1fr;
+  }
+}
+
+.worldClockRow{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  padding:14px 16px;
+  border-radius:20px;
+  background:rgba(255,255,255,.34);
+  border:1px solid rgba(255,255,255,.52);
+  box-shadow:0 8px 24px rgba(0,0,0,.05);
+  transition:background .3s ease, border-color .3s ease;
+}
+
+.worldClockRow.isNight{
+  background:rgba(41,61,76,.78);
+  border-color:rgba(255,255,255,.18);
+}
+
+.worldClockCity{
+  min-width:120px;
+  font-size:15px;
+  font-weight:800;
+  color:#4f6d77;
+  white-space:nowrap;
+}
+
+.worldClockRow.isNight .worldClockCity{
+  color:#d8e8ef;
+}
+
+.compactFlipClock{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.compactMainTime{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.flipSeparator{
+  font-size:20px;
+  font-weight:900;
+  color:#2b4a55;
+  line-height:1;
+}
+
+.worldClockRow.isNight .flipSeparator{
+  color:#f2f7fa;
+}
+
+.compactFlipCard,
+.compactSecondCard{
+  position:relative;
+  perspective:900px;
+}
+
+.compactFlipCard{
+  width:44px;
+  height:48px;
+}
+
+.compactSecondCard{
+  width:34px;
+  height:40px;
+}
+
+.flipTop,
+.flipBottom,
+.flipTopNext{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(180deg, rgba(255,255,255,.94), rgba(255,255,255,.78));
+  border:1px solid rgba(255,255,255,.92);
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  backface-visibility:hidden;
+  color:#1f404b;
+  font-weight:900;
+  border-radius:12px;
+}
+
+.worldClockRow.isNight .flipTop,
+.worldClockRow.isNight .flipBottom,
+.worldClockRow.isNight .flipTopNext{
+  background:linear-gradient(180deg, rgba(73,97,114,.95), rgba(49,70,86,.95));
+  border-color:rgba(255,255,255,.08);
+  color:#f5fbff;
+  box-shadow:0 6px 18px rgba(0,0,0,.18);
+}
+
+.flipBottom,
+.flipTopNext{
+  display:none;
+}
+
+.flipTop span{
+  display:block;
+  font-size:18px;
+  line-height:1;
+  letter-spacing:.03em;
+  transform:none;
+}
+
+.compactSecondCard .flipTop span{
+  font-size:14px;
+}
+
+.flipTopNext{
+  z-index:3;
+  transform:rotateX(90deg);
+}
+
+.compactFlipCard.is-flipping .flipTopNext,
+.compactSecondCard.is-flipping .flipTopNext{
+  animation: flipDown .42s ease forwards;
+}
+
+@keyframes flipDown{
+  0%{
+    transform:rotateX(90deg);
+    opacity:.4;
+  }
+  100%{
+    transform:rotateX(0deg);
+    opacity:1;
+  }
+}
+
+@media (max-width: 520px){
+  .worldClockRow{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .worldClockCity{
+    min-width:auto;
+  }
+}
+/* ===== World clock one-line override ===== */
+
+.compactFlipCard,
+.compactSecondCard{
+  overflow: hidden;
+}
+
+.compactFlipCard .flipTop,
+.compactSecondCard .flipTop{
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 12px !important;
+}
+
+.compactFlipCard .flipBottom,
+.compactFlipCard .flipTopNext,
+.compactSecondCard .flipBottom,
+.compactSecondCard .flipTopNext{
+  display: none !important;
+}
+
+.compactFlipCard .flipTop span,
+.compactSecondCard .flipTop span{
+  transform: none !important;
+  font-size: 18px !important;
+  line-height: 1 !important;
+}
+
+.compactSecondCard .flipTop span{
+  font-size: 14px !important;
+}
+
+.calendarDot.club{
+  background:#5aa9c5 !important;
+}
+
+.calendarDot.disney{
+  background:#ff6b81 !important;
+}
+
+.calendarDot.character{
+  background:#ffd93d !important;
 }
