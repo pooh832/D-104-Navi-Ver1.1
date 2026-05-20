@@ -866,7 +866,24 @@ body::after{
   font-size:13px;
   font-weight:900;
 }
+/* =========================
+   Calendar Text White
+========================= */
 
+.calendarCell,
+.calendarCell *{
+  color:#F4F8FC;
+}
+
+.calendarDate{
+  color:#F4F8FC !important;
+
+  font-size:13px;
+  font-weight:900;
+
+  text-shadow:
+    0 1px 6px rgba(0,0,0,.22);
+}
 .calendarDots{
   display:flex;
   gap:4px;
