@@ -341,7 +341,15 @@ body::after{
 
   color:var(--muted);
 }
+.heroTitle,
+.sectionTitle{
 
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  letter-spacing:.08em;
+}
 /* =========================
    Hero Chips
 ========================= */
