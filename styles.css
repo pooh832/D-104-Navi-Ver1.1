@@ -1,6 +1,344 @@
 /* =========================
-   NEXT EVENT
-   premium navy glass
+   D'104 Navi
+   Premium Navy Glass UI
+========================= */
+
+:root{
+
+  /* background */
+  --bg:#0a1622;
+
+  /* surfaces */
+  --surface:#182534;
+  --surfaceSoft:#1d2b3d;
+
+  /* text */
+  --ink:#f4f8fc;
+  --muted:#9caebe;
+
+  /* glass */
+  --glass:rgba(255,255,255,.045);
+  --glassHover:rgba(255,255,255,.065);
+
+  /* borders */
+  --border:rgba(255,255,255,.06);
+
+  /* accent */
+  --accent:#43bfff;
+  --accent2:#63d1ff;
+
+  /* shadows */
+  --shadow:
+    0 20px 40px rgba(0,0,0,.34);
+
+  --shadowSoft:
+    0 12px 24px rgba(0,0,0,.22);
+
+  /* radius */
+  --radius-xl:34px;
+  --radius-lg:28px;
+  --radius-md:20px;
+}
+
+/* =========================
+   reset
+========================= */
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+
+  overflow-x:hidden;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Hiragino Sans",
+    "Noto Sans JP",
+    sans-serif;
+
+  color:var(--ink);
+  line-height:1.65;
+
+  background:
+
+    radial-gradient(
+      900px 500px at 50% -10%,
+      rgba(70,170,255,.08),
+      transparent 70%
+    ),
+
+    linear-gradient(
+      180deg,
+      #0f1b28 0%,
+      #0a1622 100%
+    );
+}
+
+/* =========================
+   background glow
+========================= */
+
+body::before{
+  content:"";
+
+  position:fixed;
+  inset:0;
+
+  pointer-events:none;
+  z-index:0;
+
+  background:
+
+    radial-gradient(
+      500px 300px at 20% 20%,
+      rgba(255,255,255,.04),
+      transparent 70%
+    ),
+
+    radial-gradient(
+      500px 300px at 80% 25%,
+      rgba(67,191,255,.06),
+      transparent 70%
+    );
+
+  opacity:1;
+}
+
+/* =========================
+   layout
+========================= */
+
+.topbar,
+.hero,
+.container,
+.footer{
+  position:relative;
+  z-index:1;
+}
+
+.container{
+  max-width:960px;
+  margin:auto;
+  padding:18px;
+}
+
+/* =========================
+   topbar
+========================= */
+
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:40;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:14px 18px;
+
+  background:
+    rgba(12,20,30,.72);
+
+  border-bottom:
+    1px solid rgba(255,255,255,.04);
+
+  backdrop-filter:
+    blur(18px);
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.28);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.brandIcon{
+  width:44px;
+  height:44px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:16px;
+
+  background:
+    rgba(255,255,255,.04);
+
+  border:
+    1px solid rgba(255,255,255,.06);
+
+  box-shadow:var(--shadowSoft);
+}
+
+.brandTitle{
+  font-size:14px;
+  font-weight:900;
+  letter-spacing:.08em;
+}
+
+.brandSub{
+  font-size:11px;
+  color:var(--muted);
+}
+
+.topNav{
+  display:flex;
+  gap:8px;
+}
+
+.navLink{
+  text-decoration:none;
+
+  padding:
+    10px
+    15px;
+
+  border-radius:999px;
+
+  font-size:12px;
+  font-weight:800;
+
+  color:var(--ink);
+
+  background:
+    rgba(255,255,255,.04);
+
+  border:
+    1px solid rgba(255,255,255,.05);
+
+  transition:
+    transform .15s ease,
+    background .15s ease;
+}
+
+.navLink:hover{
+  transform:translateY(-1px);
+
+  background:
+    rgba(255,255,255,.08);
+}
+
+/* =========================
+   hero
+========================= */
+
+.hero{
+  padding:
+    56px
+    20px
+    24px;
+
+  text-align:center;
+}
+
+.heroTitle{
+  margin:0;
+
+  font-size:42px;
+  font-weight:900;
+
+  letter-spacing:.08em;
+
+  color:#f8fbff;
+}
+
+.heroLead{
+  margin:12px auto 0;
+
+  max-width:34em;
+
+  font-size:14px;
+
+  color:var(--muted);
+}
+
+/* =========================
+   hero chips
+========================= */
+
+.heroChips{
+  margin-top:22px;
+
+  display:flex;
+  justify-content:center;
+  gap:12px;
+
+  flex-wrap:wrap;
+}
+
+.chip{
+  min-width:120px;
+
+  padding:
+    14px
+    16px;
+
+  border-radius:24px;
+
+  background:
+    rgba(255,255,255,.04);
+
+  border:
+    1px solid rgba(255,255,255,.05);
+
+  box-shadow:var(--shadowSoft);
+
+  backdrop-filter:
+    blur(12px);
+}
+
+.chipKey{
+  font-size:10px;
+  font-weight:900;
+
+  letter-spacing:.14em;
+
+  color:var(--muted);
+
+  margin-bottom:4px;
+}
+
+.chipVal{
+  font-size:15px;
+  font-weight:900;
+}
+
+/* =========================
+   section title
+========================= */
+
+.sectionTitle{
+  margin:
+    32px
+    0
+    14px;
+
+  text-align:center;
+
+  font-size:13px;
+  font-weight:900;
+
+  letter-spacing:.24em;
+
+  color:#8ca3b5;
+}
+
+/* =========================
+   next event
 ========================= */
 
 .nextEvent{
@@ -19,7 +357,8 @@
       rgba(255,255,255,.02)
     );
 
-  border:1px solid rgba(255,255,255,.06);
+  border:
+    1px solid rgba(255,255,255,.06);
 
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.04),
@@ -30,9 +369,7 @@
     saturate(140%);
 }
 
-/* =========================
-   background visual
-========================= */
+/* background image */
 
 .nextEvent::before{
   content:"";
@@ -62,7 +399,7 @@
   z-index:0;
 }
 
-/* subtle blue glow */
+/* blue glow */
 
 .nextEvent::after{
   content:"";
@@ -87,17 +424,13 @@
   z-index:0;
 }
 
-/* =========================
-   content
-========================= */
-
 .nextEventInner{
   position:relative;
   z-index:2;
 }
 
 /* =========================
-   top row
+   event top
 ========================= */
 
 .eventTop{
@@ -108,10 +441,6 @@
   gap:18px;
 }
 
-/* =========================
-   left block
-========================= */
-
 .eventMain{
   display:flex;
   gap:18px;
@@ -119,7 +448,7 @@
 }
 
 /* =========================
-   date glass
+   date block
 ========================= */
 
 .eventDate{
@@ -136,7 +465,8 @@
       rgba(255,255,255,.03)
     );
 
-  border:1px solid rgba(255,255,255,.08);
+  border:
+    1px solid rgba(255,255,255,.08);
 
   backdrop-filter:
     blur(18px);
@@ -150,9 +480,9 @@
   justify-content:center;
   align-items:center;
 
-  position:relative;
-
   overflow:hidden;
+
+  position:relative;
 }
 
 .eventDate::before{
@@ -167,16 +497,12 @@
       rgba(255,255,255,.08),
       transparent 40%
     );
-
-  pointer-events:none;
 }
 
 .eventDateDay{
   font-size:38px;
   font-weight:900;
   line-height:1;
-
-  color:white;
 }
 
 .eventDateWeek{
@@ -252,7 +578,8 @@
 
   color:#ffd8d8;
 
-  backdrop-filter:blur(14px);
+  backdrop-filter:
+    blur(14px);
 
   box-shadow:
     0 8px 18px rgba(0,0,0,.18);
@@ -290,7 +617,7 @@
 }
 
 /* =========================
-   chips
+   meta chips
 ========================= */
 
 .metaChip{
@@ -317,10 +644,6 @@
   font-weight:800;
 
   color:#edf7ff;
-}
-
-.metaIcon{
-  opacity:.9;
 }
 
 /* =========================
@@ -354,8 +677,6 @@
 
   background:
     rgba(255,255,255,.05);
-
-  position:relative;
 }
 
 .countFill{
@@ -376,7 +697,7 @@
 }
 
 /* =========================
-   buttons
+   event buttons
 ========================= */
 
 .eventActions{
@@ -454,9 +775,6 @@
   backdrop-filter:
     blur(14px);
 
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.03);
-
   transition:
     background .15s ease,
     transform .15s ease;
@@ -467,6 +785,223 @@
 
   background:
     rgba(255,255,255,.08);
+}
+
+/* =========================
+   menu grid
+========================= */
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px;
+}
+
+@media (min-width:640px){
+
+  .grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+}
+
+/* =========================
+   menu tile
+========================= */
+
+.tile{
+  display:flex;
+  align-items:center;
+  gap:14px;
+
+  text-decoration:none;
+  color:var(--ink);
+
+  padding:18px;
+
+  border-radius:28px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.035),
+      rgba(255,255,255,.015)
+    );
+
+  border:
+    1px solid rgba(255,255,255,.05);
+
+  box-shadow:var(--shadowSoft);
+
+  transition:
+    transform .18s ease,
+    background .18s ease;
+}
+
+.tile:hover{
+  transform:translateY(-2px);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.05),
+      rgba(255,255,255,.025)
+    );
+}
+
+.emoji{
+  width:52px;
+  height:52px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:18px;
+
+  font-size:22px;
+
+  background:
+    rgba(255,255,255,.04);
+
+  border:
+    1px solid rgba(255,255,255,.05);
+}
+
+.tileText h3{
+  margin:0;
+
+  font-size:15px;
+  font-weight:800;
+}
+
+.tileText p{
+  margin:4px 0 0;
+
+  font-size:12px;
+
+  color:var(--muted);
+}
+
+.arrow{
+  margin-left:auto;
+
+  font-size:22px;
+
+  color:#7ca7c4;
+}
+
+/* =========================
+   calendar
+========================= */
+
+.calendarWeekdays{
+  display:none;
+}
+
+.miniCalendarGrid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+
+  gap:8px;
+}
+
+.calendarCell{
+  min-height:66px;
+
+  padding:8px;
+
+  border-radius:18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.03),
+      rgba(255,255,255,.015)
+    );
+
+  border:
+    1px solid rgba(255,255,255,.05);
+
+  box-shadow:
+    0 10px 20px rgba(0,0,0,.18);
+
+  transition:
+    transform .15s ease,
+    background .15s ease;
+}
+
+.calendarCell:hover{
+  transform:translateY(-2px);
+}
+
+.calendarCell.isToday{
+  border:
+    1px solid rgba(67,191,255,.22);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(67,191,255,.12),
+      rgba(67,191,255,.04)
+    );
+
+  box-shadow:
+    0 0 0 3px rgba(67,191,255,.06),
+    0 12px 28px rgba(67,191,255,.12);
+}
+
+.calendarCell.isSelected{
+  transform:translateY(-2px);
+
+  border:
+    1px solid rgba(67,191,255,.28);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(67,191,255,.16),
+      rgba(67,191,255,.06)
+    );
+}
+
+.calendarDate{
+  font-size:13px;
+  font-weight:900;
+}
+
+.calendarDots{
+  display:flex;
+  gap:4px;
+  flex-wrap:wrap;
+}
+
+.calendarDot{
+  width:7px;
+  height:7px;
+
+  border-radius:50%;
+
+  background:var(--accent);
+
+  box-shadow:
+    0 0 10px rgba(67,191,255,.7);
+}
+
+/* =========================
+   footer
+========================= */
+
+.footer{
+  padding:
+    34px
+    20px
+    44px;
+
+  text-align:center;
+
+  font-size:12px;
+
+  color:#8094a4;
 }
 
 /* =========================
