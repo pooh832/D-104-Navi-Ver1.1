@@ -1109,3 +1109,83 @@ body::after{
   flex:0 0 auto !important;
   white-space:nowrap !important;
 }
+
+/* =========================
+   Hero Chips Responsive Fix
+   PC / iPad / iPhone
+========================= */
+
+/* default：PC */
+.heroChips{
+  display:flex !important;
+  flex-direction:row !important;
+  justify-content:center !important;
+  align-items:center !important;
+  gap:14px !important;
+  flex-wrap:nowrap !important;
+
+  width:100%;
+  max-width:760px;
+  margin:20px auto 0;
+}
+
+.heroChips .chip{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:8px;
+
+  flex:1 1 0;
+  min-width:0;
+  max-width:220px;
+
+  padding:12px 18px;
+  white-space:nowrap;
+}
+
+/* iPad / tablet */
+@media (max-width:900px){
+  .heroChips{
+    max-width:680px;
+    gap:12px !important;
+    flex-wrap:nowrap !important;
+  }
+
+  .heroChips .chip{
+    max-width:200px;
+    padding:11px 15px;
+  }
+}
+
+/* iPhone / smartphone */
+@media (max-width:600px){
+  .heroChips{
+    display:grid !important;
+    grid-template-columns:1fr 1fr;
+    gap:10px !important;
+
+    width:100%;
+    max-width:360px;
+    margin-top:18px;
+  }
+
+  .heroChips .chip{
+    width:100% !important;
+    max-width:none;
+    min-width:0;
+
+    padding:10px 12px;
+  }
+
+  .heroChips .chip:nth-child(3){
+    grid-column:1 / -1;
+  }
+
+  .chipKey{
+    font-size:.72rem;
+  }
+
+  .chipVal{
+    font-size:.86rem;
+  }
+}
