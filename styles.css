@@ -1260,3 +1260,28 @@ body::after{
     transform:translateY(0px);
   }
 }
+#triviaInput{
+  width:100%;
+  min-height:140px;
+
+  margin-top:14px;
+  padding:18px;
+
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.12);
+
+  background:rgba(255,255,255,.08);
+
+  color:#F4F8FC;
+
+  backdrop-filter:blur(18px);
+
+  resize:vertical;
+
+  font-size:.95rem;
+  line-height:1.8;
+}
+
+#triviaInput::placeholder{
+  color:rgba(244,248,252,.45);
+}
