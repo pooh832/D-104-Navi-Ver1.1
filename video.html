@@ -4,17 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>部室への行き方 | D'104 Navi</title>
-  <link rel="stylesheet" href="styles.css?v=2" />
+  <link rel="stylesheet" href="styles.css?v=24" />
 </head>
 <body>
 
-  <!-- Topbar -->
   <header class="topbar" id="top">
     <div class="brand">
-      <div class="brandIcon" aria-hidden="true">📘</div>
+      <div class="brandIcon" aria-hidden="true">🎥</div>
       <div class="brandText">
-        <div class="brandTitle">D'104 Navi</div>
-        <div class="brandSub">サークルメンバーお助けツール</div>
+        <div class="brandTitle">Club D'104</div>
+        <div class="brandSub">部室への行き方</div>
       </div>
     </div>
 
@@ -23,42 +22,47 @@
     </nav>
   </header>
 
-  <!-- Hero -->
   <section class="hero">
     <div class="heroInner">
-      <p class="heroEyebrow">How to Go</p>
+      <p class="heroEyebrow">Route Guide</p>
       <h1 class="heroTitle">部室への行き方</h1>
-      <p class="heroLead">動画でルートを確認できます</p>
+      <p class="heroLead">初めてでも迷わないように、動画でルートを確認できます。</p>
     </div>
   </section>
 
   <main class="container">
 
-    <!-- Video Section -->
     <section class="card">
       <div class="cardHead">
         <h2 class="cardTitle">
-          <span class="badge" aria-hidden="true">🎥</span>
+          <span class="badge" aria-hidden="true">📍</span>
           route movie
         </h2>
-        <span class="pill">Guide</span>
+        <span class="pill">YouTube</span>
       </div>
 
-      <div class="videoWrap">
-        <video controls playsinline>
-          <source src="room-guide.mp4" type="video/mp4">
-          お使いのブラウザでは動画を再生できません。
-        </video>
+      <div class="videoBadge">
+        白山キャンパス → 部室
       </div>
 
-      <p class="hint">※動画が再生されない場合は、ファイル名やアップロード状況を確認してください。</p>
+      <div class="youtubeWrap">
+        <iframe
+          src="https://youtube.com/shorts/9lNxkMUNZxs?si=jMGSG5PW0F4lVO4N"
+          title="部室への行き方"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <p class="hint">
+        ※動画が表示されない場合は、通信環境またはYouTubeの公開設定を確認してください。
+      </p>
 
       <div class="actions">
-        <a href="index.html" class="btnGhost">← トップへ戻る</a>
+        <a href="index.html" class="btnGhost" style="text-decoration:none;">← トップへ戻る</a>
       </div>
     </section>
-
-    
 
   </main>
 
