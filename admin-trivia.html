@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Saved Trivia | D'104 Navi</title>
+
+  <link rel="stylesheet" href="styles.css?v=24">
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brandIcon">✨</div>
+
+    <div class="brandText">
+      <div class="brandTitle">Club D'104</div>
+      <div class="brandSub">Saved Trivia</div>
+    </div>
+  </div>
+
+  <nav class="topNav">
+    <a href="admin.html" class="navLink">Admin</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="heroInner">
+    <p class="heroEyebrow">Trivia Management</p>
+
+    <h1 class="heroTitle">
+      Saved Trivia
+    </h1>
+
+    <p class="heroLead">
+      トップページに表示する豆知識の追加・編集・削除
+    </p>
+  </div>
+</section>
+
+<main class="container">
+
+  <section class="card">
+
+    <div class="cardHead">
+      <h2 class="cardTitle">
+        <span class="badge">💡</span>
+        trivia editor
+      </h2>
+    </div>
+
+    <div class="nextBox" style="gap:14px;">
+      <div>
+        <label class="k" for="triviaInput">豆知識</label>
+
+        <textarea
+          id="triviaInput"
+          rows="5"
+          placeholder="例：東京ディズニーシーは2001年9月4日に開園しました。"
+          style="width:100%;margin-top:8px;padding:12px;border-radius:14px;font-size:14px;resize:vertical;"
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button
+        class="btnPrimary"
+        id="saveTriviaBtn"
+        type="button"
+      >
+        豆知識を追加
+      </button>
+
+      <button
+        class="btnGhost"
+        id="cancelTriviaEditBtn"
+        type="button"
+        style="display:none;"
+      >
+        編集キャンセル
+      </button>
+    </div>
+
+    <p
+      id="triviaMessage"
+      class="hint"
+    ></p>
+
+  </section>
+
+  <section class="card">
+
+    <div class="cardHead">
+      <h2 class="cardTitle">
+        <span class="badge">📖</span>
+        saved trivia
+      </h2>
+    </div>
+
+    <div id="triviaList">
+      <p class="hint">読み込み中...</p>
+    </div>
+
+  </section>
+
+</main>
+
+<footer class="footer">
+  <a href="admin.html" class="toTop">
+    ← Adminへ戻る
+  </a>
+</footer>
+
+<script type="module">
+
+import "./auth.js";
+
+import {
+  listenTrivia,
+  addTrivia,
+  updateTrivia,
+  deleteTrivia
+} from "./trivia-db.js";
+
+window.protectAdminPage();
+
+const triviaInput =
+document.getElementById("triviaInput");
+
+const saveBtn =
+document.getElementById("saveTriviaBtn");
+
+const cancelBtn =
+document.getElementById("cancelTriviaEditBtn");
+
+const message =
+document.getElementById("triviaMessage");
+
+const list =
+document.getElementById("triviaList");
+
+let editingId = null;
+
+function escapeHtml(str){
+  return String(str ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#39;");
+}
+
+function resetForm(){
+  editingId = null;
+
+  triviaInput.value = "";
+
+  saveBtn.textContent =
+    "豆知識を追加";
+
+  cancelBtn.style.display =
+    "none";
+}
+
+function startEdit(item){
+  editingId = item.id;
+
+  triviaInput.value =
+    item.text || "";
+
+  saveBtn.textContent =
+    "豆知識を更新";
+
+  cancelBtn.style.display =
+    "inline-flex";
+
+  message.textContent =
+    "編集中です。内容を修正して更新してください。";
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+saveBtn.addEventListener("click", async () => {
+  const text = triviaInput.value.trim();
+
+  if (!text) {
+    message.textContent =
+      "豆知識を入力してください。";
+    return;
+  }
+
+  try {
+    if (editingId) {
+      await updateTrivia(editingId, text);
+      message.textContent =
+        "豆知識を更新しました。";
+    } else {
+      await addTrivia(text);
+      message.textContent =
+        "豆知識を追加しました。";
+    }
+
+    resetForm();
+
+  } catch (error) {
+    console.error(error);
+    message.textContent =
+      "保存に失敗しました: " + error.message;
+  }
+});
+
+cancelBtn.addEventListener("click", () => {
+  resetForm();
+  message.textContent =
+    "編集をキャンセルしました。";
+});
+
+listenTrivia((items) => {
+  if (!items || !items.length) {
+    list.innerHTML =
+      "<p class='hint'>まだ豆知識はありません。</p>";
+    return;
+  }
+
+  const sorted = [...items].sort(
+    (a, b) => (b.createdAt || 0) - (a.createdAt || 0)
+  );
+
+  list.innerHTML = sorted.map(item => `
+    <div class="dayEventItem">
+
+      <div class="dayEventTitle">
+        ✨ ${escapeHtml(item.text)}
+      </div>
+
+      <div class="dayEventMeta">
+        ${item.createdAt ? new Date(item.createdAt).toLocaleString("ja-JP") : ""}
+      </div>
+
+      <div class="actions">
+
+        <button
+          class="btnPrimary editTriviaBtn"
+          data-id="${item.id}"
+          type="button">
+          編集
+        </button>
+
+        <button
+          class="btnGhost deleteTriviaBtn"
+          data-id="${item.id}"
+          type="button">
+          削除
+        </button>
+
+      </div>
+
+    </div>
+  `).join("");
+
+  document.querySelectorAll(".editTriviaBtn")
+    .forEach(btn => {
+      btn.onclick = () => {
+        const target =
+          sorted.find(item => item.id === btn.dataset.id);
+
+        if (target) {
+          startEdit(target);
+        }
+      };
+    });
+
+  document.querySelectorAll(".deleteTriviaBtn")
+    .forEach(btn => {
+      btn.onclick = async () => {
+        const ok =
+          confirm("この豆知識を削除しますか？");
+
+        if (!ok) return;
+
+        try {
+          await deleteTrivia(btn.dataset.id);
+          message.textContent =
+            "豆知識を削除しました。";
+
+          if (editingId === btn.dataset.id) {
+            resetForm();
+          }
+
+        } catch (error) {
+          console.error(error);
+          message.textContent =
+            "削除に失敗しました: " + error.message;
+        }
+      };
+    });
+});
+
+</script>
+
+</body>
+</html>
