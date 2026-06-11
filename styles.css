@@ -1731,3 +1731,12 @@ body::after{
 
   border:none;
 }
+.adminMenuNote{
+  margin-top:10px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+textarea{
+  font-family:inherit;
+}
