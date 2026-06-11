@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Disney Events | D'104 Navi</title>
+
+  <link rel="stylesheet" href="styles.css?v=24">
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brandIcon">🏰</div>
+
+    <div class="brandText">
+      <div class="brandTitle">Club D'104</div>
+      <div class="brandSub">Disney Events</div>
+    </div>
+  </div>
+
+  <nav class="topNav">
+    <a href="admin.html" class="navLink">Admin</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="heroInner">
+    <p class="heroEyebrow">Disney Management</p>
+
+    <h1 class="heroTitle">
+      Saved Disney Events
+    </h1>
+
+    <p class="heroLead">
+      ディズニーイベント・記念日管理
+    </p>
+  </div>
+</section>
+
+<main class="container">
+
+  <section class="card">
+
+    <div class="cardHead">
+      <h2 class="cardTitle">
+        <span class="badge">🏰</span>
+        disney event editor
+      </h2>
+    </div>
+
+    <div class="nextBox" style="gap:14px;">
+
+      <div>
+        <label class="k">タイトル</label>
+
+        <input
+          id="disneyTitle"
+          type="text"
+          placeholder="例：ミッキースクリーンデビュー"
+          style="width:100%;margin-top:8px;padding:12px;border-radius:14px;"
+        >
+      </div>
+
+      <div>
+        <label class="k">日付</label>
+
+        <input
+          id="disneyDate"
+          type="date"
+          style="width:100%;margin-top:8px;padding:12px;border-radius:14px;"
+        >
+      </div>
+
+      <div>
+        <label class="k">種類</label>
+
+        <select
+          id="disneyType"
+          style="width:100%;margin-top:8px;padding:12px;border-radius:14px;"
+        >
+          <option value="resort">
+            Resort Event
+          </option>
+
+          <option value="character">
+            Character Event
+          </option>
+        </select>
+      </div>
+
+      <div>
+        <label class="k">メモ</label>
+
+        <input
+          id="disneyNote"
+          type="text"
+          placeholder="補足説明"
+          style="width:100%;margin-top:8px;padding:12px;border-radius:14px;"
+        >
+      </div>
+
+      <div>
+        <label class="k">リンク</label>
+
+        <input
+          id="disneyLink"
+          type="url"
+          placeholder="https://..."
+          style="width:100%;margin-top:8px;padding:12px;border-radius:14px;"
+        >
+      </div>
+
+    </div>
+
+    <div class="actions">
+
+      <button
+        class="btnPrimary"
+        id="saveDisneyEventBtn"
+      >
+        Disney予定を追加
+      </button>
+
+      <button
+        class="btnGhost"
+        id="cancelDisneyEditBtn"
+        style="display:none;"
+      >
+        編集キャンセル
+      </button>
+
+    </div>
+
+    <p
+      id="disneyAdminMessage"
+      class="hint"
+    ></p>
+
+  </section>
+
+  <section class="card">
+
+    <div class="cardHead">
+      <h2 class="cardTitle">
+        <span class="badge">🌏</span>
+        saved disney events
+      </h2>
+    </div>
+
+    <div id="adminDisneyEventList">
+      <p class="hint">読み込み中...</p>
+    </div>
+
+  </section>
+
+</main>
+
+<footer class="footer">
+  <a href="admin.html" class="toTop">
+    ← Adminへ戻る
+  </a>
+</footer>
+
+<script type="module">
+
+import "./auth.js";
+
+import {
+  listenDisneyEvents,
+  addDisneyEvent,
+  updateDisneyEvent,
+  deleteDisneyEvent
+} from "./disney-events-db.js";
+
+window.protectAdminPage();
+
+const saveBtn =
+document.getElementById("saveDisneyEventBtn");
+
+const cancelBtn =
+document.getElementById("cancelDisneyEditBtn");
+
+const list =
+document.getElementById("adminDisneyEventList");
+
+const message =
+document.getElementById("disneyAdminMessage");
+
+let editingId = null;
+
+function resetForm(){
+
+  editingId = null;
+
+  disneyTitle.value = "";
+  disneyDate.value = "";
+  disneyType.value = "resort";
+  disneyNote.value = "";
+  disneyLink.value = "";
+
+  saveBtn.textContent =
+    "Disney予定を追加";
+
+  cancelBtn.style.display =
+    "none";
+}
+
+function startEdit(event){
+
+  editingId = event.id;
+
+  disneyTitle.value =
+    event.title || "";
+
+  disneyDate.value =
+    event.date || "";
+
+  disneyType.value =
+    event.type || "resort";
+
+  disneyNote.value =
+    event.note || "";
+
+  disneyLink.value =
+    event.link || "";
+
+  saveBtn.textContent =
+    "Disney予定を更新";
+
+  cancelBtn.style.display =
+    "inline-flex";
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+saveBtn.addEventListener(
+  "click",
+  async ()=>{
+
+    const data = {
+      title: disneyTitle.value.trim(),
+      date: disneyDate.value,
+      type: disneyType.value,
+      note: disneyNote.value.trim(),
+      link: disneyLink.value.trim()
+    };
+
+    try{
+
+      if(editingId){
+
+        await updateDisneyEvent(
+          editingId,
+          data
+        );
+
+        message.textContent =
+          "更新しました";
+
+      }else{
+
+        await addDisneyEvent(data);
+
+        message.textContent =
+          "追加しました";
+      }
+
+      resetForm();
+
+    }catch(error){
+
+      console.error(error);
+
+      message.textContent =
+        error.message;
+    }
+  }
+);
+
+cancelBtn.addEventListener(
+  "click",
+  resetForm
+);
+
+listenDisneyEvents(events=>{
+
+  if(!events.length){
+
+    list.innerHTML =
+      "<p class='hint'>Disney予定はありません</p>";
+
+    return;
+  }
+
+  list.innerHTML =
+    events.map(event=>`
+
+      <div class="dayEventItem">
+
+        <div class="dayEventTitle">
+          🏰 ${event.title}
+        </div>
+
+        <div class="dayEventMeta">
+          ${event.date}
+        </div>
+
+        <div class="dayEventMeta">
+          ${event.note || ""}
+        </div>
+
+        <div class="actions">
+
+          <button
+            class="btnPrimary editBtn"
+            data-id="${event.id}">
+            編集
+          </button>
+
+          <button
+            class="btnGhost deleteBtn"
+            data-id="${event.id}">
+            削除
+          </button>
+
+        </div>
+
+      </div>
+
+    `).join("");
+
+  document
+    .querySelectorAll(".editBtn")
+    .forEach(btn=>{
+
+      btn.onclick=()=>{
+
+        const target =
+          events.find(
+            e=>e.id===btn.dataset.id
+          );
+
+        startEdit(target);
+      };
+    });
+
+  document
+    .querySelectorAll(".deleteBtn")
+    .forEach(btn=>{
+
+      btn.onclick=async()=>{
+
+        if(confirm("削除しますか？")){
+
+          await deleteDisneyEvent(
+            btn.dataset.id
+          );
+        }
+      };
+    });
+
+});
+
+</script>
+
+</body>
+</html>
