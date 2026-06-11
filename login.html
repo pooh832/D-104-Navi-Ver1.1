@@ -1,56 +1,114 @@
-<main class="container">
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ログイン | D'104 Navi</title>
 
-  <section class="card">
-    <div class="cardHead">
-      <h2 class="cardTitle"><span class="badge">👤</span> admin user</h2>
+  <link rel="stylesheet" href="styles.css?v=27" />
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brandIcon">📘</div>
+
+      <div class="brandText">
+        <div class="brandTitle">Club D'104</div>
+        <div class="brandSub">幹部ログイン</div>
+      </div>
     </div>
-    <p>ログイン中: <strong id="userEmail">確認中...</strong></p>
+  </header>
 
-    <div class="actions">
-      <button class="btnGhost" onclick="logoutUser()">ログアウト</button>
+  <section class="hero">
+    <div class="heroInner">
+      <p class="heroEyebrow">Member Portal</p>
+      <h1 class="heroTitle">幹部ログイン</h1>
+      <p class="heroLead">
+        管理ページへアクセスするにはログインしてください。
+      </p>
     </div>
   </section>
 
-  <div class="sectionTitle">MANAGEMENT</div>
+  <main class="container" style="max-width:680px;">
 
-  <section class="grid">
+    <section class="card">
 
-    <a class="tile" href="admin-events.html">
-      <span class="emoji">📚</span>
-      <div class="tileText">
-        <h3>Saved Events</h3>
-        <p>活動予定の追加・編集・削除</p>
+      <div class="cardHead">
+        <h2 class="cardTitle">
+          <span class="badge">🔐</span>
+          login
+        </h2>
       </div>
-      <span class="arrow">›</span>
-    </a>
 
-    <a class="tile" href="admin-disney-events.html">
-      <span class="emoji">🏰</span>
-      <div class="tileText">
-        <h3>Saved Disney Events</h3>
-        <p>パークイベント・キャラ記念日の管理</p>
+      <div class="nextBox" style="gap:14px;">
+
+        <div>
+          <label class="k" for="email">メールアドレス</label>
+
+          <input
+            id="email"
+            type="email"
+            placeholder="example@toyo.jp"
+            style="
+              width:100%;
+              margin-top:8px;
+              padding:12px 14px;
+              border-radius:14px;
+              border:1px solid rgba(0,0,0,.12);
+              font-size:14px;
+            "
+          >
+        </div>
+
+        <div>
+          <label class="k" for="password">パスワード</label>
+
+          <input
+            id="password"
+            type="password"
+            placeholder="••••••••"
+            style="
+              width:100%;
+              margin-top:8px;
+              padding:12px 14px;
+              border-radius:14px;
+              border:1px solid rgba(0,0,0,.12);
+              font-size:14px;
+            "
+          >
+        </div>
+
       </div>
-      <span class="arrow">›</span>
-    </a>
 
-    <a class="tile" href="admin-trivia.html">
-      <span class="emoji">✨</span>
-      <div class="tileText">
-        <h3>Saved Trivia</h3>
-        <p>豆知識の追加・編集・削除</p>
+      <div class="actions">
+
+        <button
+          class="btnPrimary"
+          type="button"
+          onclick="loginUser()"
+        >
+          ログイン
+        </button>
+
+        <button
+          class="btnGhost"
+          type="button"
+          onclick="registerUser()"
+        >
+          新規登録
+        </button>
+
       </div>
-      <span class="arrow">›</span>
-    </a>
 
-    <a class="tile" href="admin-questions.html">
-      <span class="emoji">❓</span>
-      <div class="tileText">
-        <h3>Questions</h3>
-        <p>質問への回答管理</p>
-      </div>
-      <span class="arrow">›</span>
-    </a>
+      <p id="message" class="hint"></p>
 
-  </section>
+    </section>
 
-</main>
+  </main>
+
+  <script type="module" src="./auth.js?v=27"></script>
+
+</body>
+</html>
