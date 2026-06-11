@@ -1,0 +1,224 @@
+<!doctype html>
+
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Saved Events | D'104 Navi</title>
+  <link rel="stylesheet" href="styles.css?v=24" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="brandIcon">📅</div>
+    <div class="brandText">
+      <div class="brandTitle">Club D'104</div>
+      <div class="brandSub">Saved Events</div>
+    </div>
+  </div>
+  <nav class="topNav">
+    <a href="admin.html" class="navLink">Admin</a>
+  </nav>
+</header>
+<section class="hero">
+  <div class="heroInner">
+    <p class="heroEyebrow">Event Management</p>
+    <h1 class="heroTitle">Saved Events</h1>
+    <p class="heroLead">
+      サークル活動予定の追加・編集・削除
+    </p>
+  </div>
+</section>
+<main class="container">
+  <!-- イベント追加 -->
+  <section class="card">
+    <div class="cardHead">
+      <h2 class="cardTitle">
+        <span class="badge">📝</span>
+        event editor
+      </h2>
+    </div>
+<div class="nextBox" style="gap:14px;">
+  <div>
+    <label class="k">予定タイトル</label>
+    <input
+      id="eventTitle"
+      type="text"
+      placeholder="例：新歓ミーティング"
+      style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;"
+    >
+  </div>
+  <div>
+    <label class="k">場所</label>
+    <input
+      id="eventLocation"
+      type="text"
+      placeholder="例：BOX集合"
+      style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;"
+    >
+  </div>
+  <div>
+    <label class="k">開始日時</label>
+    <input
+      id="eventStart"
+      type="datetime-local"
+      style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;"
+    >
+  </div>
+  <div>
+    <label class="k">終了日時</label>
+    <input
+      id="eventEnd"
+      type="datetime-local"
+      style="width:100%;margin-top:8px;padding:12px 14px;border-radius:14px;"
+    >
+  </div>
+</div>
+<div class="actions">
+  <button class="btnPrimary" id="saveEventBtn">
+    予定を追加
+  </button>
+  <button
+    class="btnGhost"
+    id="cancelEditBtn"
+    style="display:none;"
+  >
+    編集をキャンセル
+  </button>
+</div>
+<p id="adminMessage" class="hint"></p>
+  </section>
+  <!-- 保存済みイベント -->
+  <section class="card">
+<div class="cardHead">
+  <h2 class="cardTitle">
+    <span class="badge">📚</span>
+    saved events
+  </h2>
+</div>
+<div id="adminEventList">
+  <p class="hint">読み込み中...</p>
+</div>
+  </section>
+</main>
+<footer class="footer">
+  <a href="admin.html" class="toTop">← Adminへ戻る</a>
+</footer>
+<script type="module">
+import "./auth.js";
+import {
+  addEvent,
+  listenEvents,
+  updateEvent,
+  deleteEvent
+} from "./events-db.js";
+window.protectAdminPage();
+const saveEventBtn = document.getElementById("saveEventBtn");
+const cancelEditBtn = document.getElementById("cancelEditBtn");
+const adminMessage = document.getElementById("adminMessage");
+const adminEventList = document.getElementById("adminEventList");
+const eventTitleInput = document.getElementById("eventTitle");
+const eventLocationInput = document.getElementById("eventLocation");
+const eventStartInput = document.getElementById("eventStart");
+const eventEndInput = document.getElementById("eventEnd");
+let editingEventId = null;
+function escapeHtml(str){
+  return String(str ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;");
+}
+function resetEventForm(){
+  editingEventId = null;
+  eventTitleInput.value = "";
+  eventLocationInput.value = "";
+  eventStartInput.value = "";
+  eventEndInput.value = "";
+  saveEventBtn.textContent = "予定を追加";
+  cancelEditBtn.style.display = "none";
+}
+function startEditingEvent(event){
+  editingEventId = event.id;
+  eventTitleInput.value = event.title || "";
+  eventLocationInput.value = event.location || "";
+  eventStartInput.value = event.start || "";
+  eventEndInput.value = event.end || "";
+  saveEventBtn.textContent = "予定を更新";
+  cancelEditBtn.style.display = "inline-flex";
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+function renderEvents(events){
+  if(!events.length){
+    adminEventList.innerHTML =
+      "<p class='hint'>まだ予定はありません。</p>";
+    return;
+  }
+  adminEventList.innerHTML = events.map(event => `
+    <div class="dayEventItem">
+      <div class="dayEventTitle">
+        ${escapeHtml(event.title)}
+      </div>
+      <div class="dayEventMeta">
+        ${escapeHtml(event.location)}
+      </div>
+      <div class="actions">
+        <button
+          class="btnPrimary edit-btn"
+          data-id="${event.id}">
+          編集
+        </button>
+        <button
+          class="btnGhost delete-btn"
+          data-id="${event.id}">
+          削除
+        </button>
+      </div>
+    </div>
+  `).join("");
+  document.querySelectorAll(".edit-btn")
+    .forEach(btn => {
+      btn.onclick = () => {
+        const event =
+          events.find(
+            e => e.id === btn.dataset.id
+          );
+        startEditingEvent(event);
+      };
+    });
+  document.querySelectorAll(".delete-btn")
+    .forEach(btn => {
+      btn.onclick = async () => {
+        if(confirm("削除しますか？")){
+          await deleteEvent(btn.dataset.id);
+        }
+      };
+    });
+}
+saveEventBtn.addEventListener("click", async ()=>{
+  const eventData = {
+    title:eventTitleInput.value.trim(),
+    location:eventLocationInput.value.trim(),
+    start:eventStartInput.value,
+    end:eventEndInput.value
+  };
+  if(editingEventId){
+    await updateEvent(
+      editingEventId,
+      eventData
+    );
+  }else{
+    await addEvent(eventData);
+  }
+  resetEventForm();
+});
+cancelEditBtn.addEventListener(
+  "click",
+  resetEventForm
+);
+listenEvents(renderEvents);
+</script>
+</body>
+</html>
