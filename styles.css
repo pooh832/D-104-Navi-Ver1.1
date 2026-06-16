@@ -950,17 +950,29 @@ body::after{
   box-shadow:
     0 0 0 3px rgba(127,214,230,.16);
 }
-
+/* サークル活動：背景と同化しないコーラル */
 .calendarDot.club{
-  background:#5AA9C5 !important;
+  background:#FF7A8A !important;
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,.85),
+    0 0 0 5px rgba(255,122,138,.22),
+    0 0 12px rgba(255,122,138,.55);
 }
 
+/* Disneyイベント：水色 */
 .calendarDot.disney{
-  background:#FF6B81 !important;
+  background:#7FD6E6 !important;
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,.75),
+    0 0 0 5px rgba(127,214,230,.20);
 }
 
+/* キャラクター誕生日：黄色 */
 .calendarDot.character{
   background:#FFD93D !important;
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,.75),
+    0 0 0 5px rgba(255,217,61,.20);
 }
 
 .selectedDayBox{
