@@ -1,25 +1,26 @@
 /* =========================
    D'104 Navi
    Premium Deep-Sea Glass UI
-   Spacious Edition
+   Slim Edition
 ========================= */
 
 :root{
-
-  /* Background */
   --bg:#026881;
 
-  /* Text */
   --ink:#F4F8FC;
-  --muted:rgba(244,248,252,.72);
+  --muted:rgba(244,248,252,.70);
 
-  /* Glass */
   --glass:rgba(255,255,255,.10);
   --glass2:rgba(255,255,255,.06);
-
   --border:rgba(255,255,255,.18);
 
-  /* Shadows */
+  --accent:#39A7C4;
+  --accent2:#7FD6E6;
+
+  --club:#FF7A8A;
+  --disney:#7FD6E6;
+  --character:#FFD93D;
+
   --shadow:
     0 10px 30px rgba(0,0,0,.16),
     0 24px 60px rgba(0,0,0,.14);
@@ -28,23 +29,27 @@
     0 18px 40px rgba(0,0,0,.18),
     0 32px 80px rgba(0,0,0,.16);
 
-  /* Accent */
-  --accent:#39A7C4;
-  --accent2:#7FD6E6;
-
-  /* Radius */
   --radius-xl:28px;
   --radius-lg:24px;
   --radius-md:18px;
 }
 
+/* =========================
+   Base
+========================= */
+
 *{
   box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html{
+  scroll-behavior:smooth;
 }
 
 html,
 body{
-  height:100%;
+  min-height:100%;
 }
 
 body{
@@ -63,74 +68,49 @@ body{
 
   background:var(--bg);
 
-  min-height:100vh;
-
   overflow-x:hidden;
-
   position:relative;
 }
 
-/* =========================
-   Background texture
-========================= */
-
+/* sparkle / texture */
 body::before{
   content:"";
-
   position:fixed;
   inset:0;
-
-  pointer-events:none;
   z-index:0;
+  pointer-events:none;
 
-  background:
-    radial-gradient(
-      rgba(255,255,255,.05) 1px,
-      transparent 1px
-    );
+  background-image:
+    radial-gradient(circle at 12% 22%, rgba(255,255,255,.20) 0 1px, transparent 2px),
+    radial-gradient(circle at 78% 34%, rgba(255,255,255,.16) 0 1.2px, transparent 2.4px),
+    radial-gradient(circle at 34% 78%, rgba(173,230,255,.18) 0 1px, transparent 2px),
+    radial-gradient(circle at 62% 82%, rgba(255,255,255,.14) 0 1px, transparent 2px),
+    radial-gradient(circle at 88% 12%, rgba(150,220,255,.18) 0 1px, transparent 2px);
 
-  background-size:24px 24px;
-
-  opacity:.14;
+  opacity:.65;
+  animation:sparkleFloat 18s linear infinite;
 }
 
-/* glow */
-
+/* soft glow */
 body::after{
   content:"";
-
   position:fixed;
   inset:0;
-
-  pointer-events:none;
   z-index:0;
+  pointer-events:none;
 
   background:
-
-    radial-gradient(
-      800px 420px at 50% -10%,
-      rgba(255,255,255,.12),
-      transparent 70%
-    ),
-
-    radial-gradient(
-      500px 300px at 20% 80%,
-      rgba(127,214,230,.06),
-      transparent 70%
-    ),
-
-    radial-gradient(
-      600px 320px at 90% 10%,
-      rgba(255,255,255,.05),
-      transparent 70%
-    );
+    radial-gradient(800px 420px at 50% -10%, rgba(255,255,255,.12), transparent 70%),
+    radial-gradient(500px 300px at 20% 80%, rgba(127,214,230,.06), transparent 70%),
+    radial-gradient(600px 320px at 90% 10%, rgba(255,255,255,.05), transparent 70%);
 
   opacity:.95;
 }
 
-/* =========================
-   Layers
-========================= */
+@keyframes sparkleFloat{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-8px); }
+}
 
 .topbar,
 .hero,
@@ -147,7 +127,6 @@ body::after{
 .topbar{
   position:sticky;
   top:0;
-
   z-index:100;
 
   padding:14px 18px;
@@ -158,22 +137,18 @@ body::after{
   gap:14px;
 
   background:rgba(0,0,0,.14);
-
-  border-bottom:
-    1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid rgba(255,255,255,.08);
 
   backdrop-filter:blur(20px);
   -webkit-backdrop-filter:blur(20px);
 
-  box-shadow:
-    0 4px 24px rgba(0,0,0,.16);
+  box-shadow:0 4px 24px rgba(0,0,0,.16);
 }
 
 .brand{
   display:flex;
   align-items:center;
   gap:12px;
-
   min-width:0;
 }
 
@@ -187,9 +162,7 @@ body::after{
   border-radius:18px;
 
   background:rgba(255,255,255,.10);
-
-  border:
-    1px solid rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.14);
 
   backdrop-filter:blur(18px);
 
@@ -203,11 +176,8 @@ body::after{
 }
 
 .brandTitle{
-  margin:0;
-
   font-size:14px;
   font-weight:900;
-
   letter-spacing:.08em;
 
   white-space:nowrap;
@@ -233,18 +203,14 @@ body::after{
   text-decoration:none;
 
   color:var(--ink);
-
   font-size:12px;
   font-weight:800;
 
   padding:9px 14px;
-
   border-radius:999px;
 
   background:rgba(255,255,255,.08);
-
-  border:
-    1px solid rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.14);
 
   backdrop-filter:blur(14px);
 
@@ -274,35 +240,26 @@ body::after{
 
 .hero::before{
   content:"";
-
   position:absolute;
 
   width:500px;
   height:500px;
-
   border-radius:50%;
 
   left:50%;
   top:-320px;
-
   transform:translateX(-50%);
 
   background:
-    radial-gradient(
-      circle,
-      rgba(127,214,230,.20),
-      transparent 72%
-    );
+    radial-gradient(circle, rgba(127,214,230,.20), transparent 72%);
 
   filter:blur(12px);
-
   pointer-events:none;
 }
 
 .heroInner{
   max-width:980px;
   margin:0 auto;
-
   text-align:center;
 }
 
@@ -311,13 +268,11 @@ body::after{
 
   font-size:12px;
   font-weight:900;
-
   letter-spacing:.24em;
 
   color:rgba(244,248,252,.62);
 
-  text-shadow:
-    0 0 20px rgba(255,255,255,.18);
+  text-shadow:0 0 20px rgba(255,255,255,.18);
 }
 
 .heroTitle{
@@ -325,69 +280,59 @@ body::after{
 
   font-size:38px;
   font-weight:900;
-
   letter-spacing:.08em;
 
-  text-shadow:
-    0 16px 36px rgba(0,0,0,.28);
+  text-shadow:0 16px 36px rgba(0,0,0,.28);
 }
 
 .heroLead{
   margin:14px auto 0;
 
   max-width:42em;
-
   font-size:14px;
 
   color:var(--muted);
 }
+
 .heroTitle,
 .sectionTitle{
-
-  font-family:
-    "Cormorant Garamond",
-    serif;
-
+  font-family:"Cormorant Garamond", serif;
   letter-spacing:.08em;
 }
+
 /* =========================
-   Hero Chips Layout
+   Hero Chips
 ========================= */
 
 .heroChips{
-
   display:flex;
-
   justify-content:center;
   align-items:center;
-
   gap:14px;
 
-  margin-top:22px;
+  width:100%;
+  max-width:760px;
+  margin:22px auto 0;
 
   flex-wrap:nowrap;
 }
 
 .chip{
-  white-space:nowrap;
-}
-/* =========================
-   Hero Chips
-========================= */
-
-.chip{
-  display:flex;
+  display:inline-flex;
   align-items:center;
+  justify-content:center;
   gap:10px;
+
+  flex:1 1 0;
+  min-width:0;
+  max-width:220px;
 
   padding:14px 18px;
 
   border-radius:9999px;
 
   background:rgba(255,255,255,.10);
-
-  border:
-    1px solid rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.18);
 
   backdrop-filter:blur(20px);
   -webkit-backdrop-filter:blur(20px);
@@ -396,19 +341,32 @@ body::after{
     0 10px 28px rgba(0,0,0,.14),
     inset 0 1px 0 rgba(255,255,255,.18);
 
+  white-space:nowrap;
+
   transition:
     transform .18s ease,
     box-shadow .18s ease;
 }
+
+.chipKey{
+  font-size:.72rem;
+  font-weight:900;
+  letter-spacing:.12em;
+  color:var(--muted);
+}
+
+.chipVal{
+  font-size:.9rem;
+  font-weight:900;
+}
+
 /* =========================
    Layout
 ========================= */
 
 .container{
   max-width:980px;
-
   margin:0 auto;
-
   padding:24px 22px 46px;
 }
 
@@ -423,15 +381,14 @@ body::after{
 .calendarCell,
 .selectedDayBox,
 .dayEventItem,
-.nextBox{
-
+.nextBox,
+.factCard{
   background:var(--glass);
 
   backdrop-filter:blur(22px);
   -webkit-backdrop-filter:blur(22px);
 
-  border:
-    1px solid rgba(255,255,255,.18);
+  border:1px solid var(--border);
 
   box-shadow:
     var(--shadow),
@@ -447,1296 +404,14 @@ body::after{
 
 .card:hover,
 .tile:hover,
-.calendarCell:hover{
-
-  transform:
-    translateY(-4px)
-    scale(1.01);
+.calendarCell:hover,
+.factCard:hover{
+  transform:translateY(-4px) scale(1.01);
 
   box-shadow:
     var(--shadowHover),
     inset 0 1px 0 rgba(255,255,255,.24);
 }
 
-/* glass reflection */
-
 .card::before,
-.tile::before{
-  content:"";
-
-  position:absolute;
-  inset:0;
-
-  border-radius:inherit;
-
-  pointer-events:none;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,.22),
-      rgba(255,255,255,0) 42%,
-      rgba(255,255,255,.08) 78%,
-      rgba(255,255,255,0)
-    );
-
-  opacity:.85;
-}
-
-/* =========================
-   Cards
-========================= */
-
-.card{
-  padding:24px;
-
-  border-radius:var(--radius-xl);
-}
-
-.card + .card{
-  margin-top:18px;
-}
-
-.cardHead{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-
-  margin-bottom:18px;
-}
-
-.cardTitle{
-  margin:0;
-
-  display:flex;
-  align-items:center;
-  gap:10px;
-
-  font-size:16px;
-  font-weight:900;
-
-  letter-spacing:.06em;
-}
-
-.badge{
-  width:30px;
-  height:30px;
-
-  border-radius:12px;
-
-  display:grid;
-  place-items:center;
-
-  background:rgba(255,255,255,.10);
-
-  border:
-    1px solid rgba(255,255,255,.16);
-}
-
-.pill{
-  font-size:11px;
-  font-weight:900;
-
-  color:var(--ink);
-
-  padding:7px 12px;
-
-  border-radius:999px;
-
-  background:rgba(255,255,255,.08);
-
-  border:
-    1px solid rgba(255,255,255,.14);
-}
-
-/* =========================
-   Next Event
-========================= */
-
-.nextBox{
-  display:grid;
-  gap:14px;
-
-  padding:18px;
-
-  border-radius:var(--radius-lg);
-}
-
-.kv{
-  display:grid;
-  grid-template-columns:82px 1fr;
-  gap:16px;
-
-  align-items:center;
-}
-
-.k{
-  font-size:12px;
-  font-weight:900;
-
-  color:var(--muted);
-}
-
-.v{
-  font-size:14px;
-  font-weight:800;
-}
-
-/* =========================
-   Buttons
-========================= */
-
-.actions{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-
-  margin-top:20px;
-}
-
-.btnPrimary{
-  flex:1 1 240px;
-
-  border:none;
-
-  border-radius:999px;
-
-  padding:15px 18px;
-
-  font-size:14px;
-  font-weight:900;
-
-  color:#F4F8FC;
-
-  background:
-    linear-gradient(
-      180deg,
-      #39A7C4 0%,
-      #026881 100%
-    );
-
-  box-shadow:
-    0 12px 26px rgba(0,0,0,.24),
-    inset 0 1px 0 rgba(255,255,255,.18);
-
-  position:relative;
-  overflow:hidden;
-
-  transition:
-    transform .18s ease,
-    box-shadow .18s ease;
-}
-
-.btnPrimary:hover{
-  transform:translateY(-2px);
-}
-
-.btnPrimary::after{
-  content:"";
-
-  position:absolute;
-  inset:-40% -80%;
-
-  background:
-    linear-gradient(
-      120deg,
-      transparent 35%,
-      rgba(255,255,255,.24) 50%,
-      transparent 65%
-    );
-
-  transform:translateX(-55%);
-
-  animation:btnShine 3.6s ease-in-out infinite;
-
-  pointer-events:none;
-}
-
-@keyframes btnShine{
-
-  0%{
-    transform:translateX(-55%);
-  }
-
-  55%{
-    transform:translateX(55%);
-  }
-
-  100%{
-    transform:translateX(55%);
-  }
-}
-
-.btnPrimary:active{
-  transform:scale(.99);
-}
-
-.btnGhost{
-  border-radius:999px;
-
-  padding:15px 18px;
-
-  font-weight:900;
-
-  color:var(--ink);
-
-  background:rgba(255,255,255,.08);
-
-  border:
-    1px solid rgba(255,255,255,.14);
-
-  backdrop-filter:blur(14px);
-}
-
-/* =========================
-   Section Title
-========================= */
-
-.sectionTitle{
-  margin:26px 0 16px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:14px;
-
-  text-align:center;
-
-  font-weight:900;
-  letter-spacing:.22em;
-
-  color:rgba(244,248,252,.72);
-}
-
-.sectionTitle::before,
-.sectionTitle::after{
-  content:"✧";
-
-  color:rgba(255,255,255,.88);
-
-  text-shadow:
-    0 0 18px rgba(127,214,230,.34);
-}
-
-/* =========================
-   Grid / Tiles
-========================= */
-
-.grid{
-  display:grid;
-  grid-template-columns:1fr;
-
-  gap:18px;
-}
-
-.tile{
-  display:flex;
-  align-items:center;
-  gap:16px;
-
-  text-decoration:none;
-  color:var(--ink);
-
-  padding:20px;
-
-  border-radius:var(--radius-lg);
-}
-
-.emoji{
-  width:50px;
-  height:50px;
-
-  border-radius:18px;
-
-  display:grid;
-  place-items:center;
-
-  font-size:21px;
-
-  background:rgba(255,255,255,.10);
-
-  border:
-    1px solid rgba(255,255,255,.16);
-}
-
-.tileText h3{
-  margin:0;
-
-  font-size:15px;
-}
-
-.tileText p{
-  margin:5px 0 0;
-
-  font-size:12px;
-
-  color:var(--muted);
-}
-
-.arrow{
-  margin-left:auto;
-
-  font-size:22px;
-  font-weight:900;
-
-  color:rgba(244,248,252,.38);
-}
-
-/* =========================
-   News
-========================= */
-
-.newsList{
-  list-style:none;
-
-  padding:0;
-  margin:0;
-
-  display:grid;
-  gap:14px;
-}
-
-.newsItem{
-  padding:14px 16px;
-
-  border-radius:var(--radius-md);
-
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.date{
-  min-width:92px;
-
-  font-size:12px;
-  font-weight:900;
-
-  color:rgba(244,248,252,.56);
-}
-
-.dot{
-  width:7px;
-  height:7px;
-
-  border-radius:50%;
-
-  background:var(--accent);
-
-  box-shadow:
-    0 0 0 4px rgba(127,214,230,.14);
-}
-
-.text{
-  font-size:13px;
-  font-weight:700;
-
-  color:rgba(244,248,252,.90);
-}
-
-/* =========================
-   Calendar
-========================= */
-
-.calendarNav{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.calendarMonthBtn{
-  min-width:42px;
-  padding:10px 12px;
-}
-
-.miniCalendarWrap{
-  margin-top:16px;
-}
-
-.calendarWeekdays{
-  display:none;
-}
-
-.miniCalendarGrid{
-  display:grid;
-  grid-template-columns:repeat(7, 1fr);
-
-  gap:12px;
-}
-
-.calendarCell{
-  min-height:76px;
-
-  padding:10px;
-
-  border-radius:20px;
-
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-
-  cursor:pointer;
-}
-
-.calendarCell:active{
-  transform:scale(.98);
-}
-
-.calendarCell.isMuted{
-  opacity:.30;
-}
-
-.calendarCell.isToday{
-
-  outline:
-    2px solid rgba(57,167,196,.82);
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(127,214,230,.22),
-      rgba(57,167,196,.12)
-    );
-
-  box-shadow:
-    0 12px 30px rgba(57,167,196,.24),
-    inset 0 1px 0 rgba(255,255,255,.22);
-}
-
-.calendarCell.isSelected{
-  border:
-    1px solid rgba(127,214,230,.52);
-}
-
-.calendarDate{
-  color:#F4F8FC;
-
-  font-size:13px;
-  font-weight:900;
-}
-/* =========================
-   Calendar Text White
-========================= */
-
-.calendarCell,
-.calendarCell *{
-  color:#F4F8FC;
-}
-
-.calendarDate{
-  color:#F4F8FC !important;
-
-  font-size:13px;
-  font-weight:900;
-
-  text-shadow:
-    0 1px 6px rgba(0,0,0,.22);
-}
-.calendarDots{
-  display:flex;
-  gap:4px;
-  flex-wrap:wrap;
-}
-
-.calendarDot{
-  width:7px;
-  height:7px;
-
-  border-radius:50%;
-
-  background:var(--accent);
-
-  box-shadow:
-    0 0 0 3px rgba(127,214,230,.16);
-}
-
-.calendarDot.club{
-  background:#5AA9C5 !important;
-}
-
-.calendarDot.disney{
-  background:#FF6B81 !important;
-}
-
-.calendarDot.character{
-  background:#FFD93D !important;
-}
-
-.selectedDayBox{
-  margin-top:18px;
-
-  padding:16px;
-
-  border-radius:var(--radius-lg);
-}
-
-.dayEventItem{
-  margin-top:12px;
-
-  padding:14px;
-
-  border-radius:18px;
-}
-
-.dayEventItem:first-child{
-  margin-top:0;
-}
-
-.dayEventTitle{
-  font-weight:900;
-  margin-bottom:4px;
-}
-
-.dayEventMeta{
-  font-size:12px;
-  color:var(--muted);
-}
-
-/* =========================
-   Footer
-========================= */
-
-.footer{
-  text-align:center;
-
-  padding:26px 10px 36px;
-
-  color:rgba(244,248,252,.54);
-
-  font-size:12px;
-}
-
-.toTop{
-  display:inline-block;
-
-  margin-bottom:10px;
-
-  text-decoration:none;
-
-  color:var(--ink);
-
-  font-weight:900;
-
-  padding:12px 16px;
-
-  border-radius:999px;
-
-  background:rgba(255,255,255,.08);
-
-  border:
-    1px solid rgba(255,255,255,.14);
-}
-
-/* =========================
-   Responsive
-========================= */
-
-@media (min-width:640px){
-
-  .grid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .heroTitle{
-    font-size:42px;
-  }
-}
-
-@media (max-width:520px){
-
-  .container{
-    padding:18px 16px 40px;
-  }
-
-  .hero{
-    padding:42px 16px 18px;
-  }
-
-  .calendarCell{
-    min-height:64px;
-    padding:8px;
-  }
-
-  .calendarDate{
-    font-size:12px;
-  }
-
-  .miniCalendarGrid{
-    gap:8px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce){
-
-  .btnPrimary::after{
-    animation:none;
-    opacity:.45;
-  }
-
-  .card,
-  .tile,
-  .calendarCell{
-    transition:none;
-  }
-}
-.heroChips{
-  display:flex !important;
-  flex-direction:row !important;
-
-  justify-content:center !important;
-  align-items:center !important;
-
-  gap:14px !important;
-  flex-wrap:nowrap !important;
-
-  width:100%;
-}
-
-.heroChips .chip{
-  display:inline-flex !important;
-
-  flex-direction:row !important;
-  align-items:center !important;
-  justify-content:center !important;
-
-  gap:8px;
-
-  width:auto !important;
-  max-width:none !important;
-  min-width:max-content !important;
-
-  flex:0 0 auto !important;
-  white-space:nowrap !important;
-}
-
-/* =========================
-   Hero Chips Responsive Fix
-   PC / iPad / iPhone
-========================= */
-
-/* default：PC */
-.heroChips{
-  display:flex !important;
-  flex-direction:row !important;
-  justify-content:center !important;
-  align-items:center !important;
-  gap:14px !important;
-  flex-wrap:nowrap !important;
-
-  width:100%;
-  max-width:760px;
-  margin:20px auto 0;
-}
-
-.heroChips .chip{
-  display:inline-flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  gap:8px;
-
-  flex:1 1 0;
-  min-width:0;
-  max-width:220px;
-
-  padding:12px 18px;
-  white-space:nowrap;
-}
-
-/* iPad / tablet */
-@media (max-width:900px){
-  .heroChips{
-    max-width:680px;
-    gap:12px !important;
-    flex-wrap:nowrap !important;
-  }
-
-  .heroChips .chip{
-    max-width:200px;
-    padding:11px 15px;
-  }
-}
-
-/* iPhone / smartphone */
-@media (max-width:600px){
-  .heroChips{
-    display:grid !important;
-    grid-template-columns:1fr 1fr;
-    gap:10px !important;
-
-    width:100%;
-    max-width:360px;
-    margin-top:18px;
-  }
-
-  .heroChips .chip{
-    width:100% !important;
-    max-width:none;
-    min-width:0;
-
-    padding:10px 12px;
-  }
-
-  .heroChips .chip:nth-child(3){
-    grid-column:1 / -1;
-  }
-
-  .chipKey{
-    font-size:.72rem;
-  }
-
-  .chipVal{
-    font-size:.86rem;
-  }
-}
-
-/* =========================
-   Jubilee Sparkle Layer
-========================= */
-
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-
-  pointer-events:none;
-  z-index:0;
-
-  background-image:
-
-    radial-gradient(circle at 12% 22%,
-      rgba(255,255,255,.20) 0 1px,
-      transparent 2px),
-
-    radial-gradient(circle at 78% 34%,
-      rgba(255,255,255,.16) 0 1.2px,
-      transparent 2.4px),
-
-    radial-gradient(circle at 34% 78%,
-      rgba(173,230,255,.18) 0 1px,
-      transparent 2px),
-
-    radial-gradient(circle at 62% 82%,
-      rgba(255,255,255,.14) 0 1px,
-      transparent 2px),
-
-    radial-gradient(circle at 88% 12%,
-      rgba(150,220,255,.18) 0 1px,
-      transparent 2px);
-
-  opacity:.65;
-
-  animation:
-    sparkleFloat 18s linear infinite;
-}
-
-/* 微細ノイズ */
-body::after{
-  content:"";
-  position:fixed;
-  inset:0;
-
-  pointer-events:none;
-  z-index:0;
-
-  opacity:.06;
-
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Ccircle cx='12' cy='18' r='1' fill='white'/%3E%3Ccircle cx='88' cy='42' r='1' fill='white'/%3E%3Ccircle cx='42' cy='98' r='1' fill='white'/%3E%3Ccircle cx='118' cy='122' r='1' fill='white'/%3E%3C/svg%3E");
-
-  mix-blend-mode:screen;
-}
-
-@keyframes sparkleFloat{
-  0%{
-    transform:translateY(0px);
-  }
-
-  50%{
-    transform:translateY(-8px);
-  }
-
-  100%{
-    transform:translateY(0px);
-  }
-}
-
-/* =========================
-   Premium Trivia Glass Card
-========================= */
-
-.factCard{
-  position:relative;
-
-  margin-top:28px;
-  padding:32px;
-
-  border-radius:32px;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,.12),
-      rgba(255,255,255,.05)
-    );
-
-  border:1px solid rgba(255,255,255,.14);
-
-  backdrop-filter:blur(24px);
-  -webkit-backdrop-filter:blur(24px);
-
-  box-shadow:
-    0 14px 40px rgba(0,0,0,.22),
-    inset 0 1px 0 rgba(255,255,255,.12);
-
-  overflow:hidden;
-
-  isolation:isolate;
-
-  transition:
-    transform .45s ease,
-    box-shadow .45s ease,
-    border-color .45s ease;
-}
-
-/* hover */
-.factCard:hover{
-  transform:translateY(-4px);
-
-  border-color:rgba(120,240,255,.24);
-
-  box-shadow:
-    0 24px 60px rgba(0,0,0,.28),
-    0 0 36px rgba(90,240,255,.10);
-}
-
-/* 上部グロー */
-.factCard::before{
-  content:"";
-
-  position:absolute;
-
-  top:-120px;
-  right:-120px;
-
-  width:260px;
-  height:260px;
-
-  background:
-    radial-gradient(circle,
-      rgba(130,240,255,.16),
-      transparent 72%);
-
-  pointer-events:none;
-}
-
-/* キラ粒 */
-.factCard::after{
-  content:"✦";
-
-  position:absolute;
-
-  top:20px;
-  right:22px;
-
-  color:rgba(255,255,255,.38);
-
-  font-size:14px;
-
-  animation:triviaSparkle 5s ease-in-out infinite;
-}
-
-/* label */
-.factLabel{
-  position:relative;
-  z-index:2;
-
-  margin-bottom:12px;
-
-  color:rgba(244,248,252,.55);
-
-  font-size:.72rem;
-  letter-spacing:.24em;
-
-  text-transform:uppercase;
-}
-
-/* title */
-.factTitle{
-  position:relative;
-  z-index:2;
-
-  margin:0 0 18px;
-
-  color:#F4F8FC;
-
-  font-family:"Cormorant Garamond", serif;
-  font-size:2rem;
-  font-weight:600;
-
-  letter-spacing:.04em;
-}
-
-/* text */
-.factText{
-  position:relative;
-  z-index:2;
-
-  margin:0;
-
-  color:rgba(244,248,252,.84);
-
-  font-size:1rem;
-  line-height:2;
-
-  letter-spacing:.02em;
-}
-
-/* subtle sparkle */
-@keyframes triviaSparkle{
-  0%,100%{
-    opacity:.3;
-    transform:scale(1);
-  }
-
-  50%{
-    opacity:.85;
-    transform:scale(1.2);
-  }
-}
-
-/* iPad */
-@media (max-width:900px){
-
-  .factCard{
-    padding:28px;
-    border-radius:28px;
-  }
-
-  .factTitle{
-    font-size:1.7rem;
-  }
-}
-
-/* iPhone */
-@media (max-width:600px){
-
-  .factCard{
-    padding:24px;
-    border-radius:24px;
-    margin-top:22px;
-  }
-
-  .factTitle{
-    font-size:1.42rem;
-  }
-
-  .factText{
-    font-size:.93rem;
-    line-height:1.9;
-  }
-}
-/* =========================
-   TRIVIA GLASS PANEL
-========================= */
-
-.factCard{
-  position:relative;
-
-  margin-top:34px;
-  padding:34px;
-
-  border-radius:34px;
-
-  overflow:hidden;
-  isolation:isolate;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,.12),
-      rgba(255,255,255,.05)
-    );
-
-  border:1px solid rgba(255,255,255,.16);
-
-  backdrop-filter:blur(26px);
-  -webkit-backdrop-filter:blur(26px);
-
-  box-shadow:
-    0 18px 50px rgba(0,0,0,.24),
-    inset 0 1px 0 rgba(255,255,255,.14);
-
-  transition:
-    transform .45s ease,
-    box-shadow .45s ease,
-    border-color .45s ease;
-}
-
-/* hover */
-.factCard:hover{
-  transform:translateY(-4px);
-
-  border-color:rgba(130,240,255,.28);
-
-  box-shadow:
-    0 26px 70px rgba(0,0,0,.30),
-    0 0 42px rgba(90,240,255,.10);
-}
-
-/* 背景グロー */
-.factCard::before{
-  content:"";
-
-  position:absolute;
-
-  top:-140px;
-  right:-140px;
-
-  width:320px;
-  height:320px;
-
-  background:
-    radial-gradient(circle,
-      rgba(130,240,255,.16),
-      transparent 72%);
-
-  pointer-events:none;
-}
-
-/* 右下ジュビリー演出 */
-.factCard::after{
-  content:"";
-
-  position:absolute;
-
-  right:32px;
-  bottom:18px;
-
-  width:180px;
-  height:180px;
-
-  border-radius:50%;
-
-  background:
-    radial-gradient(circle,
-      rgba(255,255,255,.20),
-      rgba(130,240,255,.10) 34%,
-      transparent 72%);
-
-  filter:blur(10px);
-
-  opacity:.9;
-
-  pointer-events:none;
-}
-
-/* 上ラベル */
-.factLabel{
-  position:relative;
-  z-index:2;
-
-  margin-bottom:14px;
-
-  color:rgba(244,248,252,.58);
-
-  font-size:.76rem;
-  letter-spacing:.26em;
-
-  text-transform:uppercase;
-}
-
-/* タイトル */
-.factTitle{
-  position:relative;
-  z-index:2;
-
-  display:flex;
-  align-items:center;
-  gap:14px;
-
-  margin:0 0 22px;
-
-  color:#F4F8FC;
-
-  font-family:"Cormorant Garamond", serif;
-  font-size:2rem;
-  font-weight:600;
-
-  letter-spacing:.04em;
-}
-
-/* アイコン */
-.factTitle::before{
-  content:"💡";
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  width:52px;
-  height:52px;
-
-  border-radius:18px;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,.18),
-      rgba(255,255,255,.08)
-    );
-
-  border:1px solid rgba(255,255,255,.16);
-
-  backdrop-filter:blur(12px);
-
-  font-size:22px;
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.16);
-}
-
-/* 本文 */
-.factText{
-  position:relative;
-  z-index:2;
-
-  max-width:70%;
-
-  margin:0;
-
-  color:rgba(244,248,252,.88);
-
-  font-size:1rem;
-  line-height:2;
-
-  letter-spacing:.02em;
-}
-
-/* subtle sparkle */
-.factCard .sparkle{
-  position:absolute;
-
-  color:white;
-
-  opacity:.4;
-
-  animation:sparkleFloat 5s ease-in-out infinite;
-}
-
-@keyframes sparkleFloat{
-  0%,100%{
-    transform:translateY(0px) scale(1);
-    opacity:.3;
-  }
-
-  50%{
-    transform:translateY(-6px) scale(1.15);
-    opacity:.85;
-  }
-}
-
-/* =========================
-   TABLET
-========================= */
-
-@media (max-width:900px){
-
-  .factCard{
-    padding:28px;
-    border-radius:28px;
-  }
-
-  .factTitle{
-    font-size:1.7rem;
-  }
-
-  .factText{
-    max-width:100%;
-  }
-
-  .factCard::after{
-    width:130px;
-    height:130px;
-  }
-}
-
-/* =========================
-   PHONE
-========================= */
-
-@media (max-width:600px){
-
-  .factCard{
-    padding:24px;
-    border-radius:24px;
-    margin-top:26px;
-  }
-
-  .factTitle{
-    font-size:1.4rem;
-    gap:12px;
-  }
-
-  .factTitle::before{
-    width:44px;
-    height:44px;
-
-    font-size:18px;
-
-    border-radius:14px;
-  }
-
-  .factText{
-    font-size:.94rem;
-    line-height:1.9;
-  }
-
-  .factCard::after{
-    width:90px;
-    height:90px;
-
-    right:10px;
-    bottom:10px;
-  }
-}
-
-.youtubeWrap{
-  position:relative;
-
-  width:100%;
-  padding-top:56.25%;
-
-  overflow:hidden;
-
-  border-radius:24px;
-
-  margin-top:16px;
-
-  box-shadow:
-    0 12px 28px rgba(0,0,0,.12);
-
-  border:
-    1px solid rgba(255,255,255,.65);
-}
-
-.youtubeWrap iframe{
-  position:absolute;
-
-  top:0;
-  left:0;
-
-  width:100%;
-  height:100%;
-
-  border:none;
-}
-.adminMenuNote{
-  margin-top:10px;
-  font-size:12px;
-  color:var(--muted);
-}
-
-textarea{
-  font-family:inherit;
-}
+.tile::before,
